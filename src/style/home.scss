@@ -1,0 +1,150 @@
+@import './padroes.scss'; 
+@import './mixin.sass';
+
+.hero{
+    align-items: stretch;
+    background-color: $backgroundPrincipal;
+    padding: 1rem;
+    gap: 5rem;
+    @include altura;
+    @include flexColumnCeterCenter;
+    @include textCenter; /* Alinhamento do texto ao centro */
+}
+
+.hero h1{
+  font-size: $tamanhoLetrasTitulosUm;
+  font-family: var(--font-cursive);
+  color: $corTitulo
+}
+
+  
+  /* Estilos para o conteúdo da seção hero */
+  .hero_conteudo {
+    @include flexCenterCenter;
+    @include textCenter;
+  }
+  
+  .hero_img{
+     @include larguraResponsiva;
+  }
+
+
+  .imagem_hero {
+    max-width: 100%; /* Ajusta a largura máxima da imagem ao contêiner pai */
+    max-height: 60rem; /* Mantém a proporção da imagem */
+    border-radius: 1rem; /* Deixa a imagem com bordas arredondadas */
+    overflow: hidden; /* Garante que a imagem fique dentro do contêiner arredondado */
+  }
+  
+  .imagem_hero:hover {
+    transform: scale(1.01); /* Aumenta ao passar o mouse */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais intensa ao passar o mouse */
+  }
+  
+  /* Estilos para o texto na seção hero */
+  .hero_texto {
+    @include larguraResponsiva;
+    @include textCenter;
+    @include flexColumn;
+    align-items: center;
+  }
+  
+  .hero_texto h1 {
+    font-family: var(--font-cursive);
+    font-size: $tamanhoLetrasTitulosUm;
+    color: $corParagrafo;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.1rem;
+    
+    margin-bottom: 2rem;
+  }
+  
+  .hero_texto h1 span {
+    color: $cor;
+    font-family: var(--font-cursive);
+  }
+  
+  .hero_texto p {
+    @include textCenter;
+    font-size: $tamanhoLetrasParagrafos; 
+    font-family: var(--body-font);
+    font-weight: 400;
+    margin-bottom: 20px;
+    max-width: 80%;
+    
+    line-height: 1.5; /* Espaçamento entre linhas */
+    letter-spacing: 0.1rem;
+    color: $corBlack;
+  }
+  
+  /* Estilos para o botão na seção hero */
+  .btn_outline {
+    @include larguraResponsiva;
+    @include flexCenterCenter;
+    max-width: 250px; /* Largura máxima */
+    padding: 8px;
+
+    background-color: $backgroundButton;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .btn_outline:hover {
+    background-color: rgb(37, 37, 37);
+    transition: all 0.5s;
+  }
+  
+  .btn_outline {
+    font-size: $tamanhoLetrasTitulosTres; /* Tamanho do texto do botão */
+    text-transform: $texttransform;
+    color: $cor;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+  
+  /* Media query para dispositivos menores */
+  @media screen and (max-width: 768px) {
+
+    .hero{
+      @include altura;
+      gap: 1rem;
+  }
+  
+    .hero_conteudo{
+        border-radius: 0 0 0 0;
+        height: 100%;
+        @include flexColumn
+    }
+   
+     .hero_img{
+      width: 60%;
+    }
+ 
+    .hero_texto{
+      @include larguraResponsivaCemPorCento;
+    }
+  
+    .hero_texto h1 {
+      font-size: $tamanhoLetrasTitulosUmMenor; /* Tamanho do título para telas menores */
+    }
+  
+    .hero_texto p {
+      font-size: $tamanhoLetrasTitulosQuatro; /* Tamanho do texto para telas menores */
+    }
+
+    .hero_texto a {
+      font-size: $tamanhoLetrasTitulosQuatro; /* Tamanho do texto para telas menores */
+    }
+  
+    .btn_outline {
+      width: 80%; /* Largura responsiva para telas menores */
+      max-width: 200px; /* Largura máxima para telas menores */
+    }
+  
+    .btn_outline span {
+      font-size: $tamanhoLetrasTitulosQuatro; /* Tamanho do texto do botão para telas menores */
+    }
+  }
+  
