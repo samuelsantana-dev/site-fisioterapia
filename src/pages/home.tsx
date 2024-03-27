@@ -1,13 +1,11 @@
 import '../style/home.scss';
 import { Image } from 'react-bootstrap';
-import { FaWhatsapp } from 'react-icons/fa';
-import { whatsapp } from '../components/links';
 
 export function Home(){
     return(
         <section id="Home" className="hero">
 
-            <h1>Jadoson sobrenome</h1>
+            <h1>Jadson sobrenome</h1>
 
             <div className="hero_conteudo">
 
@@ -16,14 +14,13 @@ export function Home(){
                 </div>
 
                 <div className="hero_texto">
-                    <h1>Site de fisioterapia<span>para o seu bem estar</span> o tempo todo</h1>
+                    <h1>Site de fisioterapia <span> para o seu bem estar</span> o tempo todo</h1>
                     <p>Inicie seus exercicios fisicos e tenha uma melhor qualidade de vida</p>
-                    <a
-                    {...whatsapp}
+                    <button
                      className="btn_outline" 
                      >
-                       <FaWhatsapp />  <span>Entre em contato</span>
-                    </a>
+                      <span>Faça Login</span>
+                    </button>
                 </div>
 
             </div>

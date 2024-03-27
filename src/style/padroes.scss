@@ -6,19 +6,11 @@ $background-black: rgb(0, 0, 0);
 $backgroundButton: #1a717db4;
 $backgroundButtonHover: #057483;
 
-// .color1 {color: #18a1db;}
-// .color2 {color: #124a54;}
-// .color3 {color: #1a717d;}
-// .color4 {color: #23a0af;}
-// .color5 {color: #2bc8c8;}
-
 $cor: white;
 $corBlack: black;
 $corTitulo: #02414d;
 $corParagrafo: #02414d;
-// $cor: #1a717d;
-// $cor: #23a0af;
-// $cor: #2bc8c8;
+
 
 //Paragrafos e TiTulos
 $tamanhoLetrasParagrafos:  1.4rem ;
@@ -31,6 +23,16 @@ $tamanhoLetrasButton: 1.2rem;
 
 //Eslos /TexTos
 $texttransform: uppercase;
+
+//Navbar
+$navbar-bg: #343a40;
+$navbar-text-color: #fff;
+$navbar-link-color: #fff;
+$navbar-link-hover-color: #fff;
+$navbar-link-hover-bg: rgba(255, 255, 255, 0.1);
+
+//Cores Bordas
+$corBorda: #02414d;
 
 
 

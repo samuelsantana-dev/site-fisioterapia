@@ -1,0 +1,96 @@
+@mixin textCenter {
+    text-align: center;
+}
+
+@mixin imagemHover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+// Altura e Largura
+@mixin altura {
+    min-height: 100vh;
+}
+
+@mixin larguraResponsiva {
+    width: 50%;    
+}
+
+@mixin larguraResponsivaCemPorCento {
+    width: 100%;
+}
+    
+// Flexbox
+@mixin columnCentralizado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@mixin flexCenterCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flexContentCenter {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin flexColumnCeterCenter {
+    //Ajusta ao meio da tela em coluna
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+//PAGINAS 
+//Ajustar itens da pagina ao centro, fica no elemento pai de todos
+@mixin ajustarAoCentroResponsivo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+//Botoes de enviar
+@mixin buttonSubmit {
+    font-size: 14px;
+    font-weight: 600;
+    border: none !important;
+    transition: all linear 160ms;
+    cursor: pointer;
+    margin: 0 !important;
+}
+
+//Formularios de Login
+@mixin form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+    padding: 40px;
+    gap: 5px
+}
+
+@mixin inputText {
+    width: 100%;
+    padding: 15px;
+    font-size: 14px;
+    margin-bottom: 1rem;
+    margin-top: 5px;
+    border-radius: 4px;
+    transition: all linear 160ms;
+    outline: none;
+}
