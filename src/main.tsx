@@ -5,6 +5,11 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Home } from './pages/home.tsx';
 import {LoginForm} from './pages/login.tsx';
 import { ToastContainer } from 'react-bootstrap';
+import { ExerciciosInferiores } from './pages/exercicios-inferiores.tsx';
+import { ExerciciosSuperiores } from './pages/exercicios-superiores.tsx';
+import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
+import { CadastroForm } from './pages/cadastro.tsx';
+import { TermoConcenso } from './pages/temoConcenso.tsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +20,27 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginForm />,
   },
+  {
+    path: "/cadastro",
+    element: <CadastroForm />,
+  },
+  {
+    path: "/termo-concenso",
+    element: <TermoConcenso />,
+  },
+  {
+    path: "/exercicios-inferiores",
+    element: <ExerciciosInferiores />,
+  },
+  {
+    path: "/exercicios-superiores",
+    element: <ExerciciosSuperiores />,
+  },
+  {
+    path: "/escolher-exercicios",
+    element: <EscolherExercicios />,
+  }
+ 
 ]);
 
 

@@ -1,31 +1,57 @@
-@import './padroes.scss'; 
+@import './padroes.scss';
 @import './mixin.scss';
+.header {
+  overflow: hidden;
+  background-color: $backgroundHeaderFooter;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.NavBar {
-  background-color: $navbar-bg;
-  color: $navbar-text-color;
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  color: $cor;
+}
 
-  .nome {
-    color: $navbar-text-color;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    margin-right: 20px;
+.header-right {
+  display: flex;
+  align-items: center;
+}
 
-    &:hover,
-    &:focus {
-      color: $navbar-link-hover-color;
-    }
+.menu-icon {
+  display: none; /* Esconde o ícone do menu em telas maiores */
+  cursor: pointer;
+}
+
+.menu-links {
+  display: flex;
+}
+
+.menu-links a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: $cor;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-icon {
+    display: block;
   }
 
-  .linksNavBar {
-    color: $navbar-link-color;
-    text-decoration: none;
-    margin-right: 15px;
+  .menu-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    background-color: $backgroundHeaderFooter;
+  }
 
-    &:hover,
-    &:focus {
-      color: $navbar-link-hover-color;
-    }
+  .menu-links.open {
+    display: flex;
   }
 }

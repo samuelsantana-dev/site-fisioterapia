@@ -78,31 +78,10 @@
     color: $corBlack;
   }
   
-  /* Estilos para o botão na seção hero */
-  .btn_outline {
-    @include larguraResponsiva;
-    @include flexCenterCenter;
-    max-width: 250px;
-    padding: 8px;
-
-    background-color: $backgroundButton;
-    border-radius: 50px;
-    border: 1px solid transparent;
-    cursor: pointer;
+  .link{
+    display: flex;
   }
   
-  .btn_outline:hover {
-    background-color: rgb(37, 37, 37);
-    transition: all 0.5s;
-  }
-  
-  .btn_outline {
-    font-size: $tamanhoLetrasTitulosTres; /* Tamanho do texto do botão */
-    text-transform: $texttransform;
-    color: $cor;
-    font-weight: 600;
-    margin-left: 8px;
-  }
   
   /* Media query para dispositivos menores */
   @media screen and (max-width: 768px) {
@@ -138,13 +117,6 @@
       font-size: $tamanhoLetrasTitulosQuatro; /* Tamanho do texto para telas menores */
     }
   
-    .btn_outline {
-      width: 80%;
-      max-width: 200px; 
-    }
-  
-    .btn_outline span {
-      font-size: $tamanhoLetrasTitulosQuatro; 
-    }
+
   }
   

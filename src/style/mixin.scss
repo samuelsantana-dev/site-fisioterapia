@@ -2,6 +2,14 @@
     text-align: center;
 }
 
+//imagem
+@mixin imagemCaixasPequenas {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
 @mixin imagemHover {
     transform: scale(1.05);
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
@@ -18,6 +26,14 @@
 
 @mixin larguraResponsivaCemPorCento {
     width: 100%;
+}
+
+//Caixas Pequenas
+@mixin caixasPequenas {
+  width: 30rem;
+  min-height: 15rem;
+  padding: 1rem;
+  border-radius: 20px;
 }
     
 // Flexbox
@@ -45,12 +61,20 @@
 }
 
 @mixin flexColumnCeterCenter {
-    //Ajusta ao meio da tela em coluna
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
+}
+
+// Mixin para criar um contêiner flexível com espaçamento uniforme entre os itens e alinhamento central, para caixas pequenas
+@mixin containerFlexivel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
 }
 
 //PAGINAS 
@@ -75,7 +99,7 @@
     margin: 0 !important;
 }
 
-//Formularios de Login
+//Formularios de Login componente formulario seria divPai
 @mixin form {
     display: flex;
     flex-direction: column;

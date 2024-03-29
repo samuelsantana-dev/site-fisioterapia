@@ -48,9 +48,24 @@
     color: $corParagrafo;
 }
 
+.btns{
+    display: flex;
+    justify-content: space-around;
+}
+
+.btnCadastre{
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    transition: all linear 160ms;
+    cursor: pointer;
+    margin: 1;
+}
+
 .btn {
     background-color: $backgroundButton;
     color: #fff;
+    margin: 3rem;
     @include buttonSubmit;
 }
 

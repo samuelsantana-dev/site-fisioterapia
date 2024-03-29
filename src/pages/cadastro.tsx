@@ -1,19 +1,36 @@
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { Link as ReactRouterLink } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import '../style/login.scss';
 import { Header } from '../components/header';
 import { Footer } from '../components/footer';
 
-export function LoginForm() {
+export function CadastroForm() {
   return (
     <>
     <Header />
     <div className='page'>
-    <Form className='formLogin'>
+    <Form className='formLogin' method='post'>
         <h1>Login</h1>
             <p>Digite os seus dados de acesso no campo abaixo.</p>
+
+        <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+        <Form.Label column sm="2">
+          Numbero de celular
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control plaintext type="email" placeholder="XX X XXXXXXXX" />
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+        <Form.Label column sm="2">
+          Idade
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control plaintext type="email" placeholder="65" />
+        </Col>
+      </Form.Group>
            
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
         <Form.Label column sm="2">
@@ -33,15 +50,7 @@ export function LoginForm() {
         </Col>
       </Form.Group>
 
-      <div className='btns'>
-        <ReactRouterLink to="/login">
-           <input type="submit" value="Acessar" className="btn" />
-        </ReactRouterLink>
-       
-        <ReactRouterLink to="/cadastro">
-          <input type="submit" value="Castre-se" className="btn" />
-        </ReactRouterLink>
-      </div>
+      <input  type="submit" value="Cadastrar" className="btn" />
     </Form>
     </div>
     <Footer />

@@ -1,0 +1,91 @@
+@import './mixin.scss'; 
+@import './padroes.scss';
+
+/* Estilos para a seção sobre */
+.sectionSobreMIm {
+  background-color: $backgroundPrincipal;
+    @include altura;
+    @include flexColumnCeterCenter;
+    @include textCenter;
+    padding: 2rem;
+  }
+
+.sectionSobreMIm h1 {
+    font-size: $tamanhoLetrasTitulosUm;
+    color: $corTitulo;
+}
+
+.conteudo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.divTextoSobreMim{
+ @include larguraResponsiva;
+}
+
+.divTextoSobreMim p {
+  font-size: $tamanhoLetrasTitulosTres;
+  line-height: 1.6;
+  color: $corParagrafo;
+}
+
+.DivSobreMimImagem{
+    @include imagemCaixasPequenas;
+}
+
+.DivSobreMimImagem img {
+    max-width: 80%;
+    max-height: 100%;
+    border-radius: 50%; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    object-fit: cover; 
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+  }
+
+.DivSobreMimImagem img:hover {
+      @include imagemHover;
+  }
+  
+.sectionSobreMIm h1 {
+    font-size: $tamanhoLetrasTitulosUm;
+    margin-bottom: 3rem;
+    font-family: var(--font-cursive);
+}
+
+.divBotoes{
+  padding-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+  
+
+
+
+  /* Estilos para dispositivos menores */
+  @media screen and (max-width: 768px) {
+    .conTeudo {
+        @include columnCentralizado;
+        padding: 2rem;
+        gap: 2rem;
+      }
+
+      .DivSobreMimImagem{
+        @include larguraResponsivaCemPorCento;
+      }
+      
+      .divTextoSobreMim{
+        @include larguraResponsivaCemPorCento;
+      }
+      
+
+    .sectionSobreMIm h1 {
+      font-size: $tamanhoLetrasTitulosUm;
+    }
+  
+    .divTextoSobreMim p {
+      font-size: $tamanhoLetrasParagrafos;
+    }
+  }
+  
