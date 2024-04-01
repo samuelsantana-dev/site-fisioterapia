@@ -32,10 +32,10 @@ export function Home(){
                           {login.value}
                         </a>
                         <a
-                        href={login.href}
-                        rel={login.rel}  
+                        href={termoConcenso.href}
+                        rel={termoConcenso.rel}  
                                             //   target={login.target}
-                        className={login.className}
+                        className={termoConcenso.className}
                         >
                           {termoConcenso.value}
                         </a>

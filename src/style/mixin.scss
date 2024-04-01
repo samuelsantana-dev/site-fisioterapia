@@ -105,7 +105,8 @@
     flex-direction: column;
     border-radius: 7px;
     padding: 40px;
-    gap: 5px
+    gap: 5px;
+    background-color: #fff; 
 }
 
 @mixin inputText {

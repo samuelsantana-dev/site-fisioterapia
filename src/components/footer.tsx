@@ -11,7 +11,7 @@ export const Footer = () => {
     <footer>
       <div className="footer-icons">
         <p className="footer-logo">
-          FISIOTERAPIA © 2023
+          FISIOTERAPIA © 2024
         </p>
       
         <a {...instagram}>

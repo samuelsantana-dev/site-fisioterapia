@@ -1,20 +1,19 @@
 @import './padroes.scss'; 
 @import './mixin.scss';
 
-.formLogin {
+.formCadastro {
    @include form;
-   max-width: 30%;
-   height: auto;
-   box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
+    height: auto;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
 }
-.formLogin h1 {
+.formCadastro h1 {
     padding: 0;
     margin: 0;
     font-weight: 500;
     font-size: 2.3em;
 }
 
-.formLogin p {
+.formCadastro p {
     margin: 1rem;
     text-align: center;
     display: inline-block;
@@ -23,22 +22,22 @@
     margin-bottom: 25px;
 }
 
-.formLogin input {
+.formCadastro input {
     @include inputText;
     border: 1px solid #ccc;
 }
 
 
-.formLogin input:focus {
+.formCadastro input:focus {
     border: 1px solid $corBorda;
 }
 
-.formLogin label {
+.formCadastro label {
     font-size: 14px;
     font-weight: 600;
 }
 
-.formLogin a {
+.formCadastro a {
     display: inline-block;
     margin-bottom: 20px;
     font-size: 13px;
@@ -46,7 +45,7 @@
     transition: all linear 160ms;
 }
 
-.formLogin a:hover {
+.formCadastro a:hover {
     color: $corParagrafo;
 }
 
@@ -55,7 +54,7 @@
     justify-content: space-around;
 }
 
-.btnCadastre{
+.btnCadastro{
     font-size: 14px;
     font-weight: 600;
     border: none;
@@ -64,14 +63,14 @@
     margin: 1;
 }
 
-.btn {
+.btnCadastro {
     background-color: $backgroundButton;
     color: #fff;
     margin: 3rem;
     @include buttonSubmit;
 }
 
-.btn:hover {
+.btnCadastro:hover {
     transform: scale(1.05);
     background-color: $backgroundButtonHover;
 
