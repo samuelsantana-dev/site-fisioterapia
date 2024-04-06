@@ -16,7 +16,7 @@ export function EscolherExercicios(){
             <div className='conteudo'>
                 <div className='DivSobreMimImagem'>
                     <img
-                     src="src/assets/fotoIntrodução.png" alt="" 
+                     src="src/assets/fisioterapiaEscolherExercicios.png" alt="" 
                      />
                 </div>
                 
@@ -25,23 +25,20 @@ export function EscolherExercicios(){
                      Especializados no atendimento a idosos, oferecemos uma variedade de exercícios direcionados por especialistas. Escolha abaixo entre exercícios para membros inferiores ou superiores e comece a cuidar da sua saúde hoje mesmo.
                     </p>
                     <div className='divBotoes'>
-                        <a 
-                        href={exerciciosInferiores.href} 
-                        rel={exerciciosInferiores.rel}  
-                        className={exerciciosInferiores.className}
-                        >
-                            {exerciciosInferiores.value}
-                        </a>
-                       
-                        <a 
-                        href={exerciciosSuperiores.href} 
-                        rel={exerciciosSuperiores.rel}  
-                        className={exerciciosSuperiores.className}
+                       <a 
+                            href={exerciciosSuperiores.href} 
+                            rel={exerciciosSuperiores.rel}  
+                            className={exerciciosSuperiores.className}
                         >
                             {exerciciosSuperiores.value}
                         </a>
-                            
-                        
+                        <a 
+                            href={exerciciosInferiores.href} 
+                            rel={exerciciosInferiores.rel}  
+                            className={exerciciosInferiores.className}
+                        >
+                            {exerciciosInferiores.value}
+                        </a>
                     </div>
                 </div>
             </div>

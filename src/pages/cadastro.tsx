@@ -14,39 +14,79 @@ export function CadastroForm() {
             <h1>Cadastre-se</h1>
             <p>Digite os seus dados de acesso no campo abaixo.</p>
 
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+            <Form.Group as={Row} className="mb-3" controlId="formFotoPerfil">
             <Form.Label column sm="2">
-              Numbero de celular
+              Foto de Perfil
             </Form.Label>
             <Col sm="10">
-              <Form.Control plaintext type="email" placeholder="XX X XXXXXXXX" />
+              <Form.Control type="file" placeholder="Escolha uma foto" />
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+          <Form.Group as={Row} className="mb-3" controlId="formNomeCompleto">
             <Form.Label column sm="2">
-              Idade
+              Nome Completo
             </Form.Label>
             <Col sm="10">
-              <Form.Control plaintext type="email" placeholder="65" />
-            </Col>
-          </Form.Group>
-              
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-            <Form.Label column sm="2">
-              Email
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control plaintext type="email" placeholder="email@example.com" />
+              <Form.Control type="text" placeholder="Digite seu nome completo" />
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+          <Form.Group as={Row} className="mb-3" controlId="formDataNascimento">
+            <Form.Label column sm="2">
+              Data de Nascimento
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control type="date" placeholder="DD/MM/AAAA" />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3" controlId="formEmail">
+            <Form.Label column sm="2">
+              E-mail
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control type="email" placeholder="Digite seu e-mail" />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3" controlId="formNumeroCelular">
+            <Form.Label column sm="2">
+              Número de Celular
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control type="tel" placeholder="(XX) X XXXX-XXXX" />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3" controlId="formSexo">
+            <Form.Label column sm="2">
+              Sexo
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control as="select">
+                <option>Outro</option>
+                <option>Masculino</option>
+                <option>Feminino</option>
+              </Form.Control>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3" controlId="formDiagnostico">
+            <Form.Label column sm="2">
+              Diagnóstico
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control type="text" placeholder="Digite seu diagnóstico" />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3" controlId="formSenha">
             <Form.Label column sm="2">
               Password
             </Form.Label>
             <Col sm="10">
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control type="password" placeholder="Digite sua senha" />
             </Col>
           </Form.Group>
 

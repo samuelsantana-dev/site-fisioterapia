@@ -3,14 +3,12 @@
 
 .formCadastro {
    @include form;
-    height: auto;
-    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
 }
 .formCadastro h1 {
     padding: 0;
     margin: 0;
     font-weight: 500;
-    font-size: 2.3em;
+    font-size: $tamanhoLetrasTitulosUm;
 }
 
 .formCadastro p {
@@ -18,7 +16,7 @@
     text-align: center;
     display: inline-block;
     font-size: $tamanhoLetrasParagrafos;
-    color: #666;
+    color: $linkDeCadastro;
     margin-bottom: 25px;
 }
 
@@ -33,15 +31,15 @@
 }
 
 .formCadastro label {
-    font-size: 14px;
+    font-size: $tamanhoLetrasParagrafos;
     font-weight: 600;
 }
 
 .formCadastro a {
     display: inline-block;
     margin-bottom: 20px;
-    font-size: 13px;
-    color: #555;
+    font-size:$tamanhoLetrasLinks;
+    color: $linkDeCadastro;
     transition: all linear 160ms;
 }
 
@@ -55,7 +53,7 @@
 }
 
 .btnCadastro{
-    font-size: 14px;
+    font-size: $tamanhoLetrasLinks;
     font-weight: 600;
     border: none;
     transition: all linear 160ms;
@@ -65,7 +63,7 @@
 
 .btnCadastro {
     background-color: $backgroundButton;
-    color: #fff;
+    color: $cor;
     margin: 3rem;
     @include buttonSubmit;
 }
@@ -75,6 +73,20 @@
     background-color: $backgroundButtonHover;
 
 }
+
+/* Adicione essas regras de estilo ao seu arquivo CSS */
+
+.formCadastro select {
+    @include inputText; /* Utilize o mesmo estilo do input para manter a consistência */
+    border: 1px solid #ccc;
+    width: 100%; /* Garante que o select ocupe toda a largura do container */
+    padding: 0.5rem; /* Ajuste o preenchimento conforme necessário */
+}
+
+.formCadastro select:focus {
+    border: 1px solid $corBorda; /* Adicione estilo ao foco do select */
+}
+
 
 .page {
     @include ajustarAoCentroResponsivo;

@@ -65,7 +65,7 @@
 
   /* Estilos para dispositivos menores */
   @media screen and (max-width: 768px) {
-    .conTeudo {
+    .conteudo {
         @include columnCentralizado;
         padding: 2rem;
         gap: 2rem;

@@ -39,7 +39,7 @@ export function LoginForm() {
           </ReactRouterLink>
         
           <ReactRouterLink to="/cadastro">
-            <input type="submit" value="Castre-se" className="btn" />
+            <input type="submit" value="Cadastre-se" className="btn" />
           </ReactRouterLink>
         </div>
       </Form>
