@@ -1,25 +1,55 @@
-import { useState } from 'react';
-import { FaBars } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 import { headerEscolherExercicios, headerHome, headerLogin, headerTermoConcenso } from '../routes/links';
-import '../style/header.scss';
 
 export function Header() {
-  const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="header">
-      <a href="#default" className="logo">CompanyLogo</a>
-      <div className="header-right">
-        <div className={`menu-icon ${showMenu ? 'open' : ''}`} onClick={() => setShowMenu(!showMenu)}>
-          <FaBars />
-        </div>
-        <div className={`menu-links ${showMenu ? 'open' : ''}`}>
-          <a href={headerHome.href} rel={headerHome.rel} className={headerHome.className}>{headerHome.value}</a>
-          <a href={headerLogin.href} rel={headerLogin.rel} className={headerLogin.className}>{headerLogin.value}</a>
-          <a href={headerEscolherExercicios.href} rel={headerEscolherExercicios.rel} className={headerEscolherExercicios.className}>{headerEscolherExercicios.value}</a>
-          <a href={headerTermoConcenso.href} rel={headerTermoConcenso.rel} className={headerTermoConcenso.className}>{headerTermoConcenso.value}</a>
+      <div className="navbar" style={{backgroundColor: '#08b5c9'}}>
+          <div className="flex-1 px-2 lg:flex-none">
+            <a className="text-lg font-bold">daisyUI</a>
+          </div> 
+          <div className="flex justify-end flex-1 px-2">
+            <div className="flex items-stretch">
+           
+            <Link 
+              to={headerHome.href} 
+              rel={headerHome.rel} 
+              className="btn btn-ghost rounded-btn"
+              >
+                {headerHome.value}
+             </Link>
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn">Opçoes</div>
+                <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                  <li>
+                    <Link 
+                      to={headerEscolherExercicios.href} 
+                      rel={headerEscolherExercicios.rel}
+                    >
+                      {headerEscolherExercicios.value}
+                    </Link>
+                  </li> 
+                  <li>
+                  <Link 
+                    to={headerTermoConcenso.href}
+                    rel={headerTermoConcenso.rel} 
+                    >
+                    {headerTermoConcenso.value}
+                  </Link>
+                  </li>
+                  <li>
+                  <Link 
+                    to={headerLogin.href} 
+                    rel={headerLogin.rel} 
+                  >
+                    {headerLogin.value}
+                  </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
         </div>
       </div>
-    </div>
+  
   );
 }

@@ -101,14 +101,13 @@
 
 //Formularios de Login componente formulario seria divPai
 @mixin form {
+    background-color: #fff; 
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
+    padding: 40px;
+    border-radius: 7px;
     display: flex;
     flex-direction: column;
-    border-radius: 7px;
-    padding: 40px;
     gap: 5px;
-    background-color: #fff; 
-    height: auto;
-    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 @mixin inputText {
@@ -121,3 +120,10 @@
     transition: all linear 160ms;
     outline: none;
 }
+
+//RESPONSIVDADE
+
+@mixin larguraResponsiva {
+    width: 100%; /* For smaller screens */
+  }
+  

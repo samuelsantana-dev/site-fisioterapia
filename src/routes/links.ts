@@ -9,7 +9,7 @@ interface Link {
 }
 
 const routesLink = (): Link => ({
-    className: 'btn_outline',
+    className: '',
     // target: '_blank',
     rel: 'noreferrer',
     href: '',

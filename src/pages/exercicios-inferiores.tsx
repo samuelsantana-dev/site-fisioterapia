@@ -1,7 +1,6 @@
 import { DivExercicios } from '../components/divExercicio';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
-import '../style/exerciciosSuperioresInferiores.scss';
 
 const exercicioInferiores = [
     { id: "exercicioUm", name: "Exercicio 1", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 1" },
@@ -19,13 +18,15 @@ export const ExerciciosInferiores = () => {
     return(
       <>
       <Header />
-        <section className="exerciciosInferiores">
+        <section className="exerciciosInferiores" style={{backgroundColor: '#32c3d36b'}}>
         
           <div>
             <h1>Exercicios Inferiores</h1>
           </div>
-
-          <DivExercicios exercicios={exercicioInferiores} />
+          <div className='d-flex'>
+             <DivExercicios exercicios={exercicioInferiores} />
+          </div>
+         
       </section>
       <Footer />
       </>

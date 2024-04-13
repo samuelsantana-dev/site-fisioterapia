@@ -1,8 +1,4 @@
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import { Link as ReactRouterLink } from 'react-router-dom';
-import Row from 'react-bootstrap/Row';
-import '../style/login.scss';
+import { Link } from 'react-router-dom';
 import { Header } from '../components/header';
 import { Footer } from '../components/footer';
 
@@ -10,42 +6,40 @@ export function LoginForm() {
   return (
     <>
     <Header />
-    <div className='page'>
-      <Form className='formLogin'>
-          <h1>Login</h1>
-          <p>Digite os seus dados de acesso no campo abaixo.</p>
-            
-        <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-          <Form.Label column sm="2">
-            Email
-          </Form.Label>
-          <Col sm="10">
-            <Form.Control plaintext type="email" placeholder="email@example.com" />
-          </Col>
-        </Form.Group>
-
-        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-          <Form.Label column sm="2">
-            Password
-          </Form.Label>
-          <Col sm="10">
-            <Form.Control type="password" placeholder="Password" />
-          </Col>
-        </Form.Group>
-
-        <div className='btns'>
-          <ReactRouterLink to="/login">
-            <input type="submit" value="Acessar" className="btn" />
-          </ReactRouterLink>
-        
-          <ReactRouterLink to="/cadastro">
-            <input type="submit" value="Cadastre-se" className="btn" />
-          </ReactRouterLink>
-        </div>
-      </Form>
+    <div className="hero min-h-screen bg-base-200" style={{backgroundColor: '#32c3d36b'}}>
+  <div className="hero-content flex-col lg:flex-row-reverse">
+    <div className="text-center lg:text-left">
+      <h1 className="text-5xl font-bold">Login now!</h1>
+      <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
     </div>
+    <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <form className="card-body">
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Email</span>
+          </label>
+          <input type="email" placeholder="email" className="input input-bordered" required />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Password</span>
+          </label>
+          <input type="password" placeholder="password" className="input input-bordered" required />
+          <label className="label">
+            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+          </label>
+        </div>
+        <div className="form-control mt-6">
+           <Link to="/login" className="btn btn-primary">Login</Link>
+        </div>
+        <div className="form-control mt-6">
+           <Link to="/cadastro" className="btn btn-primary">Cadastre-se</Link>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
     <Footer />
     </>
   );
 }
-

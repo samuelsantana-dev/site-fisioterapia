@@ -1,7 +1,6 @@
 import { DivExercicios } from '../components/divExercicio';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
-import '../style/exerciciosSuperioresInferiores.scss';
 
 const exercicioSuperiores = [
     { id: "exercicioUm", name: "Exercicio 1", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 1" },
@@ -18,7 +17,7 @@ export const ExerciciosSuperiores = () => {
     return(
       <>
       <Header />
-        <section className="exerciciosInferiores">
+        <section className="exerciciosInferiores" style={{backgroundColor: '#32c3d36b'}}>
         
           <div>
             <h1>Exercicios Superiores</h1>

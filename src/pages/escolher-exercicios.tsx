@@ -1,51 +1,48 @@
-import '../../src/style/escolherExercicio.scss'
-import { Footer } from '../components/footer'
-import { Header } from '../components/header'
-import { exerciciosInferiores, exerciciosSuperiores } from '../routes/links'
+import { Link } from 'react-router-dom';
+import { Footer } from '../components/footer';
+import { Header } from '../components/header';
+import { exerciciosInferiores, exerciciosSuperiores } from '../routes/links';
 
-export function EscolherExercicios(){
-    return(
-        <>    
+export function EscolherExercicios() {
+    return (
+      <>    
         <Header />
-           <section 
-       id="SobreMim" 
-       className='sectionSobreMIm'
-       >
-            <h1>Especializados para Idosos</h1>
-
-            <div className='conteudo'>
-                <div className='DivSobreMimImagem'>
-                    <img
-                     src="src/assets/fisioterapiaEscolherExercicios.png" alt="" 
-                     />
-                </div>
-                
-                <div className='divTextoSobreMim'>
-                    <p>
-                     Especializados no atendimento a idosos, oferecemos uma variedade de exercícios direcionados por especialistas. Escolha abaixo entre exercícios para membros inferiores ou superiores e comece a cuidar da sua saúde hoje mesmo.
-                    </p>
-                    <div className='divBotoes'>
-                       <a 
-                            href={exerciciosSuperiores.href} 
-                            rel={exerciciosSuperiores.rel}  
-                            className={exerciciosSuperiores.className}
-                        >
-                            {exerciciosSuperiores.value}
-                        </a>
-                        <a 
-                            href={exerciciosInferiores.href} 
-                            rel={exerciciosInferiores.rel}  
-                            className={exerciciosInferiores.className}
-                        >
-                            {exerciciosInferiores.value}
-                        </a>
-                    </div>
-                </div>
+        <div className="flex flex-col items-center justify-center min-h-screen w-full lg:flex-row bg-green-200">
+          <div className="flex-grow grid h-32 card place-items-center w-full lg:w-1/2">
+            <img
+              src="src/assets/fisioterapiaEscolherExercicios.png"
+              alt="Idosa dando um joia"
+              className='w-full h-auto max-w-full'
+            />
+          </div> 
+          <div className="flex-grow grid h-auto card place-items-center w-full lg:w-1/2">
+            <div className="text-center px-4 py-8">
+              <p className="text-lg">
+                Especializados no atendimento a idosos, oferecemos uma variedade de exercícios direcionados por especialistas. Escolha abaixo entre exercícios para membros inferiores ou superiores e comece a cuidar da sua saúde hoje mesmo.
+              </p>
+              <div className="flex justify-center mt-6">
+                <Link
+                  to={exerciciosSuperiores.href} 
+                  rel={exerciciosSuperiores.rel}  
+                  className="btn btn-active mr-4"
+                  style={{backgroundColor: '#1a717db4'}}
+                >
+                  {exerciciosSuperiores.value}
+                </Link>
+                <Link 
+                  to={exerciciosInferiores.href} 
+                  rel={exerciciosInferiores.rel}  
+                  className="btn btn-active"
+                  style={{backgroundColor: '#1a717db4'}}
+                >
+                  {exerciciosInferiores.value}
+                </Link>
+              </div>
             </div>
-
-       </section>
-       <Footer />
-       </>
-
-    )
-}   
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+  
