@@ -8,7 +8,7 @@ const Button = ({ isLoading, children, variant, ...props}: any) => {
       case "success":
         return 'btn-success'
       default:
-        return 'btn-primary'
+        return 'bg-backgroundButton'
     }
   }
   return (

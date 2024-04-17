@@ -10,26 +10,20 @@ const exercicioSuperiores = [
     { id: "exercicioCinco", name: "Exercicio 5", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 5" },
     { id: "exercicioSeis", name: "Exercicio 6", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 6" },
     { id: "exercicioSete", name: "Exercicio 7", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 7" },
-    { id: "exercicioOito", name: "Exercicio 8", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 7" }
+    { id: "exercicioOito", name: "Exercicio 8", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 8" },
+    { id: "exercicioOito", name: "Exercicio 8", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 9" }
 ];
 
 export const ExerciciosSuperiores = () => {
-    return(
-      <>
+  return (
+    <>
       <Header />
-        <section className="exerciciosInferiores" style={{backgroundColor: '#32c3d36b'}}>
-        
-          <div>
-            <h1>Exercicios Superiores</h1>
-          </div>
-
+      <section className="bg-backgroundMain flex items-center justify-center">
+        <div className="flex justify-center w-full">
           <DivExercicios exercicios={exercicioSuperiores} />
-
-          <div>
-            <a href="/">Voltar a pagina inicial</a>
-          </div>
+        </div>
       </section>
       <Footer />
-      </>
-    )
-}
+    </>
+  );
+};

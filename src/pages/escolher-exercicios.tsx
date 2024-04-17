@@ -7,8 +7,8 @@ export function EscolherExercicios() {
     return (
       <>    
         <Header />
-        <div className="flex flex-col items-center justify-center min-h-screen w-full lg:flex-row bg-green-200">
-          <div className="flex-grow grid h-32 card place-items-center w-full lg:w-1/2">
+        <div className="flex flex-col items-center justify-center min-h-screen w-full lg:flex-row bg-backgroundMain">
+          <div className="flex-grow grid card place-items-center w-full lg:w-1/2">
             <img
               src="src/assets/fisioterapiaEscolherExercicios.png"
               alt="Idosa dando um joia"
@@ -24,16 +24,16 @@ export function EscolherExercicios() {
                 <Link
                   to={exerciciosSuperiores.href} 
                   rel={exerciciosSuperiores.rel}  
-                  className="btn btn-active mr-4"
-                  style={{backgroundColor: '#1a717db4'}}
+                  className="btn btn-active mr-4 bg-backgroundButton"
+                
                 >
                   {exerciciosSuperiores.value}
                 </Link>
                 <Link 
                   to={exerciciosInferiores.href} 
                   rel={exerciciosInferiores.rel}  
-                  className="btn btn-active"
-                  style={{backgroundColor: '#1a717db4'}}
+                  className="btn btn-active bg-backgroundButton"
+                  
                 >
                   {exerciciosInferiores.value}
                 </Link>

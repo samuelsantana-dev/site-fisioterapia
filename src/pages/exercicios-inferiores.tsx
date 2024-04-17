@@ -18,15 +18,10 @@ export const ExerciciosInferiores = () => {
     return(
       <>
       <Header />
-        <section className="exerciciosInferiores" style={{backgroundColor: '#32c3d36b'}}>
-        
+        <section className="mx-auto bg-backgroundMain flex items-center justify-center">
           <div>
-            <h1>Exercicios Inferiores</h1>
-          </div>
-          <div className='d-flex'>
              <DivExercicios exercicios={exercicioInferiores} />
           </div>
-         
       </section>
       <Footer />
       </>

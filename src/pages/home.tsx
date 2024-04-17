@@ -11,10 +11,11 @@ export function Home(){
       <div className="hero-content flex-col lg:flex-row-reverse">
         <img src='src\assets\fotoIntrodução.png' className="max-w-sm rounded-lg shadow-2xl" />
         <div>
-          <h1 className="text-5xl font-bold">Box Office News!</h1>
-          <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-          <Link to="/login" className="btn btn-primary">login</Link>
-        </div>
+  <h1 className="text-5xl font-bold">Bem-vindo a Fisioterapia!</h1>
+  <p className="py-6">Seja bem-vindo a Fisioterapia, sua plataforma de exercícios de fisioterapia. Aqui você encontrará uma variedade de exercícios projetados para ajudá-lo(a) a melhorar sua saúde e bem-estar. Comece a praticar hoje e sinta a diferença!</p>
+  <Link to="/login" className="btn btn-primary">Login</Link>
+</div>
+
       </div>
     </div>
         <Footer />
