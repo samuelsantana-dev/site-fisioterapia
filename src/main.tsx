@@ -5,7 +5,6 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Home } from './pages/home.tsx';
 import {LoginForm} from './pages/login.tsx';
-import { ToastContainer } from 'react-bootstrap';
 import { ExerciciosInferiores } from './pages/exercicios-inferiores.tsx';
 import { ExerciciosSuperiores } from './pages/exercicios-superiores.tsx';
 import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
@@ -50,6 +49,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
   <RouterProvider router={router} />
-  <ToastContainer />
 </React.StrictMode>,
 )

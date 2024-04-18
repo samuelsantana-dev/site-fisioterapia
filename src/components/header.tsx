@@ -4,7 +4,7 @@ import { headerEscolherExercicios, headerHome, headerLogin, headerTermoConcenso 
 export function Header() {
 
   return (
-      <div className="navbar" style={{backgroundColor: '#08b5c9'}}>
+      <div className="navbar bg-backgroundHeaderFooter">
           <div className="flex-1 px-2 lg:flex-none">
             <a className="text-lg font-bold">daisyUI</a>
           </div> 
