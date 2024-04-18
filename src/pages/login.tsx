@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Header } from '../components/header';
 import { Footer } from '../components/footer';
+import buttonPadrao from '../components/button/button-padrao';
 
 export function LoginForm() {
   return (
@@ -33,7 +34,7 @@ export function LoginForm() {
             <Link to="/login" className="btn bg-backgroundButton">Login</Link>
           </div>
           <div className="form-control mt-6">
-            <Link to="/cadastro" className="btn bg-backgroundButton">Cadastre-se</Link>
+            <Link to="/cadastro" {...buttonPadrao}>Cadastre-se</Link>
           </div>
         </form>
       </div>

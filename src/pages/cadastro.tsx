@@ -3,12 +3,13 @@ import { Footer } from '../components/footer';
 import cardProps from "../sharedProps/card"
 import inputProps from "../sharedProps/input"
 import Button from "../components/button"
+import buttonPadrao from '../components/button/button-padrao';
 
 export function CadastroForm() {
   return (
     <>
       <Header />
-      <div className="flex justify-center flex-col lg:flex-row" style={{ backgroundColor: '#32c3d36b' }}>
+      <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
         <form
           className="flex items-start justify-center lg:w-[49%] my-8"
           onSubmit={(e) => {
@@ -131,6 +132,7 @@ export function CadastroForm() {
               <div className="form-control mt-6">
                 <Button
                   type="submit"
+                  {...buttonPadrao}
                 >
                   Cadastrar
                 </Button>

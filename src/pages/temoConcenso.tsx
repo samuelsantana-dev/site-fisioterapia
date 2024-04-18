@@ -4,6 +4,7 @@ import { Header } from '../components/header';
 import { Footer } from '../components/footer';
 import Button from '../components/button';
 import { Link } from 'react-router-dom';
+import buttonPadrao from '../components/button/button-padrao';
 
 export function TermoConcenso() {
   return (
@@ -28,7 +29,7 @@ export function TermoConcenso() {
                 <input type="password" placeholder="Eu nome completo aceito o termo" className="input input-bordered" required />
               </div>
               <div className="form-control mt-6">
-                 <Link to="/login" className="btn btn-primary">Aceitar termo</Link>
+                 <Link to="/login"{...buttonPadrao}>Aceitar termo</Link>
               </div>
             </form>
           </div>
