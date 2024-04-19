@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 import { exerciciosInferiores, exerciciosSuperiores } from '../routes/links';
+import ImagemExercicio from '../assets/fisioterapiaEscolherExercicios.png'
 import buttonPadrao from '../components/button/button-padrao';
 
 export function EscolherExercicios() {
@@ -34,7 +35,7 @@ export function EscolherExercicios() {
           </div>
           <div className="flex-grow m-4 grid card place-items-center w-full lg:w-1/2">
             <img
-              src="src/assets/fisioterapiaEscolherExercicios.png"
+              src={ImagemExercicio}
               alt="Idosa dando um joia"
               className='w-full h-auto md:max-w-xs lg:max-w-full'
             />
