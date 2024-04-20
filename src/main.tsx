@@ -10,6 +10,7 @@ import { ExerciciosSuperiores } from './pages/exercicios-superiores.tsx';
 import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
 import { CadastroForm } from './pages/cadastro.tsx';
 import { TermoConcenso } from './pages/temoConcenso.tsx';
+import TableUsuarios from './pages/relatorios-usuario.tsx';
 // import Root from './routes/routes.tsx';
  
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/escolher-exercicios",
     element: <EscolherExercicios />,
+  },
+  {
+    path: "/relatorios-usuario",
+    element: <TableUsuarios />,
   }
  
 ]);

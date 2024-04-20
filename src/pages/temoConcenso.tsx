@@ -9,7 +9,7 @@ export function TermoConcenso() {
   return (
     <>
       <Header />
-      <div className="hero min-h-screen bg-base-200" style={{backgroundColor: '#32c3d36b'}}>
+      <div className="hero min-h-screen bg-backgroundMain">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">TERMO DE CONSENSO</h1>

@@ -4,7 +4,8 @@ import cardProps from "../sharedProps/card"
 import inputProps from "../sharedProps/input"
 import Button from "../components/button"
 import buttonPadrao from '../components/button/button-padrao';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { cadastroUsuario } from '../api/api';
 
 export function CadastroForm() {
 
@@ -14,40 +15,22 @@ export function CadastroForm() {
     "email": "",
     "phone": "",
     "gender": "",
-    "admin": false,
+    "admin": false, //vefiricar no banco se é admin
     "profile_pic": "",
     "diagnosis": "",
     "exercise_list": [
       ""
-    ],
-    "signed_eula": false,
+    ], //lista de exercicios
+    "signed_eula": false, //verificar assinatura
     "password": ""
   });
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  useEffect(() => {
+    cadastroUsuario()
+      .then((data) => console.log(data))
+      .catch((error) => console.error('nao conectou', error));
+  })
 
-    try {
-      const response = await fetch('https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/users/', 
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      
-      if (!response.ok) {
-        throw new Error('Erro ao criar usuário');
-      }
-
-      console.log('Usuário criado com sucesso:', await response.json());
-      alert('Usuário criado com sucesso');
-    } catch (error) {
-      console.error('Erro ao criar usuário:', error);
-      // Lidar com erros aqui
-    }
-  };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
