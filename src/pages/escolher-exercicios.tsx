@@ -2,20 +2,20 @@ import { Link } from 'react-router-dom';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 import { exerciciosInferiores, exerciciosSuperiores } from '../routes/links';
-import ImagemExercicio from '../assets/fisioterapiaEscolherExercicios.png'
+import ImagemExercicio from '../assets/fisioterapiaEscolherExercicios.png';
 import buttonPadrao from '../components/button/button-padrao';
 
 export function EscolherExercicios() {
-    return (
-      <>    
-        <Header />
+  return (
+    <>    
+    <Header />
         <div className="flex flex-col items-center justify-center min-h-screen w-full lg:flex-row bg-backgroundMain">
-        <div className="flex-grow grid h-auto card place-items-center w-full lg:w-1/2">
-            <div className="text-center px-4 py-8">
+          <div className="card place-items-center w-full lg:w-1/2">
+            <div className="text-center px-4 py-8 md:m-1">
               <p className="text-lg">
                 Especializados no atendimento a idosos, oferecemos uma variedade de exercícios direcionados por especialistas. Escolha abaixo entre exercícios para membros inferiores ou superiores e comece a cuidar da sua saúde hoje mesmo.
               </p>
-              <div className="flex justify-center mt-6">
+              <div className="m-1 flex justify-center">
                 <Link
                   to={exerciciosSuperiores.href} 
                   rel={exerciciosSuperiores.rel}  
@@ -33,16 +33,16 @@ export function EscolherExercicios() {
               </div>
             </div>
           </div>
-          <div className="flex-grow m-4 grid card place-items-center w-full lg:w-1/2">
+          
+          <div className="flex-grow card place-items-center w-full lg:w-1/2">
             <img
               src={ImagemExercicio}
               alt="Idosa dando um joia"
-              className='w-full h-auto md:max-w-xs lg:max-w-full'
+              className='h-auto w-96 rounded-lg card lg:w-full'
             />
           </div>
         </div>
-        <Footer />
-      </>
-    );
-  }
-  
+      <Footer />
+    </>
+  );
+}

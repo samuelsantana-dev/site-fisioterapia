@@ -13,7 +13,7 @@ interface DivExerciciosProps {
 
 export const DivExercicios: React.FC<DivExerciciosProps> = ({ exercicios }) => {
   return (
-    <div className="p-4 flex flex-wrap w-full">
+    <div className="p-4 flex flex-wrap items-center justify-center w-full">
       {exercicios.map((exercicio) => (
         <div className="card m-2 bg-base-100 shadow-xl w-full sm:w-1/2 md:w-1/3 lg:w-1/4" id={exercicio.id.toString()} key={exercicio.id}>
           <div className="overflow-hidden shadow-xl">

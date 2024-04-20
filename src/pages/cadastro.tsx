@@ -11,7 +11,7 @@ export function CadastroForm() {
       <Header />
       <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
         <form
-          className="flex items-start justify-center lg:w-[49%] my-8"
+          className="m-1 flex items-start justify-center lg:w-[49%] my-8"
           onSubmit={(e) => {
             e.preventDefault()
           }}

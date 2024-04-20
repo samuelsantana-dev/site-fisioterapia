@@ -11,6 +11,7 @@ const exercicioInferiores = [
     { id: "exercicioSeis", name: "Exercicio 6", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 6" },
     { id: "exercicioSete", name: "Exercicio 7", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 7" },
     { id: "exercicioOito", name: "Exercicio 8", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 8" },
+    { id: "exercicioOito", name: "Exercicio 9", videoUrl: "https://www.youtube.com/embed/6PVDpWX4fnY?si=-z68A9vD7AfMPo51", text: "Descrição do Exercício 9" },
 ];
 
 
