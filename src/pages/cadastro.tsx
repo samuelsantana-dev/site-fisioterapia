@@ -4,17 +4,64 @@ import cardProps from "../sharedProps/card"
 import inputProps from "../sharedProps/input"
 import Button from "../components/button"
 import buttonPadrao from '../components/button/button-padrao';
+import { useState } from 'react';
 
 export function CadastroForm() {
+
+  const [formData, setFormData] = useState({
+    "name": "",
+    "birth": "",
+    "email": "",
+    "phone": "",
+    "gender": "",
+    "admin": false,
+    "profile_pic": "",
+    "diagnosis": "",
+    "exercise_list": [
+      ""
+    ],
+    "signed_eula": false,
+    "password": ""
+  });
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/users/', 
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Erro ao criar usuário');
+      }
+
+      console.log('Usuário criado com sucesso:', await response.json());
+      alert('Usuário criado com sucesso');
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error);
+      // Lidar com erros aqui
+    }
+  };
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+
   return (
     <>
       <Header />
       <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
         <form
           className="m-1 flex items-start justify-center lg:w-[49%] my-8"
-          onSubmit={(e) => {
-            e.preventDefault()
-          }}
+          onSubmit={handleSubmit}
         >
           <div
             {...cardProps}
@@ -30,6 +77,8 @@ export function CadastroForm() {
                   name="name"
                   maxLength={80}
                   placeholder="Digite seu nome"
+                  value={formData.name}
+                  onChange={handleChange}
                   {...inputProps}
                 />
               </div>
@@ -39,7 +88,9 @@ export function CadastroForm() {
                 </label>
                 <input
                   type="date"
-                  name="birthdate"
+                  name="birth"
+                  value={formData.birth}
+                  onChange={handleChange}
                   {...inputProps}
                 />
               </div>
@@ -52,6 +103,8 @@ export function CadastroForm() {
                   name="email"
                   maxLength={200}
                   placeholder="Digite seu e-mail"
+                  value={formData.email}
+                  onChange={handleChange}
                   {...inputProps}
                 />
               </div>
@@ -63,9 +116,11 @@ export function CadastroForm() {
                   type="text"
                   maxLength={11}
                   minLength={11}
-                  name="cpf"
+                  name="phone"
                   pattern="\d*"
-                  placeholder="Digite seu CPF"
+                  placeholder="Digite seu Telefone"
+                  value={formData.phone}
+                  onChange={handleChange}
                   {...inputProps}
                 />
               </div>
@@ -78,6 +133,8 @@ export function CadastroForm() {
                   maxLength={80}
                   name="gender"
                   placeholder="Digite seu sexo"
+                  value={formData.gender}
+                  onChange={handleChange}
                   {...inputProps}
                 />
               </div>
@@ -88,8 +145,10 @@ export function CadastroForm() {
                 <input
                   type="text"
                   maxLength={200}
-                  name="profile_image"
+                  name="profile_pic"
                   placeholder="Insira o URL da imagem de perfil"
+                  value={formData.profile_pic}
+                  onChange={handleChange}
                   {...inputProps}
                 />
               </div>
@@ -103,18 +162,8 @@ export function CadastroForm() {
                   name="diagnosis"
                   placeholder="Digite seu diagnóstico"
                   {...inputProps}
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Endereço *</span>
-                </label>
-                <input
-                  type="text"
-                  maxLength={200}
-                  name="address"
-                  placeholder="Digite seu endereço"
-                  {...inputProps}
+                  value={formData.diagnosis}
+                  onChange={handleChange}
                 />
               </div>
               <div className="form-control">
@@ -126,6 +175,8 @@ export function CadastroForm() {
                   maxLength={200}
                   name="password"
                   placeholder="Digite sua senha"
+                  value={formData.password}
+                  onChange={handleChange}
                   {...inputProps}
                 />
               </div>
