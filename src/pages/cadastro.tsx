@@ -38,6 +38,12 @@ export function CadastroForm() {
   };
 
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
+
   return (
     <>
       <Header />
