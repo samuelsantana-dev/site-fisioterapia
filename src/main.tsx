@@ -10,7 +10,8 @@ import { ExerciciosSuperiores } from './pages/exercicios-superiores.tsx';
 import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
 import { CadastroForm } from './pages/cadastro.tsx';
 import { TermoConcenso } from './pages/temoConcenso.tsx';
-import TableUsuarios from './pages/relatorios-usuario.tsx';
+import TableDadosUsuarios from './pages/relatorios-usuarios.tsx';
+import TableExercicios from './pages/relatorios-exercicios.tsx';
 // import Root from './routes/routes.tsx';
  
 
@@ -45,7 +46,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/relatorios-usuario",
-    element: <TableUsuarios />,
+    element: <TableDadosUsuarios /> ,
+  },
+  {
+    path: "/relatorios-exercicios",
+    element: <TableExercicios />,
   }
  
 ]);

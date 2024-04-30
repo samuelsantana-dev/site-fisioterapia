@@ -4,45 +4,50 @@ import cardProps from "../sharedProps/card"
 import inputProps from "../sharedProps/input"
 import Button from "../components/button"
 import buttonPadrao from '../components/button/button-padrao';
-import { useEffect, useState } from 'react';
-import { cadastroUsuario } from '../api/api';
+import { useState } from 'react';
+// import { cadastroUsuario } from '../api/api';
+import User from '../api/interface';
+import axios from 'axios';
 
 export function CadastroForm() {
 
-  const [formData, setFormData] = useState({
-    "name": "",
-    "birth": "",
-    "email": "",
-    "phone": "",
-    "gender": "",
-    "admin": false, //vefiricar no banco se é admin
-    "profile_pic": "",
-    "diagnosis": "",
-    "exercise_list": [
-      ""
-    ], //lista de exercicios
-    "signed_eula": false, //verificar assinatura
-    "password": ""
+  const [formData, setFormData] = useState<User>({
+    id: '', 
+    name: '', 
+    birth: '', 
+    email: '', 
+    phone: '', 
+    gender: '', 
+    admin: false,
+    diagnosis: '', 
+    exercise_list: [], 
+    signed_eula: false,
+    password: '' 
   });
-
-  useEffect(() => {
-    cadastroUsuario()
-      .then((data) => console.log(data))
-      .catch((error) => console.error('nao conectou', error));
-  })
-
-
+  
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await axios.post(
+        'https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/users/',
+        JSON.stringify(formData),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+      );
+      console.log('Resposta do servidor:', response.data);
+      console.log(JSON.stringify(formData));
+    } catch (error) {
+      console.error('Erro ao enviar dados:', error);
+    }
   };
-
 
   return (
     <>
@@ -50,7 +55,7 @@ export function CadastroForm() {
       <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
         <form
           className="m-1 flex items-start justify-center lg:w-[49%] my-8"
-          onSubmit={handleSubmit}
+          onSubmit={async (e) => await handleSubmit(e)}
         >
           <div
             {...cardProps}
@@ -63,9 +68,8 @@ export function CadastroForm() {
                 </label>
                 <input
                   type="text"
+                  placeholder='Digite seu nome'
                   name="name"
-                  maxLength={80}
-                  placeholder="Digite seu nome"
                   value={formData.name}
                   onChange={handleChange}
                   {...inputProps}
@@ -76,7 +80,8 @@ export function CadastroForm() {
                   <span className="label-text">Data de Nascimento *</span>
                 </label>
                 <input
-                  type="date"
+                  type="text"
+                  placeholder='ano-mes-dia ex: 2024-15-12'
                   name="birth"
                   value={formData.birth}
                   onChange={handleChange}
@@ -92,8 +97,8 @@ export function CadastroForm() {
                   name="email"
                   maxLength={200}
                   placeholder="Digite seu e-mail"
-                  value={formData.email}
                   onChange={handleChange}
+                  value={formData.email}
                   {...inputProps}
                 />
               </div>
@@ -106,10 +111,9 @@ export function CadastroForm() {
                   maxLength={11}
                   minLength={11}
                   name="phone"
-                  pattern="\d*"
                   placeholder="Digite seu Telefone"
-                  value={formData.phone}
                   onChange={handleChange}
+                  value={formData.phone}
                   {...inputProps}
                 />
               </div>
@@ -117,29 +121,17 @@ export function CadastroForm() {
                 <label className="label">
                   <span className="label-text">Sexo *</span>
                 </label>
-                <input
-                  type="text"
-                  maxLength={80}
+                <select
                   name="gender"
-                  placeholder="Digite seu sexo"
                   value={formData.gender}
                   onChange={handleChange}
                   {...inputProps}
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Imagem de perfil *</span>
-                </label>
-                <input
-                  type="text"
-                  maxLength={200}
-                  name="profile_pic"
-                  placeholder="Insira o URL da imagem de perfil"
-                  value={formData.profile_pic}
-                  onChange={handleChange}
-                  {...inputProps}
-                />
+                >
+                  <option value="">Selecione seu sexo</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="feminino">Feminino</option>
+                  <option value="outro">Outro</option>
+                </select>
               </div>
               <div className="form-control">
                 <label className="label">
@@ -150,9 +142,9 @@ export function CadastroForm() {
                   maxLength={80}
                   name="diagnosis"
                   placeholder="Digite seu diagnóstico"
-                  {...inputProps}
                   value={formData.diagnosis}
                   onChange={handleChange}
+                  {...inputProps}
                 />
               </div>
               <div className="form-control">
@@ -164,8 +156,8 @@ export function CadastroForm() {
                   maxLength={200}
                   name="password"
                   placeholder="Digite sua senha"
-                  value={formData.password}
                   onChange={handleChange}
+                  value={formData.password}
                   {...inputProps}
                 />
               </div>
