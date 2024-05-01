@@ -9,7 +9,6 @@ export async function listarTodosUsuarios() {
         "x-user-token": "ae572c421ee598d434bc8e7c"
       }
     });
-    // console.log(response.data.documents);
     return response.data.documents;
   } catch (error) {
     console.error("Erro ao listar usuários:", error);

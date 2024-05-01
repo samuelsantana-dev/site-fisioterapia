@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { headerEscolherExercicios, headerHome, headerLogin, headerTermoConcenso } from '../routes/links';
 
 export function Header() {
-
   return (
       <div className="navbar bg-backgroundHeaderFooter">
           <div className="flex-1 px-2 lg:flex-none">
@@ -37,14 +36,25 @@ export function Header() {
                     {headerTermoConcenso.value}
                   </Link>
                   </li>
-                  <li>
-                  <Link 
-                    to={headerLogin.href} 
-                    rel={headerLogin.rel} 
-                  >
-                    {headerLogin.value}
-                  </Link>
-                  </li>
+                 
+                    <li>
+                      <Link 
+                        to={headerLogin.href} 
+                        rel={headerLogin.rel} 
+                      >
+                        {headerLogin.value}
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link 
+                        to='/relatorios-usuario'
+                        rel={headerLogin.rel} 
+                      >
+                        Relatorio de Usuários
+                      </Link>
+                    </li>
+                
                 </ul>
               </div>
             </div>
