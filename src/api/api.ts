@@ -55,15 +55,34 @@ export async function cadastroUsuario(user: any) {
   }
 }
 
-// export async function cadastroUsuario() {
-//   try {
-//     const response = await axios.post("https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/users/ ", {
-//       headers: {
-//         "x-user-token": "ae572c421ee598d434bc8e7c"
-//       }
-//     });
-//     return response;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+export async function deletarUsuario(user_id: string) {
+  try {
+    const response = await axios.delete(`${baseUrl}/api/v1/users/${user_id}`, 
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        "x-user-token": `${user_id}`
+      },
+    }
+    );  
+    console.log(response.data)
+  } catch (error) {
+    console.error("Erro ao deletar o usuaário:", error);
+  }
+}
+
+export async function atualizarUsuario(user_id: string){
+  try {
+    const response = await axios.put(`${baseUrl}/api/v1/users/${user_id}`, 
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        "x-user-token": `${user_id}`
+      },
+    }
+    );  
+    console.log(response.data)
+  } catch (error) {
+    console.error("Erro ao atualizar o usuaário:", error);
+  }
+}

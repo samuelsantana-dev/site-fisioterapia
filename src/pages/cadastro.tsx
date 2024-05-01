@@ -5,12 +5,10 @@ import inputProps from "../sharedProps/input"
 import Button from "../components/button"
 import buttonPadrao from '../components/button/button-padrao';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { cadastroUsuario } from '../api/api';
 import User from '../api/interface';
 import { cadastroUsuario } from '../api/api';
-
-
 
 export function CadastroForm() {
   const [formData, setFormData] = useState<User>({

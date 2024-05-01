@@ -1,5 +1,6 @@
 interface User {
     id?: string;
+    user_id?: string;
     name: string;
     birth: string;
     email: string;

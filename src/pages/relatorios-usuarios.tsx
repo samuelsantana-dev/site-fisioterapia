@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TitleCard from "../components/titlecard";
 import SearchBar from "../components/seachbar";
-import { listarTodosUsuarios } from "../api/api";
+import { listarTodosUsuarios, deletarUsuario, atualizarUsuario } from "../api/api";
 import User from "../api/interface";
 import { Header } from "../components/header";
 
@@ -50,10 +50,30 @@ function TopSideButtons({ removeFilter, applySearch }: any) {
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
 
+  const removeUser = (user_id: string) => {
+    deletarUsuario(user_id)
+      .then(() => {
+        console.log("deletado");
+        setUsers(users.filter(user => user.user_id !== user_id));
+      })
+      .catch((error) => console.error('Erro ao deletar o usuário:', error));
+  };
+
+  const atualizarUser = (user_id: string) => {
+    atualizarUsuario(user_id)
+    .then(() => {
+      console.log("Atualizado");
+      setUsers(users.filter(user => user.user_id !== user_id));
+    })
+    .catch((error) => console.error('Erro ao deletar o usuário:', error));
+  }
+
   useEffect(() => {
     listarTodosUsuarios()
       .then((data) => setUsers(data))
       .catch((error) => console.error('Erro ao obter usuários:', error));
+
+   
   }, []);
 
   const removeFilter = () => setUsers(users);
@@ -115,10 +135,18 @@ function TableDadosUsuarios() {
                 <td>{item.email}</td>
                 <td>{item.phone}</td>
                 <td>{item.gender}</td>
-                <td>{item.admin}</td>
+                <td>{item.admin ? "admin" : "user"}</td>
                 <td>{item.diagnosis}</td>
                 <td>{item.exercise_list}</td>
                 <td>{item.signed_eula ? "Assinado" : "Não"}</td>
+                <div>
+                  <button className="btn btn-square" onClick={() => item.user_id && removeUser(item.user_id)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                  </button>
+                  <button className="btn btn-square btn-outline" onClick={() => item.user_id && atualizarUser(item.user_id)} name="edit">
+                   atualizar
+                  </button>
+                </div>
               </tr>
             ))}
           </tbody>
