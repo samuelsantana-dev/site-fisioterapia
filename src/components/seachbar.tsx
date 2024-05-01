@@ -1,7 +1,5 @@
 
 
-import React, { useEffect } from 'react'
-
 function SearchBar({searchText, styleClass, placeholderText, setSearchText}: any) {
 
 const updateSearchInput = (value: any) => {

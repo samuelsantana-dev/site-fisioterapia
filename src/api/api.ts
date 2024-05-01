@@ -35,6 +35,26 @@ export async function loginUser(user: any) {
   }
 }
 
+export async function cadastroUsuario(user: any) {
+  try {
+    const responseCadastro = await axios.post(
+      `${baseUrl}/api/v1/users/`,
+      JSON.stringify(user),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          "x-user-token": "ae572c421ee598d434bc8e7c"
+        },
+      }
+    );
+    console.log(responseCadastro.data);
+    return responseCadastro.data;
+  } catch (error) {
+    console.log('Error message:', error);
+    throw error;
+  }
+}
+
 // export async function cadastroUsuario() {
 //   try {
 //     const response = await axios.post("https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/users/ ", {

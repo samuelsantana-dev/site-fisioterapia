@@ -5,12 +5,14 @@ import inputProps from "../sharedProps/input"
 import Button from "../components/button"
 import buttonPadrao from '../components/button/button-padrao';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 // import { cadastroUsuario } from '../api/api';
 import User from '../api/interface';
-import axios from 'axios';
+import { cadastroUsuario } from '../api/api';
+
+
 
 export function CadastroForm() {
-
   const [formData, setFormData] = useState<User>({
     id: '', 
     name: '', 
@@ -25,28 +27,28 @@ export function CadastroForm() {
     password: '' 
   });
   
+  const navigate = useNavigate();
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleCheckBox = (event: any) => {
+    const { name, checked} = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      admin: true,
+      signed_eula: true,
+      [name]: checked,
+    }));
+  }
+
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        'https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/users/',
-        JSON.stringify(formData),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }
-      );
-      console.log('Resposta do servidor:', response.data);
-      console.log(JSON.stringify(formData));
-    } catch (error) {
-      console.error('Erro ao enviar dados:', error);
-    }
+    e.preventDefault()
+    const data = await cadastroUsuario(formData);
+    console.log("Cadastro bem-sucedido:", data);
+      navigate('/escolher-exercicios');
   };
 
   return (
@@ -55,7 +57,7 @@ export function CadastroForm() {
       <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
         <form
           className="m-1 flex items-start justify-center lg:w-[49%] my-8"
-          onSubmit={async (e) => await handleSubmit(e)}
+          onSubmit={handleSubmit}
         >
           <div
             {...cardProps}
@@ -160,6 +162,30 @@ export function CadastroForm() {
                   value={formData.password}
                   {...inputProps}
                 />
+              </div>
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text">Voce é um administrador ?</span>
+                  <input 
+                    type="checkbox" 
+                    name="admin" 
+                    className="checkbox checkbox-info" 
+                    checked={formData.admin}
+                    onChange={handleCheckBox} 
+                   />
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text">Aceito o Termo</span>
+                  <input 
+                    type="checkbox" 
+                    name="signed_eula" 
+                    className="checkbox checkbox-info" 
+                    checked={formData.signed_eula}
+                    onChange={handleCheckBox} 
+                   />
+                </label>
               </div>
               <div className="form-control mt-6">
                 <Button
