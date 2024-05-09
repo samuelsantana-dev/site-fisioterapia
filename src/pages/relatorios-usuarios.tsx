@@ -1,125 +1,108 @@
 import { useEffect, useState } from "react";
-import TitleCard from "../components/titlecard";
-import SearchBar from "../components/seachbar";
-import { listarTodosUsuarios, deletarUsuario, atualizarUsuario } from "../api/api";
-import User from "../api/interface";
-import { Header } from "../components/header";
-
-function TopSideButtons({ removeFilter, applySearch }: any) {
-  const [filterParam, setFilterParam] = useState("");
-  const [searchText, setSearchText] = useState("");
-
-  const removeAppliedFilter = () => {
-    removeFilter();
-    setFilterParam("");
-    setSearchText("");
-  };
-
-  useEffect(() => {
-    if (searchText === "") {
-      removeAppliedFilter();
-    } else {
-      applySearch(searchText);
-    }
-  }, [searchText]);
-
-  return (
-    <div className="inline-block float-right">
-      <SearchBar
-        searchText={searchText}
-        styleClass="mr-4"
-        setSearchText={setSearchText}
-      />
-      {filterParam !== "" && (
-        <button
-          onClick={removeAppliedFilter}
-          className="btn btn-xs mr-2 btn-active btn-ghost normal-case"
-        >
-          {filterParam}
-        </button>
-      )}
-      <div className="dropdown dropdown-bottom dropdown-end">
-        <label tabIndex={0} className="btn btn-sm btn-outline">
-            Buscar
-        </label>
-      </div>
-    </div>
-  );
-}
+import { listarTodosUsuarios, deletarUsuario, atualizarUsuario, listarUsuariosAdmin } from "../api/api";
+import { User } from "../api/interface";
+import buttonAtualizarDeletar from "../components/button/button-table";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
+  const [valorAtualInput, setValorAtualInput] = useState("");
 
-  const removeUser = (user_id: string) => {
-    deletarUsuario(user_id)
-      .then(() => {
-        console.log("deletado");
-        setUsers(users.filter(user => user.user_id !== user_id));
-      })
-      .catch((error) => console.error('Erro ao deletar o usuário:', error));
+  const valorInput = (e: any) => {
+    setValorAtualInput(e.target.value);
+    const filteredUsers = users.filter(
+      user =>
+        user.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        user.email.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    setUsers(filteredUsers);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersAdmin = await listarUsuariosAdmin();
+        const allUsers = await listarTodosUsuarios();
+  
+        setUsers([...usersAdmin, ...allUsers]);
+      } catch (error) {
+        console.error('Erro ao obter usuários:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+  const removeUser = async (user_id: string) => {
+    try {
+      await deletarUsuario(user_id);
+      console.log("Usuário deletado");
+      setUsers(users.filter(user => user.user_id !== user_id));
+    } catch (error) {
+      console.error("Erro ao deletar o usuário:", error);
+    }
   };
 
   const atualizarUser = (user_id: string) => {
     atualizarUsuario(user_id)
-    .then(() => {
-      console.log("Atualizado");
-      setUsers(users.filter(user => user.user_id !== user_id));
-    })
-    .catch((error) => console.error('Erro ao deletar o usuário:', error));
+      .then(() => {
+        console.log("Usuário atualizado");
+        setUsers(users.map(user => user.user_id === user_id ? { ...user, } : user));
+      })
+      .catch((error) => console.error('Erro ao atualizar o usuário:', error));
   }
 
-  useEffect(() => {
-    listarTodosUsuarios()
-      .then((data) => setUsers(data))
-      .catch((error) => console.error('Erro ao obter usuários:', error));
-
-   
-  }, []);
-
-  const removeFilter = () => setUsers(users);
-
-  const applySearch = (value: string) => {
-    const filtered = users.filter(
-      (t) =>
-        t.name.toLowerCase().includes(value.toLowerCase()) ||
-        t.email.toLowerCase().includes(value.toLowerCase())
-    );
-    setUsers(filtered);
-  };
-
   return (
-    <>
-    <Header />
-
-    <TitleCard
-      className="min-h-screen w-full grid justify-items-center gap-2"
-      title="Relatorio de Usuarios"
-      TopSideButtons={
-        <TopSideButtons
-          applySearch={applySearch}
-          removeFilter={removeFilter}
-        />
-      }
-    >
-      <div className="overflow-x-auto max-w-full m-2">
-        <table className="table table-xs table-pin-rows table-pin-cols bg-white">
+    <div>
+      <div className="w-full m-2 flex justify-between justify-items-center">
+        <div>
+          <h1>Relatório de Usuários</h1>
+        </div>
+        <div>
+          <label className="input input-bordered  m-2 flex items-center gap-2">
+            <input
+              type="text"
+              className="grow"
+              value={valorAtualInput}
+              onChange={valorInput}
+              placeholder="Pesquisar"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="w-4 h-4 opacity-70"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </label>
+        </div>
+      </div>
+      <div className="overflow-x-auto mt-4 h-screen">
+        <table className="table-auto border-collapse">
           <thead>
             <tr>
-              <td>Nome</td>
-              <td>Data de Nascimento</td>
-              <td>Email</td>
-              <td>Telefone</td>
-              <td>Gênero</td>
-              <td>Administrador</td>
-              <td>Diagnóstico</td>
-              <td>Lista de Exercícios</td>
-              <td>Assinatura do EULA</td>
+              <th className="border px-4 py-2">Nome</th>
+              <th className="border px-4 py-2">Data de Nascimento</th>
+              <th className="border px-4 py-2">Email</th>
+              <th className="border px-4 py-2">Telefone</th>
+              <th className="border px-4 py-2">Gênero</th>
+              <th className="border px-4 py-2">Administrador</th>
+              <th className="border px-4 py-2">Diagnóstico</th>
+              <th className="border px-4 py-2">Lista de Exercícios</th>
+              <th className="border px-4 py-2">Assinatura do EULA</th>
+              <th className="border px-4 py-2">Ações</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((item, k) => (
-              <tr key={k}>
-                <td>
+            {users.map((item, index) => (
+              <tr key={index} className="text-center">
+                <td className="border px-4 py-2">
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
                       <div className="mask mask-circle w-12 h-12">
@@ -131,42 +114,34 @@ function TableDadosUsuarios() {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.birth}</td>
-                <td>{item.email}</td>
-                <td>{item.phone}</td>
-                <td>{item.gender}</td>
-                <td>{item.admin ? "admin" : "user"}</td>
-                <td>{item.diagnosis}</td>
-                <td>{item.exercise_list}</td>
-                <td>{item.signed_eula ? "Assinado" : "Não"}</td>
-                <div>
-                  <button className="btn btn-square" onClick={() => item.user_id && removeUser(item.user_id)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                <td className="border px-4 py-2">{item.birth}</td>
+                <td className="border px-4 py-2">{item.email}</td>
+                <td className="border px-4 py-2">{item.phone}</td>
+                <td className="border px-4 py-2">{item.gender}</td>
+                <td className="border px-4 py-2">{item.admin === true ? "administrador" : "usuario"}</td>
+                <td className="border px-4 py-2">{item.diagnosis}</td>
+                <td className="border px-4 py-2">{item.exercise_list}</td>
+                <td className="border px-4 py-2">{item.signed_eula === true ? "Assinado" : "Não assinou"}</td>
+                <td className="border px-4 py-2">
+                  <button
+                    {...buttonAtualizarDeletar}
+                    onClick={() => item.id && removeUser(item.id)}
+                  >
+                     <FaTrash className="w-6 h-4 m-1" />
                   </button>
-                  <button className="btn btn-square btn-outline" onClick={() => item.user_id && atualizarUser(item.user_id)} name="edit">
-                   atualizar
+                  <button
+                    {...buttonAtualizarDeletar}
+                    onClick={() => item.id && atualizarUser(item.id)}
+                  >
+                   <FaEdit className="w-6 h-4 m-1" />
                   </button>
-                </div>
+                </td>
               </tr>
             ))}
           </tbody>
-          <tfoot>
-            <tr>
-              <td>Nome</td>
-              <td>Data de Nascimento</td>
-              <td>Email</td>
-              <td>Telefone</td>
-              <td>Gênero</td>
-              <td>Administrador</td>
-              <td>Diagnóstico</td>
-              <td>Lista de Exercícios</td>
-              <td>Assinatura do EULA</td>
-            </tr>
-          </tfoot>
         </table>
       </div>
-    </TitleCard>
-    </>
+    </div>
   );
 }
 

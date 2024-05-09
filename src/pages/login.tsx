@@ -1,6 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Header } from '../components/header';
-import { Footer } from '../components/footer';
 import buttonPadrao from '../components/button/button-padrao';
 import { loginUser } from '../api/api';
 import { useState } from 'react';
@@ -39,7 +37,6 @@ export function LoginForm() {
 
   return (
     <>
-      <Header />
       <div className="hero min-h-screen bg-backgroundMain">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
@@ -99,7 +96,6 @@ export function LoginForm() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

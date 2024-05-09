@@ -54,6 +54,15 @@ export function Header() {
                         Relatorio de Usuários
                       </Link>
                     </li>
+
+                    <li>
+                      <Link 
+                        to='/relatorios-exercicios'
+                        rel={headerLogin.rel} 
+                      >
+                        Relatorio de Exerccios
+                      </Link>
+                    </li>
                 
                 </ul>
               </div>

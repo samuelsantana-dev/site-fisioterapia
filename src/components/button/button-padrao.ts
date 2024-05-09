@@ -3,3 +3,4 @@ const buttonPadrao = {
 }
 
 export default buttonPadrao
+

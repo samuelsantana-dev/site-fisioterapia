@@ -4,11 +4,33 @@ const baseUrl = "https://app-jadson-back-wvjk3k2iaq-uc.a.run.app";
 
 export async function listarTodosUsuarios() {
   try {
-    const response = await axios.get("https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/users/all/", {
+    const response = await axios.get(`${baseUrl}/api/v1/users/all/`,
+    {
       headers: {
+        'Content-Type': 'application/json',
         "x-user-token": "ae572c421ee598d434bc8e7c"
-      }
-    });
+      },
+    }
+    );
+    console.log(response.data.documents);
+    return response.data.documents;
+  } catch (error) {
+    console.error("Erro ao listar usuários:", error);
+    throw error;
+  }
+}
+
+export async function listarUsuariosAdmin() {
+  try {
+    const response = await axios.get(`${baseUrl}/api/v1/users/all/?admin=true&limit=15`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        "x-user-token": "ae572c421ee598d434bc8e7c"
+      },
+    }
+    );
+    console.log(response.data.documents);
     return response.data.documents;
   } catch (error) {
     console.error("Erro ao listar usuários:", error);
@@ -43,7 +65,7 @@ export async function cadastroUsuario(user: any) {
       {
         headers: {
           'Content-Type': 'application/json',
-          "x-user-token": "ae572c421ee598d434bc8e7c"
+          "x-user-token": "f2aad5b7c42d773aed1b0844"
         },
       }
     );
@@ -61,7 +83,7 @@ export async function deletarUsuario(user_id: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        "x-user-token": `${user_id}`
+        "x-user-token": `f2aad5b7c42d773aed1b0844`
       },
     }
     );  
@@ -77,7 +99,7 @@ export async function atualizarUsuario(user_id: string){
     {
       headers: {
         'Content-Type': 'application/json',
-        "x-user-token": `${user_id}`
+        "x-user-token": `f2aad5b7c42d773aed1b0844`
       },
     }
     );  

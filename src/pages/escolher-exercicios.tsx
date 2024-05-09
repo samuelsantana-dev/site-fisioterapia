@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
 import { exerciciosInferiores, exerciciosSuperiores } from '../routes/links';
 import ImagemExercicio from '../assets/fisioterapiaEscolherExercicios.png';
 import buttonPadrao from '../components/button/button-padrao';
@@ -8,7 +6,6 @@ import buttonPadrao from '../components/button/button-padrao';
 export function EscolherExercicios() {
   return (
     <>    
-    <Header />
         <div className="flex flex-col items-center justify-center min-h-screen w-full lg:flex-row bg-backgroundMain">
           <div className="card place-items-center w-full lg:w-1/2">
             <div className="text-center px-4 py-8 md:m-1">
@@ -42,7 +39,6 @@ export function EscolherExercicios() {
             />
           </div>
         </div>
-      <Footer />
     </>
   );
 }

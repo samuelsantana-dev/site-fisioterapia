@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
 import imagemHome from '../assets/fotoIntrodução.png'
 import buttonPadrao from '../components/button/button-padrao';
 
@@ -8,7 +6,6 @@ import buttonPadrao from '../components/button/button-padrao';
 export function Home(){
     return(
       <>
-      <Header />
         <div className="hero min-h-screen bg-backgroundMain">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <img src={imagemHome} className="max-w-sm rounded-lg shadow-2xl" />
@@ -19,7 +16,6 @@ export function Home(){
             </div>
           </div>
         </div>
-        <Footer />
       </>
     )
 } 

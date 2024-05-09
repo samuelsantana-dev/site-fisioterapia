@@ -1,13 +1,10 @@
-import { Header } from '../components/header';
-import { Footer } from '../components/footer';
 import cardProps from "../sharedProps/card"
 import inputProps from "../sharedProps/input"
 import Button from "../components/button"
 import buttonPadrao from '../components/button/button-padrao';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { cadastroUsuario } from '../api/api';
-import User from '../api/interface';
+import {User} from '../api/interface';
 import { cadastroUsuario } from '../api/api';
 
 export function CadastroForm() {
@@ -51,7 +48,6 @@ export function CadastroForm() {
 
   return (
     <>
-      <Header />
       <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
         <form
           className="m-1 flex items-start justify-center lg:w-[49%] my-8"
@@ -197,7 +193,6 @@ export function CadastroForm() {
           </div>
         </form>
       </div>
-      <Footer />
     </>
   );
 }
