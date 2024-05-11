@@ -12,7 +12,7 @@ export function EscolherExercicios() {
               <p className="text-lg">
                 Especializados no atendimento a idosos, oferecemos uma variedade de exercícios direcionados por especialistas. Escolha abaixo entre exercícios para membros inferiores ou superiores e comece a cuidar da sua saúde hoje mesmo.
               </p>
-              <div className="m-1 flex justify-center">
+              <div className="flex justify-center m-1">
                 <Link
                   to={exerciciosSuperiores.href} 
                   rel={exerciciosSuperiores.rel}  

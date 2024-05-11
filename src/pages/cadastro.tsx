@@ -170,7 +170,9 @@ export function CadastroForm() {
                 </label>
               </div>
               <div className="form-control">
+                
                 <label className="cursor-pointer label">
+                  
                   <span className="label-text">Aceito o Termo</span>
                   <input 
                     type="checkbox" 
@@ -180,6 +182,9 @@ export function CadastroForm() {
                     onChange={handleCheckBox} 
                    />
                 </label>
+                <div>
+                    Apresentamos o seu site de fisioterapia como um 'Portal de Estudos em Fisioterapia', oferecendo uma plataforma educativa com artigos, estudos de caso e insights sobre a prática da fisioterapia. Por favor, esteja ciente de que o site é estritamente para fins educacionais e informativos. Não garantimos a precisão das informações e o usuário assume a responsabilidade por qualquer aplicação prática de técnicas ou exercícios apresentados. Recomendamos consultar um profissional de saúde em caso de lesão ou desconforto. Ao continuar a usar o site, você aceita esta cláusula de responsabilidade.
+                  </div>
               </div>
               <div className="form-control mt-6">
                 <Button

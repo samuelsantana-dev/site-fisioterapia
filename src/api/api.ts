@@ -83,7 +83,7 @@ export async function deletarUsuario(user_id: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        "x-user-token": `f2aad5b7c42d773aed1b0844`
+        "x-user-token": `${user_id}`
       },
     }
     );  

@@ -14,8 +14,8 @@ export const ExerciciosInferiores = () => {
 
   return (
     <>
-      <section className="bg-backgroundMain flex items-center justify-center">
-        <div className="flex justify-center w-full">
+      <section className="bg-backgroundMain w-full h-screen flex items-center justify-center">
+        <div className="flex justify-center p-2 max-w-7xl">
           <DivExercicios exercicios={exercicios} />
         </div>
       </section>

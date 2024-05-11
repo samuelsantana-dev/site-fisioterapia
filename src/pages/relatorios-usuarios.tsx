@@ -8,6 +8,27 @@ function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
   const [valorAtualInput, setValorAtualInput] = useState("");
 
+  const estiloTh = { className: "border px-4 py-2"};
+  const TableHeaderFooter = () => (
+    
+    <thead>
+      <tr>
+        <th {...estiloTh}>ID</th>
+        <th {...estiloTh}>Nome</th>
+        <th {...estiloTh}>Data de Nascimento</th>
+        <th {...estiloTh}>Email</th>
+        <th {...estiloTh}>Telefone</th>
+        <th {...estiloTh}>Gênero</th>
+        <th {...estiloTh}>Administrador</th>
+        <th {...estiloTh}>Diagnóstico</th>
+        <th {...estiloTh}>Lista de Exercícios</th>
+        <th {...estiloTh}>Assinatura do EULA</th>
+        <th {...estiloTh}>Ações</th>
+        <th {...estiloTh}>ID</th>
+      </tr>
+    </thead>
+  );
+
   const valorInput = (e: any) => {
     setValorAtualInput(e.target.value);
     const filteredUsers = users.filter(
@@ -55,12 +76,12 @@ function TableDadosUsuarios() {
 
   return (
     <div>
-      <div className="w-full m-2 flex justify-between justify-items-center">
-        <div>
+      <div className="m-2 flex justify-between items-stretch">
+        <div className="flex items-center">
           <h1>Relatório de Usuários</h1>
         </div>
         <div>
-          <label className="input input-bordered  m-2 flex items-center gap-2">
+          <label className="input input-bordered m-2 flex items-center gap-2">
             <input
               type="text"
               className="grow"
@@ -83,26 +104,14 @@ function TableDadosUsuarios() {
           </label>
         </div>
       </div>
-      <div className="overflow-x-auto mt-4 h-screen">
-        <table className="table-auto border-collapse">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Nome</th>
-              <th className="border px-4 py-2">Data de Nascimento</th>
-              <th className="border px-4 py-2">Email</th>
-              <th className="border px-4 py-2">Telefone</th>
-              <th className="border px-4 py-2">Gênero</th>
-              <th className="border px-4 py-2">Administrador</th>
-              <th className="border px-4 py-2">Diagnóstico</th>
-              <th className="border px-4 py-2">Lista de Exercícios</th>
-              <th className="border px-4 py-2">Assinatura do EULA</th>
-              <th className="border px-4 py-2">Ações</th>
-            </tr>
-          </thead>
+      <div className="overflow-x-auto overflow-y-auto mt-4">
+        <table className="table-auto border-collapse w-full">
+        <TableHeaderFooter />
           <tbody>
             {users.map((item, index) => (
               <tr key={index} className="text-center">
-                <td className="border px-4 py-2">
+                <td {...estiloTh}>{index + 1}</td>
+                <td {...estiloTh}>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
                       <div className="mask mask-circle w-12 h-12">
@@ -114,18 +123,18 @@ function TableDadosUsuarios() {
                     </div>
                   </div>
                 </td>
-                <td className="border px-4 py-2">{item.birth}</td>
-                <td className="border px-4 py-2">{item.email}</td>
-                <td className="border px-4 py-2">{item.phone}</td>
-                <td className="border px-4 py-2">{item.gender}</td>
-                <td className="border px-4 py-2">{item.admin === true ? "administrador" : "usuario"}</td>
-                <td className="border px-4 py-2">{item.diagnosis}</td>
-                <td className="border px-4 py-2">{item.exercise_list}</td>
-                <td className="border px-4 py-2">{item.signed_eula === true ? "Assinado" : "Não assinou"}</td>
-                <td className="border px-4 py-2">
+                <td {...estiloTh}>{item.birth}</td>
+                <td {...estiloTh}>{item.email}</td>
+                <td {...estiloTh}>{item.phone}</td>
+                <td {...estiloTh}>{item.gender}</td>
+                <td {...estiloTh}>{item.admin === true ? "administrador" : "usuario"}</td>
+                <td {...estiloTh}>{item.diagnosis}</td>
+                <td {...estiloTh}>{item.exercise_list}</td>
+                <td {...estiloTh}>{item.signed_eula === true ? "Assinado" : "Não assinou"}</td>
+                <td {...estiloTh}>
                   <button
                     {...buttonAtualizarDeletar}
-                    onClick={() => item.id && removeUser(item.id)}
+                    onClick={() => removeUser(item.user_id ?? '')}
                   >
                      <FaTrash className="w-6 h-4 m-1" />
                   </button>
@@ -136,9 +145,11 @@ function TableDadosUsuarios() {
                    <FaEdit className="w-6 h-4 m-1" />
                   </button>
                 </td>
+                <td {...estiloTh}>{index + 1}</td>
               </tr>
             ))}
           </tbody>
+          <TableHeaderFooter />
         </table>
       </div>
     </div>

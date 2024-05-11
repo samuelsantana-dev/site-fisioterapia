@@ -10,6 +10,23 @@ function TableDadosUsuarios() {
   const [exercicios, setExercies] = useState<Exercise[]>([]);
   const [valorAtualInput, setValorAtualInput] = useState("");
 
+  const estiloTh = { className: "border px-4 py-2"};
+  const TableHeaderFooter = () => (
+    
+    <thead>
+      <tr>
+          <th {...estiloTh}>ID</th>
+          <th {...estiloTh}>Grupo do Músculo</th>
+          <th {...estiloTh}>Dificuldade</th>
+          <th {...estiloTh}>Músculo</th>
+          <th {...estiloTh}>Arquivo</th>
+          <th {...estiloTh}>Nome</th>
+          <th {...estiloTh}>Descrição</th>
+          <th {...estiloTh}>Ações</th>
+          <th {...estiloTh}>ID</th>
+      </tr>
+    </thead>
+  );
   const valorInput = (e: any) => {
     setValorAtualInput(e.target.value);
     const filteredUsers = exercicios.filter(
@@ -49,16 +66,15 @@ function TableDadosUsuarios() {
     atualizarUsuario(exercise_id)
       .then(() => {
         console.log("Usuário atualizado");
-        // Atualize a lista de exercícios após a atualização bem-sucedida
-        setExercies(exercicios.map((user) => (user.exercise_id === exercise_id ? { ...user, /* campos atualizados */ } : user)));
+        setExercies(exercicios.map((user) => (user.exercise_id === exercise_id ? { ...user, } : user)));
       })
       .catch((error) => console.error("Erro ao atualizar o usuário:", error));
   };
 
   return (
-    <div className="w-full mx-auto">
-      <div className="w-full m-2 flex justify-between justify-items-center">
-        <div>
+    <div>
+      <div className="m-2 flex justify-between items-stretch">
+        <div className="flex items-center">
           <h1>Relatório de Exercícios</h1>
         </div>
         <div>
@@ -87,20 +103,11 @@ function TableDadosUsuarios() {
       </div>
       <div className="overflow-x-auto m-2 mt-4 h-screen">
         <table className="table-auto border-collapse">
-          <thead>
-            <tr>
-              <th className="border p-2">Grupo do Músculo</th>
-              <th className="border p-2">Dificuldade</th>
-              <th className="border p-2">Músculo</th>
-              <th className="border p-2">Arquivo</th>
-              <th className="border p-2">Nome</th>
-              <th className="border p-2">Descrição</th>
-              <th className="border p-2">Ações</th>
-            </tr>
-          </thead>
+        <TableHeaderFooter />
           <tbody>
             {exercicios.map((item, index) => (
               <tr key={index} className="text-center">
+                <td {...estiloTh}>{index + 1}</td>
                 <td className="border p-2">{item.muscle_group}</td>
                 <td className="border p-2">{item.difficulty}</td>
                 <td className="border p-2">{item.muscle}</td>
@@ -121,10 +128,13 @@ function TableDadosUsuarios() {
                       <FaEdit className="w-6 h-4 m-1" />
                   </button>
                 </td>
+                <td {...estiloTh}>{index + 1}</td>
               </tr>
             ))}
           </tbody>
+          <TableHeaderFooter />
         </table>
+       
       </div>
     </div>
   );
