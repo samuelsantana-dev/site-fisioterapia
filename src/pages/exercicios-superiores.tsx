@@ -13,15 +13,10 @@ export const ExerciciosSuperiores = () => {
   }, []);
 
   return (
-    <>
-      <section className="bg-backgroundMain flex items-center justify-center">
-        <div className="flex justify-center w-full">
-          <DivExercicios 
-            exercicios={exercicios}
-            
-           />
-        </div>
+    <section className="bg-backgroundMain w-full min-h-screen flex items-center justify-center">
+           <div className="w-full">
+            <DivExercicios exercicios={exercicios} />
+          </div>
       </section>
-    </>
   );
 };

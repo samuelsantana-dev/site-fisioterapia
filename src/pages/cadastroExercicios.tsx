@@ -29,6 +29,13 @@ export function CadastroExercicios() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+
+
+    if(formExercicio.description.length <= 500){
+      alert("A descrição do exercício deve ter pelo menos 500 caracteres.")
+      return;
+    }
+
     const data = await cadastroExercicioApi(formExercicio);
     console.log("Cadastro bem-sucedido:", data);
       navigate('/escolher-exercicios');
