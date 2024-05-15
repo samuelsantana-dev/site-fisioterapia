@@ -1,16 +1,17 @@
 import axios from "axios";
 
 const baseUrl = "https://app-jadson-back-wvjk3k2iaq-uc.a.run.app";
+const userToken = "cc5a0e52c29e81dbe3078fdc";
+
+const headers = {
+  'Content-Type': 'application/json',
+  'x-user-token': userToken
+};
 
 export async function listarTodosUsuarios() {
   try {
     const response = await axios.get(`${baseUrl}/api/v1/users/all/`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        "x-user-token": "ae572c421ee598d434bc8e7c"
-      },
-    }
+    { headers: headers }
     );
     console.log(response.data.documents);
     return response.data.documents;
@@ -23,12 +24,7 @@ export async function listarTodosUsuarios() {
 export async function listarUsuariosAdmin() {
   try {
     const response = await axios.get(`${baseUrl}/api/v1/users/all/?admin=true&limit=15`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        "x-user-token": "ae572c421ee598d434bc8e7c"
-      },
-    }
+    { headers: headers }
     );
     console.log(response.data.documents);
     return response.data.documents;
@@ -58,6 +54,7 @@ export async function loginUser(user: any) {
 }
 
 export async function cadastroUsuario(user: any) {
+  const userToken = window.localStorage["user_toke"];
   try {
     const responseCadastro = await axios.post(
       `${baseUrl}/api/v1/users/`,
@@ -65,7 +62,7 @@ export async function cadastroUsuario(user: any) {
       {
         headers: {
           'Content-Type': 'application/json',
-          "x-user-token": "f2aad5b7c42d773aed1b0844"
+          "x-user-token": userToken
         },
       }
     );
@@ -97,11 +94,14 @@ export async function atualizarUsuario(user_id: string){
   try {
     const response = await axios.put(`${baseUrl}/api/v1/users/${user_id}`, 
     {
-      headers: {
-        'Content-Type': 'application/json',
-        "x-user-token": `f2aad5b7c42d773aed1b0844`
-      },
+      headers: headers,
     }
+    // {
+    //   // headers: {
+    //   //   'Content-Type': 'application/json',
+    //   //   "x-user-token": `f2aad5b7c42d773aed1b0844`
+    //   // },
+    // }
     );  
     console.log(response.data)
   } catch (error) {

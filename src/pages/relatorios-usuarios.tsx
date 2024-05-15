@@ -3,12 +3,16 @@ import { listarTodosUsuarios, deletarUsuario, atualizarUsuario, listarUsuariosAd
 import { User } from "../api/interface";
 import buttonAtualizarDeletar from "../components/button/button-table";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import table from "../components/table/table";
+import divTable from "../components/table/div-table";
+import inputTable from "../components/table/input";
 
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
   const [valorAtualInput, setValorAtualInput] = useState("");
 
   const estiloTh = { className: "border px-4 py-2"};
+  const estiloTd = { classname: "border p-2" };
   const TableHeaderFooter = () => (
     
     <thead>
@@ -66,6 +70,7 @@ function TableDadosUsuarios() {
   };
 
   const atualizarUser = (user_id: string) => {
+    console.log({user_id})
     atualizarUsuario(user_id)
       .then(() => {
         console.log("Usuário atualizado");
@@ -75,84 +80,84 @@ function TableDadosUsuarios() {
   }
 
   return (
-    <div>
-      <div className="m-2 flex justify-between items-stretch">
-        <div className="flex items-center">
-          <h1>Relatório de Usuários</h1>
-        </div>
-        <div>
-          <label className="input input-bordered m-2 flex items-center gap-2">
-            <input
-              type="text"
-              className="grow"
-              value={valorAtualInput}
-              onChange={valorInput}
-              placeholder="Pesquisar"
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="w-4 h-4 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                clipRule="evenodd"
+      <div className="h-screen overflow-hidden">
+        <div className="m-2 flex justify-between items-stretch">
+          <div className="flex items-center">
+            <h1>Relatório de Usuários</h1>
+          </div>
+          <div>
+            <label {...inputTable}>
+              <input
+                type="text"
+                className="grow"
+                value={valorAtualInput}
+                onChange={valorInput}
+                placeholder="Pesquisar"
               />
-            </svg>
-          </label>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="w-4 h-4 opacity-70"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </label>
+          </div>
         </div>
-      </div>
-      <div className="overflow-x-auto overflow-y-auto mt-4">
-        <table className="table-auto border-collapse w-full">
-        <TableHeaderFooter />
-          <tbody>
-            {users.map((item, index) => (
-              <tr key={index} className="text-center">
-                <td {...estiloTh}>{index + 1}</td>
-                <td {...estiloTh}>
-                  <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                      <div className="mask mask-circle w-12 h-12">
-                        <img src={item.profile_pic} alt="Avatar" />
+        <div {...divTable}>
+          <table {...table}>
+          <TableHeaderFooter />
+            <tbody>
+              {users.map((item, index) => (
+                <tr key={index} className="text-center">
+                  <td {...estiloTd}>{index + 1}</td>
+                  <td {...estiloTd}>
+                    <div className="flex items-center space-x-3">
+                      <div className="avatar">
+                        <div className="mask mask-circle w-12 h-12">
+                          <img src={item.profile_pic} alt="Avatar" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{item.name}</div>
                       </div>
                     </div>
-                    <div>
-                      <div className="font-bold">{item.name}</div>
-                    </div>
-                  </div>
-                </td>
-                <td {...estiloTh}>{item.birth}</td>
-                <td {...estiloTh}>{item.email}</td>
-                <td {...estiloTh}>{item.phone}</td>
-                <td {...estiloTh}>{item.gender}</td>
-                <td {...estiloTh}>{item.admin === true ? "administrador" : "usuario"}</td>
-                <td {...estiloTh}>{item.diagnosis}</td>
-                <td {...estiloTh}>{item.exercise_list}</td>
-                <td {...estiloTh}>{item.signed_eula === true ? "Assinado" : "Não assinou"}</td>
-                <td {...estiloTh}>
-                  <button
-                    {...buttonAtualizarDeletar}
-                    onClick={() => removeUser(item.user_id ?? '')}
-                  >
-                     <FaTrash className="w-6 h-4 m-1" />
-                  </button>
-                  <button
-                    {...buttonAtualizarDeletar}
-                    onClick={() => item.id && atualizarUser(item.id)}
-                  >
-                   <FaEdit className="w-6 h-4 m-1" />
-                  </button>
-                </td>
-                <td {...estiloTh}>{index + 1}</td>
-              </tr>
-            ))}
-          </tbody>
-          <TableHeaderFooter />
-        </table>
+                  </td>
+                  <td {...estiloTd}>{item.birth}</td>
+                  <td {...estiloTd}>{item.email}</td>
+                  <td {...estiloTd}>{item.phone}</td>
+                  <td {...estiloTd}>{item.gender}</td>
+                  <td {...estiloTd}>{item.admin === true ? "administrador" : "usuario"}</td>
+                  <td {...estiloTd}>{item.diagnosis}</td>
+                  <td {...estiloTd}>{item.exercise_list}</td>
+                  <td {...estiloTd}>{item.signed_eula === true ? "Assinado" : "Não assinou"}</td>
+                  <td {...estiloTd}>
+                    <button
+                      {...buttonAtualizarDeletar}
+                      onClick={() => removeUser(item.user_id ?? '')}
+                    >
+                       <FaTrash className="w-6 h-4 m-1" />
+                    </button>
+                    <button
+                      {...buttonAtualizarDeletar}
+                      onClick={() => atualizarUser(item.user_id ?? '')}
+                    >
+                     <FaEdit className="w-6 h-4 m-1" />
+                    </button>
+                  </td>
+                  <td {...estiloTh}>{index + 1}</td>
+                </tr>
+              ))}
+            </tbody>
+            <TableHeaderFooter />
+          </table>
+        </div>
       </div>
-    </div>
   );
 }
 

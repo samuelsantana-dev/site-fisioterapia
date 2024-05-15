@@ -4,6 +4,9 @@ import { Exercise } from "../api/interface";
 import { deletarExercicio, getExercicios } from "../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import buttonAtualizarDeletar from "../components/button/button-table";
+import table from "../components/table/table";
+import divTable from "../components/table/div-table";
+import inputTable from "../components/table/input";
 
 
 function TableDadosUsuarios() {
@@ -11,6 +14,7 @@ function TableDadosUsuarios() {
   const [valorAtualInput, setValorAtualInput] = useState("");
 
   const estiloTh = { className: "border px-4 py-2"};
+  const estiloTd = { classname: "border p-2" };
   const TableHeaderFooter = () => (
     
     <thead>
@@ -52,7 +56,7 @@ function TableDadosUsuarios() {
     fetchData();
   }, []);
 
-  const removeExercicie = async (exercise_id: string) => {
+  const removeExercicie = async (exercise_id: string, user_token: string) => {
     try {
       await deletarExercicio(exercise_id);
       console.log("Exercício deletado");
@@ -72,13 +76,13 @@ function TableDadosUsuarios() {
   };
 
   return (
-    <div>
+    <div className="h-screen overflow-hidden">
       <div className="m-2 flex justify-between items-stretch">
         <div className="flex items-center">
           <h1>Relatório de Exercícios</h1>
         </div>
         <div>
-          <label className="input input-bordered  m-2 flex items-center gap-2">
+          <label {...inputTable}>
             <input
               type="text"
               className="grow"
@@ -101,23 +105,23 @@ function TableDadosUsuarios() {
           </label>
         </div>
       </div>
-      <div className="overflow-x-auto m-2 mt-4 h-screen">
-        <table className="table-auto border-collapse">
+      <div {...divTable}>
+        <table {...table}>
         <TableHeaderFooter />
           <tbody>
             {exercicios.map((item, index) => (
               <tr key={index} className="text-center">
                 <td {...estiloTh}>{index + 1}</td>
-                <td className="border p-2">{item.muscle_group}</td>
-                <td className="border p-2">{item.difficulty}</td>
-                <td className="border p-2">{item.muscle}</td>
-                <td className="border p-2">{item.file}</td>
-                <td className="border p-2">{item.name}</td>
-                <td className="border p-2">{item.description}</td>
-                <td className="border p-2">
+                <td {...estiloTd}>{item.muscle_group}</td>
+                <td {...estiloTd}>{item.difficulty}</td>
+                <td {...estiloTd}>{item.muscle}</td>
+                <td {...estiloTd}>{item.file}</td>
+                <td {...estiloTd}>{item.name}</td>
+                <td {...estiloTd}>{item.description}</td>
+                <td {...estiloTd}>
                   <button
                     {...buttonAtualizarDeletar}
-                    onClick={() => removeExercicie(item.exercise_id ?? '')}
+                    onClick={() => removeExercicie(item.exercise_id ?? '', item.exercise_id ?? '')}
                   >
                       <FaTrash className="w-6 h-4 m-1" />
                   </button>

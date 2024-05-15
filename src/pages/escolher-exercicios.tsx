@@ -18,14 +18,14 @@ export function EscolherExercicios() {
                   rel={exerciciosSuperiores.rel}  
                   {...buttonPadrao}
                 >
-                  {exerciciosSuperiores.value}
+                  Membros Superiores
                 </Link>
                 <Link 
                   to={exerciciosInferiores.href} 
                   rel={exerciciosInferiores.rel}  
                   {...buttonPadrao}
                 >
-                  {exerciciosInferiores.value}
+                  Membros Inferiores
                 </Link>
               </div>
             </div>

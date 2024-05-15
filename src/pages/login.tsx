@@ -22,7 +22,8 @@ export function LoginForm() {
     e.preventDefault();
     try {
       const data = await loginUser(valueForm);
-      console.log("Login bem-sucedido:", data);
+      console.log("Login bem-sucedido:", data); 
+      window.localStorage["user_toke"] = data.user_id;
       navigate('/escolher-exercicios');
     } catch (error) {
       console.error("Erro ao fazer login:", error);
