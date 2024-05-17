@@ -1,17 +1,13 @@
 import axios from "axios";
 
 const baseUrl = "https://app-jadson-back-wvjk3k2iaq-uc.a.run.app";
-const userToken = "cc5a0e52c29e81dbe3078fdc";
+const userToken = window.localStorage.getItem("user_token");
 
 const headers = {
   'Content-Type': 'application/json',
   'x-user-token': userToken
 };
 
-export function checkLoginStatus() {
-  const userToken = window.localStorage.getItem("user_token");
-  return !!userToken;
-}
 
 export async function listarTodosUsuarios() {
   try {
@@ -19,7 +15,6 @@ export async function listarTodosUsuarios() {
     { headers: headers }
     );
     console.log(response.data.documents);
-    checkLoginStatus();
     return response.data.documents;
   } catch (error) {
     console.error("Erro ao listar usuários:", error);

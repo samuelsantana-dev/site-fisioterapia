@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl = "https://app-jadson-back-wvjk3k2iaq-uc.a.run.app";
-const userToken = "cc5a0e52c29e81dbe3078fdc";
+const userToken = window.localStorage.getItem("user_token");
 
 const headers = {
   'Content-Type': 'application/json',

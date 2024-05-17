@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { listarTodosUsuarios, deletarUsuario, atualizarUsuario, listarUsuariosAdmin, checkLoginStatus } from "../api/api-usuarios";
+import { listarTodosUsuarios, deletarUsuario, atualizarUsuario, listarUsuariosAdmin } from "../api/api-usuarios";
 import { User } from "../api/interface";
 import buttonAtualizarDeletar from "../components/button/button-table";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -47,22 +47,6 @@ function TableDadosUsuarios() {
 
     setUsers(filteredUsers);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      window.localStorage.getItem("user_toke");
-      try {
-        const usersAdmin = await listarUsuariosAdmin();
-        const allUsers = await listarTodosUsuarios();
-  
-        setUsers([...usersAdmin, ...allUsers]);
-      } catch (error) {
-        console.error('Erro ao obter usuários:', error);
-      }
-    };
-  
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

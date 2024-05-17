@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { atualizarUsuario, checkLoginStatus } from "../api/api-usuarios";
+import { atualizarUsuario } from "../api/api-usuarios";
 import { Exercise } from "../api/interface";
 import { deletarExercicio, getExercicios } from "../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
@@ -7,11 +7,13 @@ import buttonAtualizarDeletar from "../components/button/button-table";
 import table from "../components/table/table";
 import divTable from "../components/table/div-table";
 import inputTable from "../components/table/input";
-
+import { useNavigate } from "react-router-dom";
 
 function TableDadosUsuarios() {
   const [exercicios, setExercies] = useState<Exercise[]>([]);
   const [valorAtualInput, setValorAtualInput] = useState("");
+  const [token, setToken] = useState<string | null>(null);
+  const navigate = useNavigate()
 
   const estiloTh = { className: "border px-4 py-2"};
   const estiloTd = { classname: "border p-2" };
@@ -44,13 +46,21 @@ function TableDadosUsuarios() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const exerciciesAdmin = await getExercicios();
-        setExercies([...exerciciesAdmin]);
-      } catch (error) {
-        console.error("Erro ao obter usuários:", error);
+      const storedToken = window.localStorage.getItem("user_toke");
+      if (storedToken) {
+        setToken(storedToken);
+        try {
+          const exerciciesAdmin = await getExercicios();
+          setExercies([...exerciciesAdmin]);
+        } catch (error) {
+          console.error("Erro ao obter usuários:", error);
+          navigate('/escolher-exercicios');
+        }
+      } else {
+        console.error('Token não encontrado');
+        navigate('/escolher-exercicios');
+         }
       }
-    };
 
     fetchData();
   }, []);
@@ -66,7 +76,6 @@ function TableDadosUsuarios() {
   };
 
   const atualizarUser = (exercise_id: string) => {
-    checkLoginStatus()
     atualizarUsuario(exercise_id)
       .then(() => {
         console.log("Usuário atualizado");
