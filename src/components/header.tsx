@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
 import { headerEscolherExercicios, headerHome, headerLogin, headerTermoConcenso } from '../routes/links';
-import { useContext } from "react";
-// import { LoginContext } from "../contexts/login";
 
 export function Header() {
 
-  // const { counter } = useContext(LoginContext);
   return (
     
     <div className="navbar bg-backgroundHeaderFooter">

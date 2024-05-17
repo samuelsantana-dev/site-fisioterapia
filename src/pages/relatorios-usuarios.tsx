@@ -14,6 +14,8 @@ function TableDadosUsuarios() {
   const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  console.log(token);
+
 
   const estiloTh = { className: "border px-4 py-2"};
   const estiloTd = { classname: "border p-2" };
