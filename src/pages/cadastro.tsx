@@ -5,7 +5,7 @@ import buttonPadrao from '../components/button/button-padrao';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {User} from '../api/interface';
-import { cadastroUsuario } from '../api/api';
+import { cadastroUsuario } from '../api/api-usuarios';
 
 export function CadastroForm() {
   const [formData, setFormData] = useState<User>({
@@ -21,7 +21,7 @@ export function CadastroForm() {
     signed_eula: false,
     password: '' 
   });
-  
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e: any) => {
@@ -41,9 +41,14 @@ export function CadastroForm() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    const data = await cadastroUsuario(formData);
-    console.log("Cadastro bem-sucedido:", data);
+    try {
+      const data = await cadastroUsuario(formData);
+      console.log("Cadastro bem-sucedido:", data);
       navigate('/escolher-exercicios');
+    } catch (error) {
+      console.error("Erro ao cadastrar:", error);
+      setError('Erro ao cadastrar. Por favor, verifique suas informações.');
+    }
   };
 
   return (
@@ -76,7 +81,7 @@ export function CadastroForm() {
                   <span className="label-text">Data de Nascimento *</span>
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   placeholder='ano-mes-dia ex: 2024-15-12'
                   name="birth"
                   value={formData.birth}
@@ -186,6 +191,7 @@ export function CadastroForm() {
                     Apresentamos o seu site de fisioterapia como um 'Portal de Estudos em Fisioterapia', oferecendo uma plataforma educativa com artigos, estudos de caso e insights sobre a prática da fisioterapia. Por favor, esteja ciente de que o site é estritamente para fins educacionais e informativos. Não garantimos a precisão das informações e o usuário assume a responsabilidade por qualquer aplicação prática de técnicas ou exercícios apresentados. Recomendamos consultar um profissional de saúde em caso de lesão ou desconforto. Ao continuar a usar o site, você aceita esta cláusula de responsabilidade.
                   </div>
               </div>
+              {error && <p className="text-red-500">{error}</p>}
               <div className="form-control mt-6">
                 <Button
                   type="submit"

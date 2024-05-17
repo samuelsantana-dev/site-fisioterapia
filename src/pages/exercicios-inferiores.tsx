@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getExercicios } from '../api/api-exercicios';
 import { Exercise } from '../api/interface';
-import { DivExercicios } from '../components/divExercicio';
+import { DivExercicios } from '../components/div-exercicio';
 
 export const ExerciciosInferiores = () => {
   const [exercicios, setExercicios] = useState<Exercise[]>([]);

@@ -1,15 +1,34 @@
-// App.js
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Route, Routes, useRoutes } from 'react-router-dom';
 import { Home } from './pages/home.tsx';
 import { LoginForm } from './pages/login.tsx';
 import { ExerciciosInferiores } from './pages/exercicios-inferiores.tsx';
 import { ExerciciosSuperiores } from './pages/exercicios-superiores.tsx';
 import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
 import { CadastroForm } from './pages/cadastro.tsx';
-import { CadastroExercicios } from './pages/cadastroExercicios.tsx';
+import { CadastroExercicios } from './pages/cadastro-exercicios.tsx';
 import TableDadosUsuarios from './pages/relatorios-usuarios.tsx';
 import TableExercicios from './pages/relatorios-exercicios.tsx';
 import Layout from './layout.tsx';
+import { AuthProvider } from './hook/use-auth.tsx';
+import { ProtectedRoute } from './hook/protect-route.tsx';
+
+
+export function Rotas(){
+      <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route
+          path="/secret"
+          element={
+            <ProtectedRoute>
+              <CadastroExercicios />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </AuthProvider>
+}
 
 const router = createBrowserRouter([
   {
@@ -51,4 +70,7 @@ const router = createBrowserRouter([
 ]);
 
 
-export default router;
+export default router
+
+
+ 

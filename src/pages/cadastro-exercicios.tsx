@@ -18,7 +18,7 @@ export function CadastroExercicios() {
     instructions: [],
     file: ""
   });
-  
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e: any) => {
@@ -28,20 +28,21 @@ export function CadastroExercicios() {
 
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault()
-
-
-    if(formExercicio.description.length <= 500){
-      alert("A descrição do exercício deve ter pelo menos 500 caracteres.")
-      return;
+    try {
+      e.preventDefault()
+      if(formExercicio.description.length <= 500){
+        alert("A descrição do exercício deve ter pelo menos 500 caracteres.")
+        return;
+      }
+      const data = await cadastroExercicioApi(formExercicio);
+      console.log("Cadastro bem-sucedido:", data);
+        navigate('/escolher-exercicios');
+    } catch {
+      console.error("Erro ao cadastrar:", error);
+      setError('Erro ao cadastrar. Por favor, verifique suas informações.');
     }
-
-    const data = await cadastroExercicioApi(formExercicio);
-    console.log("Cadastro bem-sucedido:", data);
-      navigate('/escolher-exercicios');
+   
   };
-
-  console.log(formExercicio)
 
   return (
     <>
@@ -150,7 +151,7 @@ export function CadastroExercicios() {
                   {...inputProps}
                 />
               </div>
-
+              {error && <p className="text-red-500">{error}</p>}
               <div className="form-control mt-6">
                 <Button
                   type="submit"

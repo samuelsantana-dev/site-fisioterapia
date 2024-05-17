@@ -8,12 +8,18 @@ const headers = {
   'x-user-token': userToken
 };
 
+export function checkLoginStatus() {
+  const userToken = window.localStorage.getItem("user_token");
+  return !!userToken;
+}
+
 export async function listarTodosUsuarios() {
   try {
     const response = await axios.get(`${baseUrl}/api/v1/users/all/`,
     { headers: headers }
     );
     console.log(response.data.documents);
+    checkLoginStatus();
     return response.data.documents;
   } catch (error) {
     console.error("Erro ao listar usuários:", error);
@@ -80,7 +86,7 @@ export async function deletarUsuario(user_id: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        "x-user-token": `${user_id}`
+        "x-user-token": `${window.localStorage["user_toke"]}`
       },
     }
     );  
@@ -96,12 +102,6 @@ export async function atualizarUsuario(user_id: string){
     {
       headers: headers,
     }
-    // {
-    //   // headers: {
-    //   //   'Content-Type': 'application/json',
-    //   //   "x-user-token": `f2aad5b7c42d773aed1b0844`
-    //   // },
-    // }
     );  
     console.log(response.data)
   } catch (error) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { atualizarUsuario } from "../api/api";
+import { atualizarUsuario, checkLoginStatus } from "../api/api-usuarios";
 import { Exercise } from "../api/interface";
 import { deletarExercicio, getExercicios } from "../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
@@ -46,7 +46,6 @@ function TableDadosUsuarios() {
     const fetchData = async () => {
       try {
         const exerciciesAdmin = await getExercicios();
-
         setExercies([...exerciciesAdmin]);
       } catch (error) {
         console.error("Erro ao obter usuários:", error);
@@ -56,7 +55,7 @@ function TableDadosUsuarios() {
     fetchData();
   }, []);
 
-  const removeExercicie = async (exercise_id: string, user_token: string) => {
+  const removeExercicie = async (exercise_id: string) => {
     try {
       await deletarExercicio(exercise_id);
       console.log("Exercício deletado");
@@ -67,6 +66,7 @@ function TableDadosUsuarios() {
   };
 
   const atualizarUser = (exercise_id: string) => {
+    checkLoginStatus()
     atualizarUsuario(exercise_id)
       .then(() => {
         console.log("Usuário atualizado");
@@ -77,7 +77,7 @@ function TableDadosUsuarios() {
 
   return (
     <div className="h-screen overflow-hidden">
-      <div className="m-2 flex justify-between items-stretch">
+     <div className="m-2 flex justify-between items-stretch flex-col md:flex-row">
         <div className="flex items-center">
           <h1>Relatório de Exercícios</h1>
         </div>
@@ -121,7 +121,7 @@ function TableDadosUsuarios() {
                 <td {...estiloTd}>
                   <button
                     {...buttonAtualizarDeletar}
-                    onClick={() => removeExercicie(item.exercise_id ?? '', item.exercise_id ?? '')}
+                    onClick={() => removeExercicie(item.exercise_id ?? '')}
                   >
                       <FaTrash className="w-6 h-4 m-1" />
                   </button>

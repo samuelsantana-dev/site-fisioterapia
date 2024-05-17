@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { listarTodosUsuarios, deletarUsuario, atualizarUsuario, listarUsuariosAdmin } from "../api/api";
+import { listarTodosUsuarios, deletarUsuario, atualizarUsuario, listarUsuariosAdmin, checkLoginStatus } from "../api/api-usuarios";
 import { User } from "../api/interface";
 import buttonAtualizarDeletar from "../components/button/button-table";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import table from "../components/table/table";
 import divTable from "../components/table/div-table";
 import inputTable from "../components/table/input";
+import { useNavigate } from "react-router-dom";
 
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
   const [valorAtualInput, setValorAtualInput] = useState("");
+  const [token, setToken] = useState<string | null>(null);
+  const navigate = useNavigate();
+
 
   const estiloTh = { className: "border px-4 py-2"};
   const estiloTd = { classname: "border p-2" };
@@ -46,6 +50,7 @@ function TableDadosUsuarios() {
 
   useEffect(() => {
     const fetchData = async () => {
+      window.localStorage.getItem("user_toke");
       try {
         const usersAdmin = await listarUsuariosAdmin();
         const allUsers = await listarTodosUsuarios();
@@ -56,6 +61,29 @@ function TableDadosUsuarios() {
       }
     };
   
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const storedToken = window.localStorage.getItem("user_toke");
+      if (storedToken) {
+        setToken(storedToken);
+        try {
+          const usersAdmin = await listarUsuariosAdmin();
+          const allUsers = await listarTodosUsuarios();
+          setUsers([...usersAdmin, ...allUsers]);
+          
+        } catch (error) {
+          console.error('Erro ao obter usuários:', error);
+          navigate('/escolher-exercicios');
+        }
+      } else {
+        console.error('Token não encontrado');
+        navigate('/escolher-exercicios');
+      }
+    };
+
     fetchData();
   }, []);
 
@@ -81,7 +109,7 @@ function TableDadosUsuarios() {
 
   return (
       <div className="h-screen overflow-hidden">
-        <div className="m-2 flex justify-between items-stretch">
+       <div className="m-2 flex justify-between items-stretch flex-col md:flex-row">
           <div className="flex items-center">
             <h1>Relatório de Usuários</h1>
           </div>

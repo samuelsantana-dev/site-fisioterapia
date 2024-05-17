@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import buttonPadrao from '../components/button/button-padrao';
-import { loginUser } from '../api/api';
+import { loginUser } from '../api/api-usuarios';
 import { useState } from 'react';
 import inputProps from '../sharedProps/input';
 import Button from '../components/button';
@@ -10,9 +10,9 @@ export function LoginForm() {
     email: '',
     password: '', 
   });
-
+  const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setValueForm({ ...valueForm, [name]: value });
@@ -25,17 +25,28 @@ export function LoginForm() {
       console.log("Login bem-sucedido:", data); 
       window.localStorage["user_toke"] = data.user_id;
       navigate('/escolher-exercicios');
+      
     } catch (error) {
       console.error("Erro ao fazer login:", error);
+      console.error("Erro ao fazer login:", error);
+      setError('Erro ao fazer login. Por favor, verifique suas credenciais.');
     }
   };
 
   const loginErros = () => {
-    if(valueForm.email === '' || valueForm.password === '') {
-      return alert("Preencha os campos corretamente")
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (valueForm.email === '' || valueForm.password === '') {
+      setError('Preencha todos os campos.');
+      return;
     }
-}
-
+  
+    if (!emailRegex.test(valueForm.email)) {
+      setError('Digite um endereço de e-mail válido.');
+      return;
+    }
+  };
+  
   return (
     <>
       <div className="hero min-h-screen bg-backgroundMain">
@@ -82,6 +93,7 @@ export function LoginForm() {
                   </a>
                 </label>
               </div>
+              {error && <p className="text-red-500">{error}</p>}
               <div className="form-control mt-6">
                 <Button type="submit" onClick={loginErros} {...buttonPadrao}>
                   Login
