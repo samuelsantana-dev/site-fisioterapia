@@ -61,11 +61,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/relatorios-usuario",
-    element: <Layout><TableDadosUsuarios /></Layout>,
+    element: <TableDadosUsuarios />,
   },
   {
     path: "/relatorios-exercicios",
-    element: <Layout><TableExercicios /></Layout>,
+    element: <TableExercicios />,
   }
 ]);
 

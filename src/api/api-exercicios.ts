@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const baseUrl = "https://app-jadson-back-wvjk3k2iaq-uc.a.run.app";
-const userToken = window.localStorage.getItem("user_token");
-
+const userToken =  window.localStorage.getItem("user_toke"); 
+// "cc5a0e52c29e81dbe3078fdc"
 const headers = {
   'Content-Type': 'application/json',
   'x-user-token': userToken
@@ -28,10 +28,7 @@ export async function cadastroExercicioApi(exercise_id: any){
         `${baseUrl}/api/v1/exercises`,
         JSON.stringify(exercise_id),
         {
-          headers: {
-            'Content-Type': 'application/json',
-            "x-user-token": `${exercise_id}`
-          },
+          headers
         }
     )
       console.log(response.data)
@@ -41,11 +38,11 @@ export async function cadastroExercicioApi(exercise_id: any){
     }
 }
 
-export async function atualizarExercicio(exercise: any){
+export async function atualizarExercicio(exercise_id: any){
   try{
     const response = await axios.put(
-      `${baseUrl}/api/v2/exercises/${exercise.id}`,
-      JSON.stringify(exercise),
+      `${baseUrl}/api/v2/exercises/${exercise_id}`,
+      JSON.stringify(exercise_id),
       { headers: headers }
     )
     console.log('response', response.data)
@@ -58,7 +55,10 @@ export async function deletarExercicio(exercise_id: string) {
   try {
     const response = await axios.delete(`${baseUrl}/api/v1/exercises/${exercise_id}`, 
     {
-      headers: headers,
+      headers: {
+        'Content-Type': 'application/json',
+        "x-user-token": `${window.localStorage["user_toke"]}`
+      },
     }
     );  
     console.log(response.data)

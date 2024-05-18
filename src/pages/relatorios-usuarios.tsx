@@ -5,8 +5,9 @@ import buttonAtualizarDeletar from "../components/button/button-table";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import table from "../components/table/table";
 import divTable from "../components/table/div-table";
-import inputTable from "../components/table/input";
 import { useNavigate } from "react-router-dom";
+import SearchInput from "../components/seachbar";
+import { Header } from "../components/header";
 
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
@@ -19,32 +20,13 @@ function TableDadosUsuarios() {
 
   const estiloTh = { className: "border px-4 py-2"};
   const estiloTd = { classname: "border p-2" };
-  const TableHeaderFooter = () => (
-    
-    <thead>
-      <tr>
-        <th {...estiloTh}>ID</th>
-        <th {...estiloTh}>Nome</th>
-        <th {...estiloTh}>Data de Nascimento</th>
-        <th {...estiloTh}>Email</th>
-        <th {...estiloTh}>Telefone</th>
-        <th {...estiloTh}>Gênero</th>
-        <th {...estiloTh}>Administrador</th>
-        <th {...estiloTh}>Diagnóstico</th>
-        <th {...estiloTh}>Lista de Exercícios</th>
-        <th {...estiloTh}>Assinatura do EULA</th>
-        <th {...estiloTh}>Ações</th>
-        <th {...estiloTh}>ID</th>
-      </tr>
-    </thead>
-  );
 
   const valorInput = (e: any) => {
     setValorAtualInput(e.target.value);
     const filteredUsers = users.filter(
       user =>
-        user.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        user.email.toLowerCase().includes(e.target.value.toLowerCase())
+        user.name.toLowerCase().includes(e.target.value) ||
+        user.email.toLowerCase().includes(e.target.value)
     );
 
     setUsers(filteredUsers);
@@ -62,11 +44,11 @@ function TableDadosUsuarios() {
           
         } catch (error) {
           console.error('Erro ao obter usuários:', error);
-          navigate('/escolher-exercicios');
+          navigate('/login');
         }
       } else {
         console.error('Token não encontrado');
-        navigate('/escolher-exercicios');
+        navigate('/login');
       }
     };
 
@@ -94,38 +76,37 @@ function TableDadosUsuarios() {
   }
 
   return (
-      <div className="h-screen overflow-hidden">
-       <div className="m-2 flex justify-between items-stretch flex-col md:flex-row">
-          <div className="flex items-center">
-            <h1>Relatório de Usuários</h1>
+    <>
+    <Header/>
+      <div>
+         <div >
+            <SearchInput
+              label="Relatório de Usuários"
+              value={valorAtualInput}
+              onChange={valorInput} 
+              placeholder="Pesquisar"      
+            />
           </div>
-          <div>
-            <label {...inputTable}>
-              <input
-                type="text"
-                className="grow"
-                value={valorAtualInput}
-                onChange={valorInput}
-                placeholder="Pesquisar"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="w-4 h-4 opacity-70"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </label>
-          </div>
-        </div>
+          
+ 
         <div {...divTable}>
           <table {...table}>
-          <TableHeaderFooter />
+          <thead>
+            <tr>
+              <th {...estiloTh}>ID</th>
+              <th {...estiloTh}>Nome</th>
+              <th {...estiloTh}>Data de Nascimento</th>
+              <th {...estiloTh}>Email</th>
+              <th {...estiloTh}>Telefone</th>
+              <th {...estiloTh}>Gênero</th>
+              <th {...estiloTh}>Administrador</th>
+              <th {...estiloTh}>Diagnóstico</th>
+              <th {...estiloTh}>Lista de Exercícios</th>
+              <th {...estiloTh}>Assinatura do EULA</th>
+              <th {...estiloTh}>Ações</th>
+              <th {...estiloTh}>ID</th>
+            </tr>
+          </thead>
             <tbody>
               {users.map((item, index) => (
                 <tr key={index} className="text-center">
@@ -142,7 +123,7 @@ function TableDadosUsuarios() {
                       </div>
                     </div>
                   </td>
-                  <td {...estiloTd}>{item.birth}</td>
+                  <td {...estiloTd}>{new Date(item.birth).toISOString().slice(0,10)}</td>
                   <td {...estiloTd}>{item.email}</td>
                   <td {...estiloTd}>{item.phone}</td>
                   <td {...estiloTd}>{item.gender}</td>
@@ -164,14 +145,30 @@ function TableDadosUsuarios() {
                      <FaEdit className="w-6 h-4 m-1" />
                     </button>
                   </td>
-                  <td {...estiloTh}>{index + 1}</td>
+                  <td {...estiloTd}>{index + 1}</td>
                 </tr>
               ))}
             </tbody>
-            <TableHeaderFooter />
+            <thead>
+              <tr>
+                <th {...estiloTh}>ID</th>
+                <th {...estiloTh}>Nome</th>
+                <th {...estiloTh}>Data de Nascimento</th>
+                <th {...estiloTh}>Email</th>
+                <th {...estiloTh}>Telefone</th>
+                <th {...estiloTh}>Gênero</th>
+                <th {...estiloTh}>Administrador</th>
+                <th {...estiloTh}>Diagnóstico</th>
+                <th {...estiloTh}>Lista de Exercícios</th>
+                <th {...estiloTh}>Assinatura do EULA</th>
+                <th {...estiloTh}>Ações</th>
+                <th {...estiloTh}>ID</th>
+              </tr>
+            </thead>
           </table>
         </div>
       </div>
+    </>
   );
 }
 

@@ -1,40 +1,23 @@
 import { useEffect, useState } from "react";
-import { atualizarUsuario } from "../api/api-usuarios";
 import { Exercise } from "../api/interface";
-import { deletarExercicio, getExercicios } from "../api/api-exercicios";
+import { atualizarExercicio, deletarExercicio, getExercicios } from "../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import buttonAtualizarDeletar from "../components/button/button-table";
 import table from "../components/table/table";
 import divTable from "../components/table/div-table";
-import inputTable from "../components/table/input";
 import { useNavigate } from "react-router-dom";
+import SearchInput from "../components/seachbar";
+import { Header } from "../components/header";
 
 function TableDadosUsuarios() {
   const [exercicios, setExercies] = useState<Exercise[]>([]);
   const [valorAtualInput, setValorAtualInput] = useState("");
   const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate()
-  console.log(token);
-  
+  console.log(token)
 
   const estiloTh = { className: "border px-4 py-2"};
   const estiloTd = { classname: "border p-2" };
-  const TableHeaderFooter = () => (
-    
-    <thead>
-      <tr>
-          <th {...estiloTh}>ID</th>
-          <th {...estiloTh}>Grupo do Músculo</th>
-          <th {...estiloTh}>Dificuldade</th>
-          <th {...estiloTh}>Músculo</th>
-          <th {...estiloTh}>Arquivo</th>
-          <th {...estiloTh}>Nome</th>
-          <th {...estiloTh}>Descrição</th>
-          <th {...estiloTh}>Ações</th>
-          <th {...estiloTh}>ID</th>
-      </tr>
-    </thead>
-  );
   const valorInput = (e: any) => {
     setValorAtualInput(e.target.value);
     const filteredUsers = exercicios.filter(
@@ -55,13 +38,30 @@ function TableDadosUsuarios() {
           const exerciciesAdmin = await getExercicios();
           setExercies([...exerciciesAdmin]);
         } catch (error) {
+          alert('Faça login para acessar essa pagina');
           console.error("Erro ao obter usuários:", error);
-          navigate('/escolher-exercicios');
+          navigate('/login');
         }
       } else {
         console.error('Token não encontrado');
-        navigate('/escolher-exercicios');
+        navigate('/login');
          }
+      }
+
+    fetchData();
+  }, []);
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+          const exerciciesAdmin = await getExercicios();
+          setExercies([...exerciciesAdmin]);
+        } catch (error) {
+          console.error("Erro ao obter usuários:", error);
+          // navigate('/escolher-exercicios');
+        }
+      
       }
 
     fetchData();
@@ -71,14 +71,14 @@ function TableDadosUsuarios() {
     try {
       await deletarExercicio(exercise_id);
       console.log("Exercício deletado");
-      setExercies(exercicios.filter((user) => user.exercise_id !== exercise_id));
+      setExercies(exercicios.filter((ex) => ex.exercise_id === exercise_id));
     } catch (error) {
       console.error("Erro ao deletar o Exercício:", error);
     }
   };
 
-  const atualizarUser = (exercise_id: string) => {
-    atualizarUsuario(exercise_id)
+  const atualizarEx = (exercise_id: string) => {
+    atualizarExercicio(exercise_id)
       .then(() => {
         console.log("Usuário atualizado");
         setExercies(exercicios.map((user) => (user.exercise_id === exercise_id ? { ...user, } : user)));
@@ -87,38 +87,32 @@ function TableDadosUsuarios() {
   };
 
   return (
-    <div className="h-screen overflow-hidden">
-     <div className="m-2 flex justify-between items-stretch flex-col md:flex-row">
-        <div className="flex items-center">
-          <h1>Relatório de Exercícios</h1>
-        </div>
-        <div>
-          <label {...inputTable}>
-            <input
-              type="text"
-              className="grow"
+    <>
+    <Header />
+    <div>
+      <div>
+            <SearchInput
+              label="Relatório de Exercicios"
               value={valorAtualInput}
-              onChange={valorInput}
-              placeholder="Pesquisar"
+              onChange={valorInput} 
+              placeholder="Pesquisar"      
             />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="w-4 h-4 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </label>
-        </div>
-      </div>
+          </div>
       <div {...divTable}>
         <table {...table}>
-        <TableHeaderFooter />
+        <thead>
+          <tr>
+              <th {...estiloTh}>ID</th>
+              <th {...estiloTh}>Grupo do Músculo</th>
+              <th {...estiloTh}>Dificuldade</th>
+              <th {...estiloTh}>Músculo</th>
+              <th {...estiloTh}>Arquivo</th>
+              <th {...estiloTh}>Nome</th>
+              <th {...estiloTh}>Descrição</th>
+              <th {...estiloTh}>Ações</th>
+              <th {...estiloTh}>ID</th>
+          </tr>
+         </thead>
           <tbody>
             {exercicios.map((item, index) => (
               <tr key={index} className="text-center">
@@ -138,7 +132,7 @@ function TableDadosUsuarios() {
                   </button>
                   <button
                     {...buttonAtualizarDeletar}
-                    onClick={() => atualizarUser(item.exercise_id ?? '')}
+                    onClick={() => atualizarEx(item.exercise_id ?? '')}
                   >
                       <FaEdit className="w-6 h-4 m-1" />
                   </button>
@@ -147,11 +141,24 @@ function TableDadosUsuarios() {
               </tr>
             ))}
           </tbody>
-          <TableHeaderFooter />
+          <thead>
+          <tr>
+              <th {...estiloTh}>ID</th>
+              <th {...estiloTh}>Grupo do Músculo</th>
+              <th {...estiloTh}>Dificuldade</th>
+              <th {...estiloTh}>Músculo</th>
+              <th {...estiloTh}>Arquivo</th>
+              <th {...estiloTh}>Nome</th>
+              <th {...estiloTh}>Descrição</th>
+              <th {...estiloTh}>Ações</th>
+              <th {...estiloTh}>ID</th>
+          </tr>
+         </thead>
         </table>
        
       </div>
     </div>
+    </>
   );
 }
 
