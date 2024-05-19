@@ -52,158 +52,164 @@ export function CadastroForm() {
   };
 
   return (
-    <>
-      <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
-        <form
-          className="m-1 flex items-start justify-center lg:w-[49%] my-8"
-          onSubmit={handleSubmit}
+    <div className="bg-backgroundMain flex justify-center flex-col lg:flex-row">
+      <form
+        className="m-1 flex items-start justify-center lg:w-[49%] my-8"
+        onSubmit={handleSubmit}
+      >
+        <div
+          {...cardProps}
+          className={`${cardProps.className} w-full max-w-[600px]`}
         >
-          <div
-            {...cardProps}
-            className={`${cardProps.className} w-full max-w-[600px]`}
-          >
-            <div className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Nome *</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder='Digite seu nome'
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  {...inputProps}
+          <div className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Nome *</span>
+              </label>
+              <input
+                type="text"
+                placeholder='Digite seu nome completo'
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                {...inputProps}
+              />
+              {!formData.name && <span className="text-red-500">Nome é obrigatório</span>}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Data de Nascimento *</span>
+              </label>
+              <input
+                type="text"
+                placeholder='AAAA-MM-DD ex: 2024-12-15'
+                name="birth"
+                value={formData.birth}
+                onChange={handleChange}
+                {...inputProps}
+              />
+              {!formData.birth && <span className="text-red-500">Data de nascimento é obrigatória</span>}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email *</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                maxLength={200}
+                placeholder="Digite seu e-mail"
+                onChange={handleChange}
+                value={formData.email}
+                {...inputProps}
+              />
+              {!formData.email && <span className="text-red-500">Email é obrigatório</span>}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Número de Telefone *</span>
+              </label>
+              <input
+                type="text"
+                maxLength={11}
+                minLength={11}
+                name="phone"
+                placeholder="Digite seu telefone com DDD (ex: 11987654321)"
+                onChange={handleChange}
+                value={formData.phone}
+                {...inputProps}
+              />
+              {!formData.phone && <span className="text-red-500">Número de telefone é obrigatório</span>}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Sexo *</span>
+              </label>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                {...inputProps}
+              >
+                <option value="">Selecione seu sexo</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="outro">Outro</option>
+              </select>
+              {!formData.gender && <span className="text-red-500">Sexo é obrigatório</span>}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Diagnóstico *</span>
+              </label>
+              <input
+                type="text"
+                maxLength={80}
+                name="diagnosis"
+                placeholder="Digite seu diagnóstico"
+                value={formData.diagnosis}
+                onChange={handleChange}
+                {...inputProps}
+              />
+              {!formData.diagnosis && <span className="text-red-500">Diagnóstico é obrigatório</span>}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Senha *</span>
+              </label>
+              <input
+                type="password"
+                maxLength={200}
+                name="password"
+                placeholder="Digite uma senha segura"
+                onChange={handleChange}
+                value={formData.password}
+                {...inputProps}
+              />
+              {!formData.password && <span className="text-red-500">Senha é obrigatória</span>}
+            </div>
+            <div className="form-control">
+              <label className="cursor-pointer label">
+                <span className="label-text">Você é um administrador?</span>
+                <input 
+                  type="checkbox" 
+                  name="admin" 
+                  className="checkbox checkbox-info" 
+                  checked={formData.admin}
+                  onChange={handleCheckBox} 
                 />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Data de Nascimento *</span>
-                </label>
-                <input
-                  type="number"
-                  placeholder='ano-mes-dia ex: 2024-15-12'
-                  name="birth"
-                  value={formData.birth}
-                  onChange={handleChange}
-                  {...inputProps}
+              </label>
+            </div>
+            <div className="form-control">
+              <label className="cursor-pointer label">
+                <span className="label-text">Aceito o Termo *</span>
+                <input 
+                  type="checkbox" 
+                  name="signed_eula" 
+                  className="checkbox checkbox-info" 
+                  checked={formData.signed_eula}
+                  onChange={handleCheckBox} 
                 />
+              </label>
+              <div className="mt-2">
+                <p>
+                  Apresentamos o seu site de fisioterapia como um 'Portal de Estudos em Fisioterapia', oferecendo uma plataforma educativa com artigos, estudos de caso e insights sobre a prática da fisioterapia. Por favor, esteja ciente de que o site é estritamente para fins educacionais e informativos. Não garantimos a precisão das informações e o usuário assume a responsabilidade por qualquer aplicação prática de técnicas ou exercícios apresentados. Recomendamos consultar um profissional de saúde em caso de lesão ou desconforto. Ao continuar a usar o site, você aceita esta cláusula de responsabilidade.
+                </p>
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email *</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  maxLength={200}
-                  placeholder="Digite seu e-mail"
-                  onChange={handleChange}
-                  value={formData.email}
-                  {...inputProps}
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Número *</span>
-                </label>
-                <input
-                  type="text"
-                  maxLength={11}
-                  minLength={11}
-                  name="phone"
-                  placeholder="Digite seu Telefone"
-                  onChange={handleChange}
-                  value={formData.phone}
-                  {...inputProps}
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Sexo *</span>
-                </label>
-                <select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  {...inputProps}
-                >
-                  <option value="">Selecione seu sexo</option>
-                  <option value="masculino">Masculino</option>
-                  <option value="feminino">Feminino</option>
-                  <option value="outro">Outro</option>
-                </select>
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Diagnóstico *</span>
-                </label>
-                <input
-                  type="text"
-                  maxLength={80}
-                  name="diagnosis"
-                  placeholder="Digite seu diagnóstico"
-                  value={formData.diagnosis}
-                  onChange={handleChange}
-                  {...inputProps}
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Senha *</span>
-                </label>
-                <input
-                  type="password"
-                  maxLength={200}
-                  name="password"
-                  placeholder="Digite sua senha"
-                  onChange={handleChange}
-                  value={formData.password}
-                  {...inputProps}
-                />
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text">Voce é um administrador ?</span>
-                  <input 
-                    type="checkbox" 
-                    name="admin" 
-                    className="checkbox checkbox-info" 
-                    checked={formData.admin}
-                    onChange={handleCheckBox} 
-                   />
-                </label>
-              </div>
-              <div className="form-control">
-                
-                <label className="cursor-pointer label">
-                  
-                  <span className="label-text">Aceito o Termo</span>
-                  <input 
-                    type="checkbox" 
-                    name="signed_eula" 
-                    className="checkbox checkbox-info" 
-                    checked={formData.signed_eula}
-                    onChange={handleCheckBox} 
-                   />
-                </label>
-                <div>
-                    Apresentamos o seu site de fisioterapia como um 'Portal de Estudos em Fisioterapia', oferecendo uma plataforma educativa com artigos, estudos de caso e insights sobre a prática da fisioterapia. Por favor, esteja ciente de que o site é estritamente para fins educacionais e informativos. Não garantimos a precisão das informações e o usuário assume a responsabilidade por qualquer aplicação prática de técnicas ou exercícios apresentados. Recomendamos consultar um profissional de saúde em caso de lesão ou desconforto. Ao continuar a usar o site, você aceita esta cláusula de responsabilidade.
-                  </div>
-              </div>
-              {error && <p className="text-red-500">{error}</p>}
-              <div className="form-control mt-6">
-                <Button
-                  type="submit"
-                  {...buttonPadrao}
-                >
-                  Cadastrar
-                </Button>
-              </div>
+              {!formData.signed_eula && <span className="text-red-500">Aceitação do termo é obrigatória</span>}
+            </div>
+            {error && <p className="text-red-500">{error}</p>}
+            <div className="form-control mt-6">
+              <Button
+                type="submit"
+                {...buttonPadrao}
+              >
+                Cadastrar
+              </Button>
             </div>
           </div>
-        </form>
-      </div>
-    </>
+        </div>
+      </form>
+    </div>
   );
 }

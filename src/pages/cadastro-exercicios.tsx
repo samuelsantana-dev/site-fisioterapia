@@ -23,6 +23,13 @@ export function CadastroExercicios() {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
+    if (name === 'file') {
+      const videoId = value.split('v=')[1]?.split('&')[0] || value.split('/').pop();
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+      setformExercicio({ ...formExercicio, [name]: embedUrl });
+    } else {
+      setformExercicio({ ...formExercicio, [name]: value });
+    }
     setformExercicio({ ...formExercicio, [name]: value });
   };
 
@@ -35,7 +42,7 @@ export function CadastroExercicios() {
         return;
       }
       const data = await cadastroExercicioApi(formExercicio);
-      console.log("Cadastro bem-sucedido:", data);
+      console.log("Cadastro de exercicio bem-sucedido:", data);
         navigate('/escolher-exercicios');
     } catch {
       console.error("Erro ao cadastrar:", error);

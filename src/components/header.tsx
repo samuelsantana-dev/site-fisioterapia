@@ -62,6 +62,14 @@ export function Header() {
                     Relatório de Exercícios
                   </Link>
                 </li>
+              <li>
+                <Link 
+                  to='/cadastro'
+                  rel={headerLogin.rel} 
+                >
+                  Cadastre-se
+                </Link>
+              </li>
                 <li>
                   <button onClick={logoutUser} className="btn btn-ghost w-full text-left">
                     Sair
