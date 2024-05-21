@@ -8,6 +8,7 @@ import divTable from "../components/table/div-table";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/seachbar";
 import { Header } from "../components/header";
+import estiloTd from "../components/table/td";
 
 function TableDadosUsuarios() {
   const [exercicios, setExercies] = useState<Exercise[]>([]);
@@ -17,7 +18,6 @@ function TableDadosUsuarios() {
   console.log(token)
 
   const estiloTh = { className: "border px-4 py-2"};
-  const estiloTd = { classname: "border p-2" };
   const valorInput = (e: any) => {
     setValorAtualInput(e.target.value);
     const filteredUsers = exercicios.filter(
@@ -50,23 +50,7 @@ function TableDadosUsuarios() {
 
     fetchData();
   }, []);
-
   
-  useEffect(() => {
-    const fetchData = async () => {
-        try {
-          const exerciciesAdmin = await getExercicios();
-          setExercies([...exerciciesAdmin]);
-        } catch (error) {
-          console.error("Erro ao obter usuários:", error);
-          // navigate('/escolher-exercicios');
-        }
-      
-      }
-
-    fetchData();
-  }, []);
-
   const removeExercicie = async (exercise_id: string) => {
     try {
       await deletarExercicio(exercise_id);
@@ -120,7 +104,9 @@ function TableDadosUsuarios() {
                 <td {...estiloTd}>{item.muscle_group}</td>
                 <td {...estiloTd}>{item.difficulty}</td>
                 <td {...estiloTd}>{item.muscle}</td>
-                <td {...estiloTd}>{item.file}</td>
+                <td className="text-blue-500 border p-2">
+                    <a href={item.file} target="_blank" rel="noopener noreferrer">{item.file}</a>
+                </td>
                 <td {...estiloTd}>{item.name}</td>
                 <td {...estiloTd}>{item.description}</td>
                 <td {...estiloTd}>

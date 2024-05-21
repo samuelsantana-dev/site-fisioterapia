@@ -16,7 +16,7 @@ export function Header() {
       <div className="flex-1 px-2 lg:flex-none">
         <a className="text-lg font-bold">Fisioterapia</a>
       </div>
-      <div className="flex justify-end flex-1 px-2">
+      <div className="flex justify-end flex-1 px-2 z-50">
         <div className="flex items-stretch">
           <Link 
             to={headerHome.href} 

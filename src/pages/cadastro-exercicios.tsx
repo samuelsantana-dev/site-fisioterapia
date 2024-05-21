@@ -21,17 +21,45 @@ export function CadastroExercicios() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // const extractVideoId = (url: string) => {
+  //   const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/gi;
+  //   const match = youtubeRegex.exec(url);
+  //   return match ? match[1] : '';
+  // };
+  const extractVideoId = (url: string) => {
+    let videoId = '';
+    if (url.includes('youtube.com')) {
+      const urlParams = new URLSearchParams(new URL(url).search);
+      videoId = urlParams.get('v') || '';
+    } else if (url.includes('youtu.be')) {
+      videoId = url.split('/').pop() || '';
+    }
+    return videoId;
+  };
+  
+  
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     if (name === 'file') {
-      const videoId = value.split('v=')[1]?.split('&')[0] || value.split('/').pop();
+      const videoId = extractVideoId(value);
       const embedUrl = `https://www.youtube.com/embed/${videoId}`;
       setformExercicio({ ...formExercicio, [name]: embedUrl });
     } else {
       setformExercicio({ ...formExercicio, [name]: value });
     }
-    setformExercicio({ ...formExercicio, [name]: value });
   };
+
+  // const handleChange = (e: any) => {
+  //   const { name, value } = e.target;
+  //   if (name === 'file') {
+  //     const videoId = value.split('v=')[1]?.split('&')[0] || value.split('/').pop();
+  //     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  //     setformExercicio({ ...formExercicio, [name]: embedUrl });
+  //   } else {
+  //     setformExercicio({ ...formExercicio, [name]: value });
+  //   }
+  //   setformExercicio({ ...formExercicio, [name]: value });
+  // };
 
 
   const handleSubmit = async (e: any) => {

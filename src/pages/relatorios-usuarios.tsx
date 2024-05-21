@@ -8,6 +8,8 @@ import divTable from "../components/table/div-table";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/seachbar";
 import { Header } from "../components/header";
+import estiloTd from "../components/table/td";
+import estiloTh from "../components/table/th";
 
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
@@ -16,10 +18,6 @@ function TableDadosUsuarios() {
   const navigate = useNavigate();
 
   console.log(token);
-
-
-  const estiloTh = { className: "border px-4 py-2"};
-  const estiloTd = { classname: "border p-2" };
 
   const valorInput = (e: any) => {
     setValorAtualInput(e.target.value);

@@ -7,7 +7,7 @@ export interface User {
     phone: string;
     gender: string;
     admin?: boolean;
-    profile_pic?: string | undefined;
+    profile_pic?: string | undefined | null;
     diagnosis: string;
     exercise_list?: string[];
     signed_eula?: boolean;

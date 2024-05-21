@@ -25,7 +25,7 @@ export function LoginForm() {
       console.log("Login bem-sucedido:", data); 
       window.localStorage["user_toke"] = data.user_id;
       navigate('/escolher-exercicios');
-      
+      window.location.reload();
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       console.error("Erro ao fazer login:", error);

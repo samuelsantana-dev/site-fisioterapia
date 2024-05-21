@@ -16,6 +16,7 @@ export function CadastroForm() {
     phone: '', 
     gender: '', 
     admin: false,
+    profile_pic: '' as string,
     diagnosis: '', 
     exercise_list: [], 
     signed_eula: false,
@@ -24,6 +25,18 @@ export function CadastroForm() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const handleImageChange = (e: any) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const imageDataUrl = reader.result instanceof ArrayBuffer ? Buffer.from(reader.result).toString('base64') : null;
+      setFormData({ ...formData, profile_pic: imageDataUrl });
+    };
+    if (file) {
+      reader.readAsArrayBuffer(file);
+    }
+  };
+  
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -74,7 +87,21 @@ export function CadastroForm() {
                 onChange={handleChange}
                 {...inputProps}
               />
-              {!formData.name && <span className="text-red-500">Nome é obrigatório</span>}
+            </div>
+            <div className="card-body">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Foto de Perfil *</span>
+                  </label>
+                  <input
+                    type="file"
+                    placeholder='Preenhca sua imagem de perfil'
+                    name="profile_pic"
+                    value={formData.profile_pic}
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                </div>
             </div>
             <div className="form-control">
               <label className="label">
@@ -82,13 +109,15 @@ export function CadastroForm() {
               </label>
               <input
                 type="text"
-                placeholder='AAAA-MM-DD ex: 2024-12-15'
+                placeholder='Ano-Mês-Dia. Ex: 2024-12-15'
                 name="birth"
                 value={formData.birth}
                 onChange={handleChange}
                 {...inputProps}
               />
-              {!formData.birth && <span className="text-red-500">Data de nascimento é obrigatória</span>}
+              <span id="dateHelp" className="text-gray-500">
+                Ano-Mês-Dia. Ex: 2024-12-15
+              </span>
             </div>
             <div className="form-control">
               <label className="label">
@@ -103,23 +132,27 @@ export function CadastroForm() {
                 value={formData.email}
                 {...inputProps}
               />
-              {!formData.email && <span className="text-red-500">Email é obrigatório</span>}
+            
             </div>
             <div className="form-control">
-              <label className="label">
+              <label className="label" htmlFor="phone">
                 <span className="label-text">Número de Telefone *</span>
               </label>
               <input
                 type="text"
+                id="phone"
                 maxLength={11}
                 minLength={11}
                 name="phone"
-                placeholder="Digite seu telefone com DDD (ex: 11987654321)"
+                placeholder="11987654321"
                 onChange={handleChange}
                 value={formData.phone}
+                aria-describedby="phoneHelp"
                 {...inputProps}
               />
-              {!formData.phone && <span className="text-red-500">Número de telefone é obrigatório</span>}
+              <span id="phoneHelp" className="text-gray-500">
+                Digite seu telefone com DDD, sem espaços ou traços. Ex: 11987654321
+              </span>
             </div>
             <div className="form-control">
               <label className="label">
@@ -136,7 +169,6 @@ export function CadastroForm() {
                 <option value="feminino">Feminino</option>
                 <option value="outro">Outro</option>
               </select>
-              {!formData.gender && <span className="text-red-500">Sexo é obrigatório</span>}
             </div>
             <div className="form-control">
               <label className="label">
@@ -151,7 +183,6 @@ export function CadastroForm() {
                 onChange={handleChange}
                 {...inputProps}
               />
-              {!formData.diagnosis && <span className="text-red-500">Diagnóstico é obrigatório</span>}
             </div>
             <div className="form-control">
               <label className="label">
@@ -166,7 +197,6 @@ export function CadastroForm() {
                 value={formData.password}
                 {...inputProps}
               />
-              {!formData.password && <span className="text-red-500">Senha é obrigatória</span>}
             </div>
             <div className="form-control">
               <label className="cursor-pointer label">
