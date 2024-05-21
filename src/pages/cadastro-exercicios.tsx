@@ -20,6 +20,7 @@ export function CadastroExercicios() {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [userDifficulty, setUserDifficulty] = useState('');
 
   // const extractVideoId = (url: string) => {
   //   const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/gi;
@@ -47,6 +48,23 @@ export function CadastroExercicios() {
     } else {
       setformExercicio({ ...formExercicio, [name]: value });
     }
+  };
+
+  const handleDifficult = (e: any) => {
+    const { name, value } = e.target;
+    setUserDifficulty(value); // Atualiza o estado com a dificuldade selecionada pelo usuário
+
+    let dif;
+    if (value === 'facil') {
+      dif = 0.1;
+    } else if (value === 'medio') {
+      dif = 0.5;
+    } else if (value === 'dificil') {
+      dif = 0.9;
+    } else {
+      dif = '';
+    }
+    setformExercicio({ ...formExercicio, [name]: dif });
   };
 
   // const handleChange = (e: any) => {
@@ -121,7 +139,7 @@ export function CadastroExercicios() {
                   {...inputProps}
                 />
               </div>
-              <div className="form-control">
+              {/* <div className="form-control">
                 <label className="label">
                   <span className="label-text">Dificuldade do exercicio *</span>
                 </label>
@@ -133,6 +151,22 @@ export function CadastroExercicios() {
                   onChange={handleChange}
                   {...inputProps}
                 />
+              </div> */}
+
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Dificuldade do exercício *</span>
+                </label>
+                <select
+                  name="difficulty"
+                  value={userDifficulty} // Use o estado userDifficulty aqui
+                  onChange={handleDifficult}
+                >
+                  <option value="">Selecione a dificuldade</option>
+                  <option value="facil">fácil</option>
+                  <option value="medio">médio</option>
+                  <option value="dificil">difícil</option>
+                </select>
               </div>
               <div className="form-control">
                 <label className="label">
