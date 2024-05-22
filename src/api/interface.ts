@@ -1,5 +1,5 @@
 export interface User {
-    id?: string;
+    id?: string | undefined | null;
     user_id?: string;
     name: string;
     birth: string;
@@ -14,6 +14,22 @@ export interface User {
     password: string;
 }
 
+export interface UserEdit {
+    id?: string | undefined | null;
+    user_id?: string;
+    name?: string;
+    birth?: string;
+    email?: string;
+    phone?: string;
+    gender?: string;
+    admin?: boolean;
+    profile_pic?: string | undefined | null;
+    diagnosis?: string;
+    exercise_list?: string[];
+    signed_eula?: boolean;
+    password?: string;
+}
+
 export interface Exercise {
     exercise_id?: string;
     muscle_group: string;
@@ -22,6 +38,6 @@ export interface Exercise {
     name: string;
     reps: number;
     description: string;
-    instructions?: [];
+    instructions?: (string | number)[];
     file: string;
 }

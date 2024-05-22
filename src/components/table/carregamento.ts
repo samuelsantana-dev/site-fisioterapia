@@ -1,0 +1,1 @@
+export const isUserLoggedIn = window.localStorage.getItem("user_token");

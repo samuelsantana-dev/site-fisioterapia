@@ -1,13 +1,6 @@
 import axios from "axios";
-
-const baseUrl = "https://app-jadson-back-wvjk3k2iaq-uc.a.run.app";
-const userToken = window.localStorage.getItem("user_toke");
-
-const headers = {
-  'Content-Type': 'application/json',
-  'x-user-token': userToken
-};
-
+import { User, UserEdit } from "./interface";
+import { baseUrl, headers, createBody, userTokenDelPutPot } from "./export-padrao";
 
 export async function listarTodosUsuarios() {
   try {
@@ -39,7 +32,7 @@ export async function loginUser(user: any) {
   try {
     const responseLogin = await axios.post(
       `${baseUrl}/api/v1/users/login`,
-      JSON.stringify(user),
+      createBody(user),
       {
         headers: {
           'Content-Type': 'application/json',
@@ -55,15 +48,14 @@ export async function loginUser(user: any) {
 }
 
 export async function cadastroUsuario(user: any) {
-  const userToken = window.localStorage["user_toke"];
   try {
     const responseCadastro = await axios.post(
       `${baseUrl}/api/v1/users/`,
-      JSON.stringify(user),
+      createBody(user),
       {
         headers: {
           'Content-Type': 'application/json',
-          "x-user-token": userToken
+          "x-user-token": userTokenDelPutPot
         },
       }
     );
@@ -81,7 +73,7 @@ export async function deletarUsuario(user_id: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        "x-user-token": `${window.localStorage["user_toke"]}`
+        "x-user-token": userTokenDelPutPot
       },
     }
     );  
@@ -91,15 +83,23 @@ export async function deletarUsuario(user_id: string) {
   }
 }
 
-export async function atualizarUsuario(user_id: string){
+export async function atualizarUsuario(user: UserEdit) {
   try {
-    const response = await axios.put(`${baseUrl}/api/v1/users/${user_id}`, 
-    {
-      headers: headers,
-    }
-    );  
-    console.log(response.data)
+    const response = await axios.put(
+      `${baseUrl}/api/v1/users/${user.user_id}`,
+      createBody(user),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          "x-user-token": userTokenDelPutPot
+        },
+      }
+  );
+    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.error("Erro ao atualizar o usuaário:", error);
+    console.error("Erro ao atualizar o usuário:", error);
+    throw error;
   }
 }
+

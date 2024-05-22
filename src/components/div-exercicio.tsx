@@ -1,4 +1,5 @@
 import { Exercise } from '../api/interface';
+import { difficulty } from './validacoes-gerais';
 
 interface DivExerciciosProps {
   exercicios: Exercise[];
@@ -13,9 +14,9 @@ export function DivExercicios({ exercicios }: DivExerciciosProps) {
           <div className="card-body">
             <h2 className="card-title text-center font-bold">{exercicio.name}</h2>
             <p>{exercicio.description}</p>
-            <p className="text-sm font-semibold">Muscle: {exercicio.muscle}</p>
-            <p className="text-sm font-semibold">Muscle Group: {exercicio.muscle_group}</p>
-            <p className="text-sm font-semibold">Difficulty: {exercicio.difficulty}</p>
+            <p className="text-sm font-semibold">Musculo: {exercicio.muscle}</p>
+            <p className="text-sm font-semibold">Grupo do Musculo: {exercicio.muscle_group}</p>
+            <p className="text-sm font-semibold">Dificuldade: {difficulty(exercicio.difficulty)}</p>
             <div className="form-control">
               <label className="cursor-pointer label">
                 <input

@@ -23,7 +23,7 @@ export function LoginForm() {
     try {
       const data = await loginUser(valueForm);
       console.log("Login bem-sucedido:", data); 
-      window.localStorage["user_toke"] = data.user_id;
+      window.localStorage["user_token"] = data.user_id;
       navigate('/escolher-exercicios');
       window.location.reload();
     } catch (error) {

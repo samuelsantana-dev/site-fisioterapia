@@ -1,16 +1,19 @@
 import { createBrowserRouter,Route, Routes} from 'react-router-dom';
 import { Home } from './pages/home.tsx';
 import { LoginForm } from './pages/login.tsx';
-import { ExerciciosInferiores } from './pages/exercicios-inferiores.tsx';
-import { ExerciciosSuperiores } from './pages/exercicios-superiores.tsx';
+import { ExerciciosInferiores } from './pages/exercicios/exercicios-inferiores.tsx';
+import { ExerciciosSuperiores } from './pages/exercicios/exercicios-superiores.tsx';
 import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
-import { CadastroForm } from './pages/cadastro.tsx';
-import { CadastroExercicios } from './pages/cadastro-exercicios.tsx';
+import { CadastroForm } from './pages/cadastros/cadastro-usuario.tsx';
+import { CadastroExercicios } from './pages/cadastros/cadastro-exercicios.tsx';
 import TableDadosUsuarios from './pages/relatorios-usuarios.tsx';
 import TableExercicios from './pages/relatorios-exercicios.tsx';
 import Layout from './layout.tsx';
 import { AuthProvider } from './hook/use-auth.tsx';
 import { ProtectedRoute } from './hook/protect-route.tsx';
+import {EditarUsuario} from './pages/cadastros/editar-usuario.tsx';
+import { EditarExercicios } from './pages/cadastros/editar-exercicio.tsx';
+import { ExerciciosAerobicos } from './pages/exercicios/exercicios-aerobicos.tsx';
 
 
 export function Rotas(){
@@ -38,10 +41,18 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Layout><LoginForm /></Layout>,
-  },
+  },  
   {
     path: "/cadastro",
     element: <Layout><CadastroForm /></Layout>,
+  },
+  {
+    path: "/editar-usuario/:id",
+    element: <Layout><EditarUsuario /></Layout>,
+  },
+  {
+    path: "/editar-exercicio/:id",
+    element: <Layout><EditarExercicios /></Layout>,
   },
   {
     path: "/cadastro-exercicios",
@@ -50,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: "/exercicios-inferiores",
     element: <Layout><ExerciciosInferiores /></Layout>,
+  },
+  {
+    path: "/exercicios-aerobicos/",
+    element: <Layout><ExerciciosAerobicos /></Layout>,
   },
   {
     path: "/exercicios-superiores",

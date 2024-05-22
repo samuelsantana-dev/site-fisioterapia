@@ -1,29 +1,24 @@
-import cardProps from "../sharedProps/card"
-import inputProps from "../sharedProps/input"
-import Button from "../components/button"
-import buttonPadrao from '../components/button/button-padrao';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {User} from '../api/interface';
-import { cadastroUsuario } from '../api/api-usuarios';
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { User, UserEdit } from "../../api/interface";
+import Button from "../../components/button";
+import buttonPadrao from "../../components/button/button-padrao";
+import cardProps from "../../sharedProps/card";
+import inputProps from "../../sharedProps/input";
+import inputPropsPassword from "../../sharedProps/input-senha"
 
-export function CadastroForm() {
-  const [formData, setFormData] = useState<User>({
-    id: '', 
-    name: '', 
-    birth: '', 
-    email: '', 
-    phone: '', 
-    gender: '', 
-    admin: false,
-    profile_pic: '' as string,
-    diagnosis: '', 
-    exercise_list: [], 
-    signed_eula: false,
-    password: '' 
-  });
+
+interface UsuarioFormProps {
+  initialData: User | UserEdit;
+  onSubmit: (data: User | UserEdit) => Promise<void>;
+  isEditMode?: boolean;
+}
+
+export function UsuarioForm({ initialData, onSubmit, isEditMode = false }: UsuarioFormProps) {
+  const [formData, setFormData] = useState<User | UserEdit>(initialData);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const isUserLoggedIn = window.localStorage.getItem("user_token");
 
   const handleImageChange = (e: any) => {
     const file = e.target.files[0];
@@ -36,31 +31,28 @@ export function CadastroForm() {
       reader.readAsArrayBuffer(file);
     }
   };
-  
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleCheckBox = (event: any) => {
-    const { name, checked} = event.target;
+    const { name, checked } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      admin: true,
-      signed_eula: true,
       [name]: checked,
     }));
-  }
+  };
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const data = await cadastroUsuario(formData);
-      console.log("Cadastro bem-sucedido:", data);
+      await onSubmit(formData);
       navigate('/escolher-exercicios');
     } catch (error) {
-      console.error("Erro ao cadastrar:", error);
-      setError('Erro ao cadastrar. Por favor, verifique suas informações.');
+      console.error("Erro ao enviar formulário:", error);
+      setError('Erro ao enviar formulário. Por favor, verifique suas informações.');
     }
   };
 
@@ -88,35 +80,22 @@ export function CadastroForm() {
                 {...inputProps}
               />
             </div>
-            <div className="card-body">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Foto de Perfil *</span>
-                  </label>
-                  <input
-                    type="file"
-                    placeholder='Preenhca sua imagem de perfil'
-                    name="profile_pic"
-                    value={formData.profile_pic}
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
-                </div>
-            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Data de Nascimento *</span>
               </label>
               <input
                 type="text"
-                placeholder='Ano-Mês-Dia. Ex: 2024-12-15'
+                placeholder='Ano-Mês-Dia Ex: 2000-12-20'
                 name="birth"
+                minLength={10}
+                maxLength={10}
                 value={formData.birth}
                 onChange={handleChange}
                 {...inputProps}
               />
               <span id="dateHelp" className="text-gray-500">
-                Ano-Mês-Dia. Ex: 2024-12-15
+                 Ano-Mês-Dia Ex: 2000-12-20
               </span>
             </div>
             <div className="form-control">
@@ -132,7 +111,6 @@ export function CadastroForm() {
                 value={formData.email}
                 {...inputProps}
               />
-            
             </div>
             <div className="form-control">
               <label className="label" htmlFor="phone">
@@ -184,9 +162,10 @@ export function CadastroForm() {
                 {...inputProps}
               />
             </div>
-            <div className="form-control">
+            {isUserLoggedIn ? (
+              <div className="form-control">
               <label className="label">
-                <span className="label-text">Senha *</span>
+                <span className="label-text">Senha{isEditMode ? '' : ' *'}</span>
               </label>
               <input
                 type="password"
@@ -195,30 +174,50 @@ export function CadastroForm() {
                 placeholder="Digite uma senha segura"
                 onChange={handleChange}
                 value={formData.password}
-                {...inputProps}
+                {...inputPropsPassword}
               />
             </div>
-            <div className="form-control">
-              <label className="cursor-pointer label">
-                <span className="label-text">Você é um administrador?</span>
-                <input 
-                  type="checkbox" 
-                  name="admin" 
-                  className="checkbox checkbox-info" 
-                  checked={formData.admin}
-                  onChange={handleCheckBox} 
+            ) : 
+            (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Senha{isEditMode ? '' : ' *'}</span>
+                </label>
+                <input
+                  type="password"
+                  maxLength={200}
+                  name="password"
+                  placeholder="Digite uma senha segura"
+                  onChange={handleChange}
+                  value={formData.password}
+                  {...inputProps}
                 />
-              </label>
-            </div>
+              </div>
+            )}
+            
+            {isUserLoggedIn && (
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text">Você é um administrador?</span>
+                  <input
+                    type="checkbox"
+                    name="admin"
+                    className="checkbox checkbox-info"
+                    checked={formData.admin}
+                    onChange={handleCheckBox}
+                  />
+                </label>
+              </div>
+            )}
             <div className="form-control">
               <label className="cursor-pointer label">
                 <span className="label-text">Aceito o Termo *</span>
-                <input 
-                  type="checkbox" 
-                  name="signed_eula" 
-                  className="checkbox checkbox-info" 
+                <input
+                  type="checkbox"
+                  name="signed_eula"
+                  className="checkbox checkbox-info"
                   checked={formData.signed_eula}
-                  onChange={handleCheckBox} 
+                  onChange={handleCheckBox}
                 />
               </label>
               <div className="mt-2">
@@ -234,7 +233,7 @@ export function CadastroForm() {
                 type="submit"
                 {...buttonPadrao}
               >
-                Cadastrar
+                {isEditMode ? 'Editar' : 'Cadastrar'}
               </Button>
             </div>
           </div>

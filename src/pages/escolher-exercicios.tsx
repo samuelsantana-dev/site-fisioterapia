@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { exerciciosInferiores, exerciciosSuperiores } from '../routes/links';
+import { exerciciosAerobicos, exerciciosInferiores, exerciciosSuperiores } from '../routes/links';
 import ImagemExercicio from '../assets/fisioterapia-escolher-exercicios.png';
 import buttonPadrao from '../components/button/button-padrao';
 
@@ -29,7 +29,13 @@ export function EscolherExercicios() {
                 >
                   Membros Inferiores
                 </Link>
-
+                <Link 
+                  to={exerciciosAerobicos.href} 
+                  rel={exerciciosAerobicos.rel}  
+                  {...buttonPadrao}
+                >
+                 Exercicios Aerobicos
+                </Link>
               </div>
             </div>
           </div>

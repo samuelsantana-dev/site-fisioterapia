@@ -1,12 +1,7 @@
 import axios from "axios";
+import { baseUrl, createBody, headers, userTokenDelPutPot } from "./export-padrao";
+import { Exercise, UserEdit } from "./interface";
 
-const baseUrl = "https://app-jadson-back-wvjk3k2iaq-uc.a.run.app";
-const userToken =  window.localStorage.getItem("user_toke"); 
-// "cc5a0e52c29e81dbe3078fdc"
-const headers = {
-  'Content-Type': 'application/json',
-  'x-user-token': userToken
-};
 
 export async function getExercicios() {
     try {
@@ -26,7 +21,7 @@ export async function cadastroExercicioApi(exercise_id: any){
     try {
       const response = await axios.post(
         `${baseUrl}/api/v1/exercises`,
-        JSON.stringify(exercise_id),
+       createBody(exercise_id),
         {
           headers
         }
@@ -38,12 +33,17 @@ export async function cadastroExercicioApi(exercise_id: any){
     }
 }
 
-export async function atualizarExercicio(exercise_id: any){
+export async function atualizarExercicio(exercise: Exercise){
   try{
     const response = await axios.put(
-      `${baseUrl}/api/v2/exercises/${exercise_id}`,
-      JSON.stringify(exercise_id),
-      { headers: headers }
+      `${baseUrl}/api/v1/exercises/${exercise.exercise_id}`,
+     createBody(exercise),
+     {
+      headers: {
+        'Content-Type': 'application/json',
+        "x-user-token": userTokenDelPutPot
+      },
+    }
     )
     console.log('response', response.data)
   } catch (error){
@@ -57,7 +57,7 @@ export async function deletarExercicio(exercise_id: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        "x-user-token": `${window.localStorage["user_toke"]}`
+        "x-user-token": userTokenDelPutPot
       },
     }
     );  

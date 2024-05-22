@@ -20,6 +20,7 @@ export const cadastro = { ...routesLink(), href: "/cadastro", value: 'cadastre-s
 
 export const escolherExercicios = { ...routesLink(), href: "/escolher-exercicios", value: 'Escolher Exercicios' };
 export const exerciciosInferiores = { ...routesLink(), href: "/exercicios-inferiores", value: 'Exercicios Inferiores' };
+export const exerciciosAerobicos = { ...routesLink(), href: "/exercicios-aerobicos", value: 'Exercicios Exercicios Aerobicos' };
 export const exerciciosSuperiores = { ...routesLink(), href: "/exercicios-superiores", value: 'Exercicios Superiores' };
 export const termoConcenso = { ...routesLink(), href: "/cadastro-exercicios", value: 'Termo de Concenso' };
 
