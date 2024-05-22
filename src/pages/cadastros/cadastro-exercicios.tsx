@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { cadastroExercicioApi } from '../../api/api-exercicios';
 import { ExerciseForm } from '../formulario-props/exercicio-props';
 import { Exercise } from '../../api/interface';
