@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseUrl, createBody, headers, userTokenDelPutPot } from "./export-padrao";
-import { Exercise, UserEdit } from "./interface";
+import { Exercise } from "./interface";
 
 
 export async function getExercicios() {

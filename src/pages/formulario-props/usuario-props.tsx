@@ -20,17 +20,17 @@ export function UsuarioForm({ initialData, onSubmit, isEditMode = false }: Usuar
   const navigate = useNavigate();
   const isUserLoggedIn = window.localStorage.getItem("user_token");
 
-  const handleImageChange = (e: any) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const imageDataUrl = reader.result instanceof ArrayBuffer ? Buffer.from(reader.result).toString('base64') : null;
-      setFormData({ ...formData, profile_pic: imageDataUrl });
-    };
-    if (file) {
-      reader.readAsArrayBuffer(file);
-    }
-  };
+  // const handleImageChange = (e: any) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     const imageDataUrl = reader.result instanceof ArrayBuffer ? Buffer.from(reader.result).toString('base64') : null;
+  //     setFormData({ ...formData, profile_pic: imageDataUrl });
+  //   };
+  //   if (file) {
+  //     reader.readAsArrayBuffer(file);
+  //   }
+  // };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;

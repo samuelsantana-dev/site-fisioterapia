@@ -15,8 +15,6 @@ export function CadastroExercicios() {
     instructions: [],
     file: ""
   }
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
   
   const handleSubmit = async (formData: Exercise) => {
     try {

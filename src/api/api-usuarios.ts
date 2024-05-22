@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, UserEdit } from "./interface";
+import { UserEdit } from "./interface";
 import { baseUrl, headers, createBody, userTokenDelPutPot } from "./export-padrao";
 
 export async function listarTodosUsuarios() {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Exercise } from "../../api/interface";
 import { atualizarExercicio } from "../../api/api-exercicios";
 import axios from "axios";
 import { ExerciseForm } from "../formulario-props/exercicio-props";
@@ -10,6 +9,7 @@ export function EditarExercicios() {
   const [formExercicio, setformExercicio] = useState(null);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  console.log(error);
 
   const handleSubmit = async (formExercicio: any) => {
     try {

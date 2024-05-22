@@ -10,7 +10,6 @@ import SearchInput from "../components/seachbar";
 import { Header } from "../components/header";
 import estiloTd from "../components/table/td";
 import estiloTh from "../components/table/th";
-import { isUserLoggedIn } from "../components/table/carregamento";
 
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]); // Lista completa de usuários
