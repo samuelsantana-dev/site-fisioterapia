@@ -50,11 +50,11 @@ function TableDadosUsuarios() {
           setFilteredUsers(combinedUsers);
         } catch (error) {
           console.error('Erro ao obter usuários:', error);
+          alert('Faça login para acessar essa página');
           navigate('/login');
         }
       } else {
         console.error('Token não encontrado');
-        alert('Faça login para acessar essa página');
         navigate('/login');
       }
     };

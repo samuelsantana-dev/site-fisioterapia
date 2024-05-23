@@ -9,29 +9,10 @@ import { CadastroExercicios } from './pages/cadastros/cadastro-exercicios.tsx';
 import TableDadosUsuarios from './pages/relatorios-usuarios.tsx';
 import TableExercicios from './pages/relatorios-exercicios.tsx';
 import Layout from './layout.tsx';
-import { AuthProvider } from './hook/use-auth.tsx';
-import { ProtectedRoute } from './hook/protect-route.tsx';
 import {EditarUsuario} from './pages/cadastros/editar-usuario.tsx';
 import { EditarExercicios } from './pages/cadastros/editar-exercicio.tsx';
 import { ExerciciosAerobicos } from './pages/exercicios/exercicios-aerobicos.tsx';
 
-
-export function Rotas(){
-      <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route
-          path="/secret"
-          element={
-            <ProtectedRoute>
-              <CadastroExercicios />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </AuthProvider>
-}
 
 const router = createBrowserRouter([
   {

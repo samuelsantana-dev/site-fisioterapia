@@ -6,6 +6,7 @@ import buttonPadrao from "../../components/button/button-padrao";
 import cardProps from "../../sharedProps/card";
 import inputProps from "../../sharedProps/input";
 import inputPropsPassword from "../../sharedProps/input-senha"
+import { isUserLoggedIn } from "../../components/table/carregamento";
 
 
 interface UsuarioFormProps {
@@ -18,7 +19,6 @@ export function UsuarioForm({ initialData, onSubmit, isEditMode = false }: Usuar
   const [formData, setFormData] = useState<User | UserEdit>(initialData);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const isUserLoggedIn = window.localStorage.getItem("user_token");
 
   // const handleImageChange = (e: any) => {
   //   const file = e.target.files[0];

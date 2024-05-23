@@ -17,7 +17,6 @@ export function ExerciseForm({ initialData, onSubmit, isEditMode = false }: Exer
   const [formExercicio, setformExercicio] = useState<Exercise>(initialData);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  // const isUserLoggedIn = window.localStorage.getItem("user_token");
 
   const extractVideoId = (url: string) => {
     let videoId = "";
