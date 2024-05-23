@@ -25,8 +25,6 @@ export function CadastroForm() {
       const data = await cadastroUsuario(formData);
       window.localStorage["user_token"] = data.user_id;
       navigate('/escolher-exercicios');
-      window.location.reload();
-      console.log("Cadastro bem-sucedido");
     } catch (error) {
       throw new Error('Erro ao cadastrar');
     }

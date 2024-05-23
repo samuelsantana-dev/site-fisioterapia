@@ -68,9 +68,6 @@ function TableDadosUsuarios() {
     }
   };
 
-  
-  
-
   const atualizarEx = (exercise_id: string) => {
     navigate(`/editar-exercicio/${exercise_id}`);
   };

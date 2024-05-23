@@ -22,12 +22,9 @@ export function LoginForm() {
     e.preventDefault();
     try {
       const data = await loginUser(valueForm);
-      console.log("Login bem-sucedido:", data); 
       window.localStorage["user_token"] = data.user_id;
       navigate('/escolher-exercicios');
-      window.location.reload();
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
       console.error("Erro ao fazer login:", error);
       setError('Erro ao fazer login. Por favor, verifique suas credenciais.');
     }
