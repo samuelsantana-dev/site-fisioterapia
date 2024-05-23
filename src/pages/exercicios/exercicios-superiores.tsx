@@ -15,6 +15,7 @@ export const ExerciciosSuperiores = () => {
 
   const exerciciosSuperiores = exercicios.filter((ex) => ex.muscle_group === 'superiores');
   ordenarPorDificuldade(exerciciosSuperiores);
+  console.log('teste', exerciciosSuperiores);
   return (
     <section className="bg-backgroundMain w-full min-h-screen flex items-center justify-center">
            <div className="w-full">
