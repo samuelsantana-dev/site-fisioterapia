@@ -1,4 +1,4 @@
-import { createBrowserRouter,Route, Routes} from 'react-router-dom';
+import { createBrowserRouter} from 'react-router-dom';
 import { Home } from './pages/home.tsx';
 import { LoginForm } from './pages/login.tsx';
 import { ExerciciosInferiores } from './pages/exercicios/exercicios-inferiores.tsx';
