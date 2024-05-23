@@ -49,7 +49,7 @@ export function UsuarioForm({ initialData, onSubmit, isEditMode = false }: Usuar
     e.preventDefault();
     try {
       await onSubmit(formData);
-      navigate('/escolher-exercicios');
+      navigate('/relatorios-usuario');
     } catch (error) {
       console.error("Erro ao enviar formulário:", error);
       setError('Erro ao enviar formulário. Por favor, verifique suas informações.');
