@@ -12,5 +12,3 @@ export const headers = {
 //converte para JSON
 export const createBody = (value: any) => JSON.stringify(value);
 
-// token do user exemplo enviar
-export const userTokenDelPutPot = window.localStorage["user_token"]

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseUrl, createBody, headers, userTokenDelPutPot } from "./export-padrao";
+import { baseUrl, createBody, headers } from "./export-padrao";
 import { Exercise } from "./interface";
 
 
@@ -23,7 +23,7 @@ export async function cadastroExercicioApi(exercise_id: any){
         `${baseUrl}/api/v1/exercises`,
        createBody(exercise_id),
         {
-          headers
+          headers: headers
         }
     )
       console.log(response.data)
@@ -39,10 +39,7 @@ export async function atualizarExercicio(exercise: Exercise){
       `${baseUrl}/api/v1/exercises/${exercise.exercise_id}`,
      createBody(exercise),
      {
-      headers: {
-        'Content-Type': 'application/json',
-        "x-user-token": userTokenDelPutPot
-      },
+      headers: headers
     }
     )
     console.log('response', response.data)
@@ -55,10 +52,7 @@ export async function deletarExercicio(exercise_id: string) {
   try {
     const response = await axios.delete(`${baseUrl}/api/v1/exercises/${exercise_id}`, 
     {
-      headers: {
-        'Content-Type': 'application/json',
-        "x-user-token": userTokenDelPutPot
-      },
+      headers: headers
     }
     );  
     console.log(response.data)

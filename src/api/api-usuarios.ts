@@ -1,6 +1,6 @@
 import axios from "axios";
 import { UserEdit } from "./interface";
-import { baseUrl, headers, createBody, userTokenDelPutPot } from "./export-padrao";
+import { baseUrl, headers, createBody } from "./export-padrao";
 
 export async function listarTodosUsuarios() {
   try {
@@ -55,7 +55,6 @@ export async function cadastroUsuario(user: any) {
       {
         headers: {
           'Content-Type': 'application/json',
-          "x-user-token": userTokenDelPutPot
         },
       }
     );
@@ -71,10 +70,7 @@ export async function deletarUsuario(user_id: string) {
   try {
     const response = await axios.delete(`${baseUrl}/api/v1/users/${user_id}`, 
     {
-      headers: {
-        'Content-Type': 'application/json',
-        "x-user-token": userTokenDelPutPot
-      },
+      headers: headers
     }
     );  
     console.log(response.data)
@@ -89,10 +85,7 @@ export async function atualizarUsuario(user: UserEdit) {
       `${baseUrl}/api/v1/users/${user.user_id}`,
       createBody(user),
       {
-        headers: {
-          'Content-Type': 'application/json',
-          "x-user-token": userTokenDelPutPot
-        },
+        headers: headers
       }
   );
     console.log(response.data);
