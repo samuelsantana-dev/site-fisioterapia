@@ -5,10 +5,10 @@ export function Header() {
   const navigate = useNavigate();
 
   const logoutUser = () => {
+    window.localStorage.removeItem("user_toke");
     window.localStorage.removeItem("user_token");
     navigate('/login');
   };
-
   const isUserLoggedIn = window.localStorage.getItem("user_token");
 
   return (
