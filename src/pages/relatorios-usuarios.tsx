@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { listarTodosUsuarios, deletarUsuario, listarUsuariosAdmin } from "../api/api-usuarios";
 import { User } from "../api/interface";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -13,6 +13,7 @@ function TableDadosUsuarios() {
   const [valorAtualInput, setValorAtualInput] = useState("");
   const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
+  console.log(token);
 
   const valorInput = (e: any) => {
     const valor = e.target.value;
@@ -113,6 +114,7 @@ function TableDadosUsuarios() {
         </div>
 
         <div className="overflow-x-auto">
+        <div className="max-h-96 overflow-y-auto table-xs table-pin-rows table-pin-cols">
           <table className="table w-full">
             <thead>
               <tr>
@@ -171,6 +173,7 @@ function TableDadosUsuarios() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </>

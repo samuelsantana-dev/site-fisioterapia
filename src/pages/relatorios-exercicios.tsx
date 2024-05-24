@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Exercise } from "../api/interface";
 import { deletarExercicio, getExercicios } from "../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
-import Papa from "papaparse"; 
+import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/seachbar";
 import { Header } from "../components/header";
@@ -26,7 +26,7 @@ function TableDadosExercicios() {
         (user) =>
           user.name.toLowerCase().includes(valor.toLowerCase()) ||
           user.muscle_group.toLowerCase().includes(valor.toLowerCase()) ||
-          user.description.toLowerCase().includes(valor.toLowerCase()) 
+          user.description.toLowerCase().includes(valor.toLowerCase())
       );
       setFilteredExercicios(filteredUsers);
     }
@@ -38,8 +38,13 @@ function TableDadosExercicios() {
       if (storedToken) {
         try {
           const exerciciosAdmin = await getExercicios();
-          setExercicios([...exerciciosAdmin]);
-          setFilteredExercicios([...exerciciosAdmin]);
+          const savedExerciciosConcluidos = JSON.parse(localStorage.getItem("exerciciosConcluidos") || "[]");
+          const exerciciosMarcados = exerciciosAdmin.map((exercicio: Exercise) => ({
+            ...exercicio,
+            concluido: savedExerciciosConcluidos.includes(exercicio.exercise_id)
+          }));
+          setExercicios(exerciciosMarcados);
+          setFilteredExercicios(exerciciosMarcados);
         } catch (error) {
           console.error("Erro ao obter exercícios:", error);
           alert('Faça login para acessar essa página');
@@ -107,63 +112,65 @@ function TableDadosExercicios() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="table w-full">
-            <thead>
-              <tr>
-                <th {...estiloTh}>ID</th>
-                <th {...estiloTh}>Grupo do Músculo</th>
-                <th {...estiloTh}>Dificuldade</th>
-                <th {...estiloTh}>Músculo</th>
-                <th {...estiloTh}>Arquivo</th>
-                <th {...estiloTh}>Nome</th>
-                <th {...estiloTh}>Descrição</th>
-                <th {...estiloTh}>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredExercicios.map((item, index) => (
-                <tr key={index} className="hover">
-                  <td {...estiloTd}>{index + 1}</td>
-                  <td {...estiloTd}>{item.muscle_group}</td>
-                  <td {...estiloTd}>{difficulty(item.difficulty)}</td>
-                  <td {...estiloTd}>{item.muscle}</td>
-                  <td {...estiloTd} className="text-blue-500">
-                    <a href={item.file} target="_blank" rel="noopener noreferrer">
-                      {item.file}
-                    </a>
-                  </td>
-                  <td {...estiloTd}>{item.name}</td>
-                  <td {...estiloTd}>{item.description}</td>
-                  <td {...estiloTd}>
-                    <button
-                      className="btn btn-error btn-xs mr-2"
-                      onClick={() => removeExercicio(item.exercise_id ?? "")}
-                    >
-                      <FaTrash />
-                    </button>
-                    <button
-                      className="btn btn-warning btn-xs"
-                      onClick={() => atualizarEx(item.exercise_id ?? "")}
-                    >
-                      <FaEdit />
-                    </button>
-                  </td>
+          <div className="max-h-96 overflow-y-auto table-xs table-pin-rows table-pin-cols">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th {...estiloTh}>ID</th>
+                  <th {...estiloTh}>Grupo do Músculo</th>
+                  <th {...estiloTh}>Dificuldade</th>
+                  <th {...estiloTh}>Músculo</th>
+                  <th {...estiloTh}>Arquivo</th>
+                  <th {...estiloTh}>Nome</th>
+                  <th {...estiloTh}>Descrição</th>
+                  <th {...estiloTh}>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-            <thead>
-              <tr>
-                <th {...estiloTh}>ID</th>
-                <th {...estiloTh}>Grupo do Músculo</th>
-                <th {...estiloTh}>Dificuldade</th>
-                <th {...estiloTh}>Músculo</th>
-                <th {...estiloTh}>Arquivo</th>
-                <th {...estiloTh}>Nome</th>
-                <th {...estiloTh}>Descrição</th>
-                <th {...estiloTh}>Ações</th>
-              </tr>
-            </thead>
-          </table>
+              </thead>
+              <tbody>
+                {filteredExercicios.map((item, index) => (
+                  <tr key={index} className="hover">
+                    <td {...estiloTd}>{index + 1}</td>
+                    <td {...estiloTd}>{item.muscle_group}</td>
+                    <td {...estiloTd}>{difficulty(item.difficulty)}</td>
+                    <td {...estiloTd}>{item.muscle}</td>
+                    <td {...estiloTd} className="text-blue-500">
+                      <a href={item.file} target="_blank" rel="noopener noreferrer">
+                        {item.file}
+                      </a>
+                    </td>
+                    <td {...estiloTd}>{item.name}</td>
+                    <td {...estiloTd}>{item.description}</td>
+                    <td {...estiloTd}>
+                      <button
+                        className="btn btn-error btn-xs mr-2"
+                        onClick={() => removeExercicio(item.exercise_id ?? "")}
+                      >
+                        <FaTrash />
+                      </button>
+                      <button
+                        className="btn btn-warning btn-xs"
+                        onClick={() => atualizarEx(item.exercise_id ?? "")}
+                      >
+                        <FaEdit />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <thead>
+                <tr>
+                  <th {...estiloTh}>ID</th>
+                  <th {...estiloTh}>Grupo do Músculo</th>
+                  <th {...estiloTh}>Dificuldade</th>
+                  <th {...estiloTh}>Músculo</th>
+                  <th {...estiloTh}>Arquivo</th>
+                  <th {...estiloTh}>Nome</th>
+                  <th {...estiloTh}>Descrição</th>
+                  <th {...estiloTh}>Ações</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
         </div>
       </div>
     </>
