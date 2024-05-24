@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Exercise } from "../api/interface";
 import { deletarExercicio, getExercicios } from "../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
-import buttonAtualizarDeletar from "../components/button/button-table";
-import table from "../components/table/table";
-import divTable from "../components/table/div-table";
+import Papa from "papaparse"; 
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/seachbar";
 import { Header } from "../components/header";
-import estiloTd from "../components/table/td";
 import { difficulty } from "../components/validacoes-gerais";
 
-function TableDadosUsuarios() {
+function TableDadosExercicios() {
   const [exercicios, setExercicios] = useState<Exercise[]>([]);
   const [filteredExercicios, setFilteredExercicios] = useState<Exercise[]>([]);
   const [valorAtualInput, setValorAtualInput] = useState("");
   const navigate = useNavigate();
-  const estiloTh = { className: "border px-4 py-2"};
+  const estiloTh = { className: "px-4 py-2 border" };
+  const estiloTd = { className: "px-4 py-2 border" };
 
   const valorInput = (e: any) => {
     const valor = e.target.value;
@@ -72,20 +70,44 @@ function TableDadosUsuarios() {
     navigate(`/editar-exercicio/${exercise_id}`);
   };
 
+  const exportToCSV = () => {
+    const csvData = filteredExercicios.map(item => ({
+      ID: item.exercise_id,
+      "Grupo do Músculo": item.muscle_group,
+      Dificuldade: difficulty(item.difficulty),
+      Músculo: item.muscle,
+      Arquivo: item.file,
+      Nome: item.name,
+      Descrição: item.description
+    }));
+    
+    const csv = Papa.unparse(csvData);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "exercicios.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <Header />
-      <div>
-        <div>
+      <div className="container mx-auto p-4">
+        <div className="flex justify-between items-center mb-4">
           <SearchInput
             label="Relatório de Exercícios"
             value={valorAtualInput}
             onChange={valorInput}
             placeholder="Pesquisar"
           />
+          <button className="btn btn-primary" onClick={exportToCSV}>Exportar para CSV</button>
         </div>
-        <div {...divTable}>
-          <table {...table}>
+
+        <div className="overflow-x-auto">
+          <table className="table w-full">
             <thead>
               <tr>
                 <th {...estiloTh}>ID</th>
@@ -100,12 +122,12 @@ function TableDadosUsuarios() {
             </thead>
             <tbody>
               {filteredExercicios.map((item, index) => (
-                <tr key={index} className="text-center">
+                <tr key={index} className="hover">
                   <td {...estiloTd}>{index + 1}</td>
                   <td {...estiloTd}>{item.muscle_group}</td>
                   <td {...estiloTd}>{difficulty(item.difficulty)}</td>
                   <td {...estiloTd}>{item.muscle}</td>
-                  <td className="text-blue-500 border p-2">
+                  <td {...estiloTd} className="text-blue-500">
                     <a href={item.file} target="_blank" rel="noopener noreferrer">
                       {item.file}
                     </a>
@@ -114,21 +136,33 @@ function TableDadosUsuarios() {
                   <td {...estiloTd}>{item.description}</td>
                   <td {...estiloTd}>
                     <button
-                      {...buttonAtualizarDeletar}
+                      className="btn btn-error btn-xs mr-2"
                       onClick={() => removeExercicio(item.exercise_id ?? "")}
                     >
-                      <FaTrash className="w-6 h-4 m-1" />
+                      <FaTrash />
                     </button>
                     <button
-                      {...buttonAtualizarDeletar}
+                      className="btn btn-warning btn-xs"
                       onClick={() => atualizarEx(item.exercise_id ?? "")}
                     >
-                      <FaEdit className="w-6 h-4 m-1" />
+                      <FaEdit />
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
+            <thead>
+              <tr>
+                <th {...estiloTh}>ID</th>
+                <th {...estiloTh}>Grupo do Músculo</th>
+                <th {...estiloTh}>Dificuldade</th>
+                <th {...estiloTh}>Músculo</th>
+                <th {...estiloTh}>Arquivo</th>
+                <th {...estiloTh}>Nome</th>
+                <th {...estiloTh}>Descrição</th>
+                <th {...estiloTh}>Ações</th>
+              </tr>
+            </thead>
           </table>
         </div>
       </div>
@@ -136,4 +170,4 @@ function TableDadosUsuarios() {
   );
 }
 
-export default TableDadosUsuarios;
+export default TableDadosExercicios;

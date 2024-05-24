@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     element: <Layout><ExerciciosInferiores /></Layout>,
   },
   {
-    path: "/exercicios-aerobicos/",
+    path: "/exercicios-aerobicos",
     element: <Layout><ExerciciosAerobicos /></Layout>,
   },
   {
