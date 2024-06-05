@@ -195,7 +195,7 @@ export function UsuarioForm({ initialData, onSubmit, isEditMode = false }: Usuar
               </div>
             )}
             
-            {isUserLoggedIn && (
+            {isUserLoggedIn ? (
               <div className="form-control">
                 <label className="cursor-pointer label">
                   <span className="label-text">Você é um administrador?</span>
@@ -208,7 +208,7 @@ export function UsuarioForm({ initialData, onSubmit, isEditMode = false }: Usuar
                   />
                 </label>
               </div>
-            )}
+            ) : null}
             <div className="form-control">
               <label className="cursor-pointer label">
                 <span className="label-text">Aceito o Termo *</span>

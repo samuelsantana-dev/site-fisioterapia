@@ -5,7 +5,6 @@ import { FaTrash, FaEdit } from 'react-icons/fa';
 import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/seachbar";
-import { Header } from "../components/header";
 import { difficulty } from "../components/validacoes-gerais";
 
 function TableDadosExercicios() {
@@ -99,7 +98,6 @@ function TableDadosExercicios() {
 
   return (
     <>
-      <Header />
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <SearchInput

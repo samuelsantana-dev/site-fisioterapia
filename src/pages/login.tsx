@@ -32,7 +32,7 @@ export function LoginForm() {
       const data = await loginUser(valueForm);
       window.localStorage.setItem("user_token", data.user_id);
       setIsUserLoggedIn(true);
-      navigate('/escolher-exercicios');
+        navigate('/escolher-exercicios');
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       setError('Erro ao fazer login. Por favor, verifique suas credenciais.');

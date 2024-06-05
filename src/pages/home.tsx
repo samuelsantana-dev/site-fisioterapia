@@ -4,6 +4,7 @@ import buttonPadrao from '../components/button/button-padrao';
 
 
 export function Home(){
+
     return(
       <>
         <div className="hero min-h-screen bg-backgroundMain">

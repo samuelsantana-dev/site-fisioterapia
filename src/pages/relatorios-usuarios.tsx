@@ -5,7 +5,6 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/seachbar";
-import { Header } from "../components/header";
 
 function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
@@ -101,7 +100,6 @@ function TableDadosUsuarios() {
 
   return (
     <>
-      <Header />
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <SearchInput

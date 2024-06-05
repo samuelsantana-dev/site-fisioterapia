@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { headerEscolherExercicios, headerHome, headerLogin } from '../routes/links';
+import { headerEscolherExercicios, headerHome, headerLogin, headerTermoConcenso } from '../routes/links';
 
-export function Header() {
+export function HeaderAdmin() {
   const navigate = useNavigate();
 
   const logoutUser = () => {
@@ -9,6 +9,7 @@ export function Header() {
     window.localStorage.removeItem("user_token");
     navigate('/login');
   };
+
   const isUserLoggedIn = window.localStorage.getItem("user_token");
 
   return (
@@ -29,7 +30,7 @@ export function Header() {
             <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn">Opções</div>
             {isUserLoggedIn ? (
               <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                <li  className="btn btn-ghost w-full text-left">
+                <li>
                   <Link 
                     to={headerEscolherExercicios.href} 
                     rel={headerEscolherExercicios.rel}
@@ -38,6 +39,30 @@ export function Header() {
                   </Link>
                 </li>
                 
+                <li>
+                  <Link 
+                    to={headerTermoConcenso.href}
+                    rel={headerTermoConcenso.rel} 
+                  >
+                    {headerTermoConcenso.value}
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to='/relatorios-usuario'
+                    rel={headerLogin.rel} 
+                  >
+                    Relatório de Usuários
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to='/relatorios-exercicios'
+                    rel={headerLogin.rel} 
+                  >
+                    Relatório de Exercícios
+                  </Link>
+                </li>
                 <li>
                   <button onClick={logoutUser} className="btn btn-ghost w-full text-left">
                     Sair
