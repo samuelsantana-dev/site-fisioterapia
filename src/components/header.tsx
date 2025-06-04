@@ -36,6 +36,11 @@ export function Header({ isAdmin = false }) {
                 {isAdmin && (
                   <>
                     <li>
+                      <Link to="/cadastro-exercicios">
+                        Cadastrar Exercícios
+                      </Link>
+                    </li>
+                    <li>
                       <Link to="/relatorios-usuario">
                         Relatório de Usuários
                       </Link>
