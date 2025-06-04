@@ -16,7 +16,6 @@ import NotFound from './pages/not-found/not-found.tsx';
 import { useState, useEffect } from 'react';
 import { listarTodosUsuarios, listarUsuariosAdmin } from './api/api-usuarios.ts';
 import { User } from './api/interface.ts';
-import { HeaderAdmin } from './components/headerAdmin.tsx';
 
 function App() {
     const [users, setUsers] = useState<User[]>([]);
@@ -47,7 +46,7 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-               {teste?.admin === true ? (<HeaderAdmin />) : (<Header />)} 
+                    <Header />
                 <Routes>
                     {teste?.admin === true && (
                         <>
