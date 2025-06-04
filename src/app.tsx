@@ -14,14 +14,16 @@ import { ExerciciosAerobicos } from './pages/exercicios/exercicios-aerobicos.tsx
 import { Header } from './components/header.tsx';
 import NotFound from './pages/not-found/not-found.tsx';
 import { Footer } from './components/footer.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
     const [isAdmin, setIsAdmin] = useState(true);
     const isUserLoggedIn = window.localStorage.getItem("user_token");
-    if (!isUserLoggedIn) {
-        setIsAdmin(false);
-    }
+    useEffect(() => {
+        if (!isUserLoggedIn) {
+            setIsAdmin(false);
+        }
+    })
     return (
         <div className="App">
             <BrowserRouter>
