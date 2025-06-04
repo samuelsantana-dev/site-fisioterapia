@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Exercise } from "../api/interface";
 import { deletarExercicio, getExercicios } from "../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
@@ -7,74 +7,92 @@ import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/seachbar";
 import { difficulty } from "../components/validacoes-gerais";
 
-function TableDadosExercicios() {
+export function TableDadosExercicios() {
   const [exercicios, setExercicios] = useState<Exercise[]>([]);
   const [filteredExercicios, setFilteredExercicios] = useState<Exercise[]>([]);
-  const [valorAtualInput, setValorAtualInput] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const estiloTh = { className: "px-4 py-2 border" };
-  const estiloTd = { className: "px-4 py-2 border" };
 
-  const valorInput = (e: any) => {
-    const valor = e.target.value;
-    setValorAtualInput(valor);
-    if (valor === "") {
-      setFilteredExercicios(exercicios);
-    } else {
-      const filteredUsers = exercicios.filter(
-        (user) =>
-          user.name.toLowerCase().includes(valor.toLowerCase()) ||
-          user.muscle_group.toLowerCase().includes(valor.toLowerCase()) ||
-          user.description.toLowerCase().includes(valor.toLowerCase())
-      );
-      setFilteredExercicios(filteredUsers);
-    }
+  // Estilos reutilizáveis
+  const tableStyles = {
+    header: "px-4 py-2 border bg-gray-100 font-semibold",
+    cell: "px-4 py-2 border",
+    actionButton: "btn btn-xs mr-2"
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const storedToken = window.localStorage.getItem("user_token");
-      if (storedToken) {
-        try {
-          const exerciciosAdmin = await getExercicios();
-          const savedExerciciosConcluidos = JSON.parse(localStorage.getItem("exerciciosConcluidos") || "[]");
-          const exerciciosMarcados = exerciciosAdmin.map((exercicio: Exercise) => ({
-            ...exercicio,
-            concluido: savedExerciciosConcluidos.includes(exercicio.exercise_id)
-          }));
-          setExercicios(exerciciosMarcados);
-          setFilteredExercicios(exerciciosMarcados);
-        } catch (error) {
-          console.error("Erro ao obter exercícios:", error);
-          alert('Faça login para acessar essa página');
-          navigate('/login');
-        }
-      } else {
-        console.error('Token não encontrado');
-        navigate('/login');
+  // Busca dados dos exercícios
+  const fetchExercicios = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const storedToken = localStorage.getItem("user_token");
+      if (!storedToken) {
+        throw new Error("Token não encontrado");
       }
-    };
-    fetchData();
+
+      const exerciciosData = await getExercicios();
+      const savedExerciciosConcluidos = JSON.parse(localStorage.getItem("exerciciosConcluidos") || "[]");
+      
+      const exerciciosMarcados = exerciciosData.map((exercicio: Exercise) => ({
+        ...exercicio,
+        concluido: savedExerciciosConcluidos.includes(exercicio.exercise_id)
+      }));
+      
+      setExercicios(exerciciosMarcados);
+      setFilteredExercicios(exerciciosMarcados);
+    } catch (err) {
+      console.error("Erro ao obter exercícios:", err);
+      setError(err instanceof Error ? err.message : "Erro desconhecido");
+      navigate('/login');
+    } finally {
+      setIsLoading(false);
+    }
   }, [navigate]);
 
-  const removeExercicio = async (exercise_id: string) => {
+  useEffect(() => {
+    fetchExercicios();
+  }, [fetchExercicios]);
+
+  // Filtra exercícios baseado no termo de busca
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredExercicios(exercicios);
+    } else {
+      const filtered = exercicios.filter(exercicio =>
+        Object.values(exercicio).some(
+          value => typeof value === 'string' && 
+                  value.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+      setFilteredExercicios(filtered);
+    }
+  }, [searchTerm, exercicios]);
+
+  // Remove exercício
+  const handleRemoveExercicio = async (exerciseId: string) => {
+    if (!window.confirm("Tem certeza que deseja excluir este exercício?")) return;
+    
     try {
-      await deletarExercicio(exercise_id);
-      const updatedExercicios = exercicios.filter((ex) => ex.exercise_id !== exercise_id);
+      await deletarExercicio(exerciseId);
+      const updatedExercicios = exercicios.filter(ex => ex.exercise_id !== exerciseId);
       setExercicios(updatedExercicios);
       setFilteredExercicios(updatedExercicios);
-      alert('Exercício deletado com sucesso!');
-    } catch (error) {
-      alert('Erro ao deletar o Exercício!');
-      console.error("Erro ao deletar o Exercício:", error);
+    } catch (err) {
+      console.error("Erro ao deletar exercício:", err);
+      setError("Erro ao deletar exercício");
     }
   };
 
-  const atualizarEx = (exercise_id: string) => {
-    navigate(`/editar-exercicio/${exercise_id}`);
+  // Navega para edição
+  const handleEditExercicio = (exerciseId: string) => {
+    navigate(`/editar-exercicio/${exerciseId}`);
   };
 
-  const exportToCSV = () => {
+  // Exporta para CSV
+  const handleExportToCSV = () => {
     const csvData = filteredExercicios.map(item => ({
       ID: item.exercise_id,
       "Grupo do Músculo": item.muscle_group,
@@ -87,92 +105,128 @@ function TableDadosExercicios() {
     
     const csv = Papa.unparse(csvData);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "exercicios.csv");
+    
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "exercicios.csv";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
-  return (
-    <>
-      <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-4">
-          <SearchInput
-            label="Relatório de Exercícios"
-            value={valorAtualInput}
-            onChange={valorInput}
-            placeholder="Pesquisar"
-          />
-          <button className="btn btn-primary" onClick={exportToCSV}>Exportar para CSV</button>
+  // Renderiza linha da tabela
+  const renderTableRow = (item: Exercise, index: number) => (
+    <tr key={item.exercise_id} className="hover">
+      <td className={tableStyles.cell}>{index + 1}</td>
+      <td className={tableStyles.cell}>{item.muscle_group}</td>
+      <td className={tableStyles.cell}>{difficulty(item.difficulty)}</td>
+      <td className={tableStyles.cell}>{item.muscle}</td>
+      <td className={tableStyles.cell}>
+        {item.file && (
+          <a 
+            href={item.file} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Ver arquivo
+          </a>
+        )}
+      </td>
+      <td className={tableStyles.cell}>{item.name}</td>
+      <td className={tableStyles.cell}>{item.description}</td>
+      <td className={tableStyles.cell}>
+        <div className="flex space-x-2">
+          <button
+            className={`${tableStyles.actionButton} btn-error`}
+            onClick={() => handleRemoveExercicio(item.exercise_id ?? "")}
+            aria-label="Excluir exercício"
+          >
+            <FaTrash />
+          </button>
+          <button
+            className={`${tableStyles.actionButton} btn-warning`}
+            onClick={() => handleEditExercicio(item.exercise_id ?? "")}
+            aria-label="Editar exercício"
+          >
+            <FaEdit />
+          </button>
         </div>
+      </td>
+    </tr>
+  );
 
-        <div className="overflow-x-auto">
-          <div className="max-h-96 overflow-y-auto table-xs table-pin-rows table-pin-cols">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th {...estiloTh}>ID</th>
-                  <th {...estiloTh}>Grupo do Músculo</th>
-                  <th {...estiloTh}>Dificuldade</th>
-                  <th {...estiloTh}>Músculo</th>
-                  <th {...estiloTh}>Arquivo</th>
-                  <th {...estiloTh}>Nome</th>
-                  <th {...estiloTh}>Descrição</th>
-                  <th {...estiloTh}>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredExercicios.map((item, index) => (
-                  <tr key={index} className="hover">
-                    <td {...estiloTd}>{index + 1}</td>
-                    <td {...estiloTd}>{item.muscle_group}</td>
-                    <td {...estiloTd}>{difficulty(item.difficulty)}</td>
-                    <td {...estiloTd}>{item.muscle}</td>
-                    <td {...estiloTd} className="text-blue-500">
-                      <a href={item.file} target="_blank" rel="noopener noreferrer">
-                        {item.file}
-                      </a>
-                    </td>
-                    <td {...estiloTd}>{item.name}</td>
-                    <td {...estiloTd}>{item.description}</td>
-                    <td {...estiloTd}>
-                      <button
-                        className="btn btn-error btn-xs mr-2"
-                        onClick={() => removeExercicio(item.exercise_id ?? "")}
-                      >
-                        <FaTrash />
-                      </button>
-                      <button
-                        className="btn btn-warning btn-xs"
-                        onClick={() => atualizarEx(item.exercise_id ?? "")}
-                      >
-                        <FaEdit />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <thead>
-                <tr>
-                  <th {...estiloTh}>ID</th>
-                  <th {...estiloTh}>Grupo do Músculo</th>
-                  <th {...estiloTh}>Dificuldade</th>
-                  <th {...estiloTh}>Músculo</th>
-                  <th {...estiloTh}>Arquivo</th>
-                  <th {...estiloTh}>Nome</th>
-                  <th {...estiloTh}>Descrição</th>
-                  <th {...estiloTh}>Ações</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
+  if (isLoading) {
+    return (
+      <div className="container mx-auto p-4 flex justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-4">
+        <div className="alert alert-error">
+          <span>{error}</span>
+          <button className="btn btn-sm" onClick={fetchExercicios}>
+            Tentar novamente
+          </button>
         </div>
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h1 className="text-2xl font-bold">Relatório de Exercícios</h1>
+        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+          <SearchInput
+            value={searchTerm}
+            onChange={(e: any) => setSearchTerm(e.target.value)}
+            placeholder="Pesquisar exercícios..."
+            className="flex-grow"
+          />
+          <button 
+            className="btn btn-primary"
+            onClick={handleExportToCSV}
+            disabled={filteredExercicios.length === 0}
+          >
+            Exportar para CSV
+          </button>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto bg-white rounded-lg shadow">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th className={tableStyles.header}>ID</th>
+              <th className={tableStyles.header}>Grupo Muscular</th>
+              <th className={tableStyles.header}>Dificuldade</th>
+              <th className={tableStyles.header}>Músculo</th>
+              <th className={tableStyles.header}>Arquivo</th>
+              <th className={tableStyles.header}>Nome</th>
+              <th className={tableStyles.header}>Descrição</th>
+              <th className={tableStyles.header}>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredExercicios.length > 0 ? (
+              filteredExercicios.map(renderTableRow)
+            ) : (
+              <tr>
+                <td colSpan={8} className="text-center py-4">
+                  {searchTerm ? "Nenhum exercício encontrado" : "Nenhum exercício disponível"}
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
-
-export default TableDadosExercicios;

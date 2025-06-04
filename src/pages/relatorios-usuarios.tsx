@@ -1,168 +1,167 @@
-import { useEffect, useState } from "react";
-import { listarTodosUsuarios, deletarUsuario, listarUsuariosAdmin } from "../api/api-usuarios";
-import { User } from "../api/interface";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import Papa from "papaparse";
-import { useNavigate } from "react-router-dom";
-import SearchInput from "../components/seachbar";
+import { useEffect, useMemo, useState, ChangeEvent } from 'react';
+import {
+  listarTodosUsuarios,
+  listarUsuariosAdmin,
+  deletarUsuario,
+} from '../api/api-usuarios';
+import { User } from '../api/interface';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import Papa from 'papaparse';
+import { useNavigate } from 'react-router-dom';
+import SearchInput from '../components/seachbar';
 
-function TableDadosUsuarios() {
+export default function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
-  const [valorAtualInput, setValorAtualInput] = useState("");
-  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState('');
   const navigate = useNavigate();
-  console.log(token);
-
-  const valorInput = (e: any) => {
-    const valor = e.target.value;
-    setValorAtualInput(valor);
-    if (valor === "") { 
-      setFilteredUsers(users);
-    } else {
-      const filteredUsers = users.filter(
-        user =>
-          user.name.toLowerCase().includes(valor.toLowerCase()) ||
-          user.email.toLowerCase().includes(valor.toLowerCase()) ||
-          user.gender.toLowerCase().includes(valor.toLowerCase())
-      );
-      setFilteredUsers(filteredUsers); 
-    }
-  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const storedToken = window.localStorage.getItem("user_token");
-      if (storedToken) {
-        setToken(storedToken);
-        try {
-          const usersAdmin = await listarUsuariosAdmin();
-          const allUsers = await listarTodosUsuarios();
-          const combinedUsers = [...usersAdmin, ...allUsers];
-          setUsers(combinedUsers);
-          setFilteredUsers(combinedUsers);
-        } catch (error) {
-          console.error('Erro ao obter usuários:', error);
-          alert('Faça login para acessar essa página');
-          navigate('/login');
-        }
-      } else {
-        console.error('Token não encontrado');
-        navigate('/login');
+    const fetchUsers = async () => {
+      try {
+        const [admins, commons] = await Promise.all([
+          listarUsuariosAdmin(),
+          listarTodosUsuarios(),
+        ]);
+        setUsers([...admins, ...commons]);
+      } catch (err) {
+        console.error('Erro ao buscar usuários:', err);
+        alert('Falha ao carregar usuários.');
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchData();
-  }, [navigate]);
+    fetchUsers();
+  }, []);
 
-  const removeUser = async (user_id: string) => {
+  /* ---------- FILTRO MEMOIZADO ---------- */
+  const filteredUsers = useMemo(() => {
+    const q = query.toLowerCase().trim();
+    if (!q) return users;
+
+    return users.filter(
+      ({ name, email, gender }) =>
+        name.toLowerCase().includes(q) ||
+        email.toLowerCase().includes(q) ||
+        gender.toLowerCase().includes(q),
+    );
+  }, [users, query]);
+
+  /* ---------- HANDLERS ---------- */
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) =>
+    setQuery(e.target.value);
+
+  const handleDelete = async (user_id: string) => {
+    if (!confirm('Tem certeza que deseja remover este usuário?')) return;
     try {
       await deletarUsuario(user_id);
-      const updatedUsers = users.filter(user => user.user_id !== user_id);
-      setUsers(updatedUsers);
-      setFilteredUsers(updatedUsers);
-      alert('Remoção Bem Sucedida!');
-    } catch (error) {
+      setUsers(prev => prev.filter(u => u.user_id !== user_id));
+      alert('Usuário removido com sucesso!');
+    } catch (err) {
+      console.error('Erro ao deletar usuário:', err);
       alert('Erro ao deletar o usuário!');
-      console.error("Erro ao deletar o usuário:", error);
     }
   };
 
-  const atualizarUser = (user_id: string) => {
-    navigate(`/editar-usuario/${user_id}`);
-    console.log(user_id);
-  };
+  const handleUpdate = (user_id: string) => navigate(`/editar-usuario/${user_id}`);
 
-  const exportToCSV = () => {
-    const csvData = filteredUsers.map(item => ({
-      ID: item.user_id,
-      Nome: item.name,
-      "Data de Nascimento": new Date(item.birth).toISOString().slice(0, 10),
-      Email: item.email,
-      Telefone: item.phone,
-      Gênero: item.gender,
-      Administrador: item.admin ? "administrador" : "usuario",
-      Diagnóstico: item.diagnosis,
-      "Lista de Exercícios": item.exercise_list,
-      "Assinatura do EULA": item.signed_eula ? "Assinado" : "Não assinou",
+  const handleExport = () => {
+    const csvData = filteredUsers.map(u => ({
+      ID: u.user_id,
+      Nome: u.name,
+      'Data de Nascimento': new Date(u.birth).toISOString().slice(0, 10),
+      Email: u.email,
+      Telefone: u.phone,
+      Gênero: u.gender,
+      Administrador: u.admin ? 'administrador' : 'usuario',
+      Diagnóstico: u.diagnosis,
+      'Lista de Exercícios': u.exercise_list,
+      'Assinatura do EULA': u.signed_eula ? 'Assinada' : 'Não assinou',
     }));
 
-    const csv = Papa.unparse(csvData);
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "usuarios.csv");
-    document.body.appendChild(link);
+    const blob = new Blob([Papa.unparse(csvData)], {
+      type: 'text/csv;charset=utf-8;',
+    });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'usuarios.csv';
     link.click();
-    document.body.removeChild(link);
   };
 
+  /* ---------- RENDER ---------- */
   return (
-    <>
-      <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-4">
-          <SearchInput
-            label="Relatório de Usuários"
-            value={valorAtualInput}
-            onChange={valorInput}
-            placeholder="Pesquisar"
-          />
-          <button className="btn btn-primary" onClick={exportToCSV}>Exportar para CSV</button>
-        </div>
+    <div className="container mx-auto p-4 100-vh">
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
+        <SearchInput
+          label="Relatório de Usuários"
+          value={query}
+          onChange={handleSearch}
+          placeholder="Pesquisar"
+        />
+        <button className="btn btn-primary" onClick={handleExport}>
+          Exportar CSV
+        </button>
+      </div>
 
-        <div className="overflow-x-auto">
-        <div className="max-h-96 overflow-y-auto table-xs table-pin-rows table-pin-cols">
-          <table className="table w-full">
+      {loading ? (
+        <div className="flex justify-center py-10">
+          <span className="loading loading-dots loading-lg" />
+        </div>
+      ) : (
+        <div className="overflow-x-auto max-h-96">
+          <table className="table table-xs w-full">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Nome</th>
-                <th>Data de Nascimento</th>
+                <th>Nascimento</th>
                 <th>Email</th>
                 <th>Telefone</th>
                 <th>Gênero</th>
-                <th>Administrador</th>
+                <th>Admin</th>
                 <th>Diagnóstico</th>
-                <th>Lista de Exercícios</th>
-                <th>Assinatura do EULA</th>
+                <th>Exercícios</th>
+                <th>EULA</th>
                 <th>Ações</th>
               </tr>
             </thead>
+
             <tbody>
-              {filteredUsers.map((item, index) => (
-                <tr key={index} className="hover">
-                  <td>{index + 1}</td>
+              {filteredUsers.map((u, idx) => (
+                <tr key={u.user_id} className="hover">
+                  <td>{idx + 1}</td>
                   <td>
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center gap-3">
                       <div className="avatar">
-                        <div className="mask mask-circle w-12 h-12">
-                          <img src={item.profile_pic || 'default_image.jpg'} alt="Avatar" />
+                        <div className="mask mask-circle w-10 h-10">
+                          <img
+                            src={u.profile_pic || 'default_image.jpg'}
+                            alt={`Avatar de ${u.name}`}
+                          />
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{item.name}</div>
-                      </div>
+                      <span className="font-bold">{u.name}</span>
                     </div>
                   </td>
-                  <td>{new Date(item.birth).toISOString().slice(0, 10)}</td>
-                  <td>{item.email}</td>
-                  <td>{item.phone}</td>
-                  <td>{item.gender}</td>
-                  <td>{item.admin ? "administrador" : "usuario"}</td>
-                  <td>{item.diagnosis}</td>
-                  <td>{item.exercise_list}</td>
-                  <td>{item.signed_eula ? "Assinado" : "Não assinou"}</td>
-                  <td>
+                  <td>{new Date(u.birth).toLocaleDateString()}</td>
+                  <td>{u.email}</td>
+                  <td>{u.phone}</td>
+                  <td>{u.gender}</td>
+                  <td>{u.admin ? 'administrador' : 'usuario'}</td>
+                  <td>{u.diagnosis}</td>
+                  <td>{u.exercise_list}</td>
+                  <td>{u.signed_eula ? 'Assinada' : 'Não assinou'}</td>
+                  <td className="flex gap-2">
                     <button
-                      className="btn btn-error btn-xs mr-2"
-                      onClick={() => removeUser(item.user_id ?? '')}
+                      className="btn btn-error btn-xs"
+                      onClick={() => handleDelete(u.user_id ?? '')}
                     >
                       <FaTrash />
                     </button>
                     <button
                       className="btn btn-warning btn-xs"
-                      onClick={() => atualizarUser(item.user_id ?? '')}
+                      onClick={() => handleUpdate(u.user_id ?? '')}
                     >
                       <FaEdit />
                     </button>
@@ -171,11 +170,12 @@ function TableDadosUsuarios() {
               ))}
             </tbody>
           </table>
-          </div>
+
+          {!filteredUsers.length && (
+            <p className="text-center py-4">Nenhum usuário encontrado.</p>
+          )}
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
-
-export default TableDadosUsuarios;

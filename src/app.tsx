@@ -7,7 +7,7 @@ import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
 import { CadastroForm } from './pages/cadastros/cadastro-usuario.tsx';
 import { CadastroExercicios } from './pages/cadastros/cadastro-exercicios.tsx';
 import TableDadosUsuarios from './pages/relatorios-usuarios.tsx';
-import TableExercicios from './pages/relatorios-exercicios.tsx';
+import {TableDadosExercicios} from './pages/relatorios-exercicios.tsx';
 import { EditarUsuario } from './pages/cadastros/editar-usuario.tsx';
 import { EditarExercicios } from './pages/cadastros/editar-exercicio.tsx';
 import { ExerciciosAerobicos } from './pages/exercicios/exercicios-aerobicos.tsx';
@@ -33,7 +33,7 @@ function App() {
                             <Route path="/editar-exercicio/:id" element={<EditarExercicios />} />
                             <Route path="/cadastro-exercicios" element={<CadastroExercicios />} />
                             <Route path="/relatorios-usuario" element={<TableDadosUsuarios />} />
-                           <Route path="/relatorios-exercicios" element={<TableExercicios />} />
+                           <Route path="/relatorios-exercicios" element={<TableDadosExercicios />} />
                         </>
                     )}
                     <Route path="/" element={<Home />} />
