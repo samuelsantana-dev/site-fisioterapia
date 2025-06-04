@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
 import imagemHome from '../assets/fotoIntrodução.png';
-import buttonPadrao from '../components/button/button-padrao';
 
 export function Home() {
 
