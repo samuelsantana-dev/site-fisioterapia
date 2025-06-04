@@ -4,7 +4,6 @@ export function Header({ isAdmin = false }) {
   const navigate = useNavigate();
 
   const logoutUser = () => {
-    window.localStorage.removeItem("user_toke");
     window.localStorage.removeItem("user_token");
     navigate('/login');
   };
@@ -36,11 +35,6 @@ export function Header({ isAdmin = false }) {
                 
                 {isAdmin && (
                   <>
-                    <li>
-                      <Link to="/termo-consenso">
-                        Termo de Consentimento
-                      </Link>
-                    </li>
                     <li>
                       <Link to="/relatorios-usuario">
                         Relatório de Usuários
