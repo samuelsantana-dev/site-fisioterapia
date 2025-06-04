@@ -3,6 +3,9 @@ import imagemHome from '../assets/fotoIntrodução.png';
 import buttonPadrao from '../components/button/button-padrao';
 
 export function Home() {
+
+  const isUserLoggedIn = window.localStorage.getItem("user_token");
+
   return (
     <section className="hero min-h-screen bg-backgroundMain">
       <div className="hero-content flex-col lg:flex-row-reverse gap-10 px-6">
@@ -23,9 +26,7 @@ export function Home() {
             melhorar sua saúde e bem-estar. Comece a praticar hoje e sinta a
             diferença!
           </p>
-          <Link to="/login" {...buttonPadrao}>
-            Login
-          </Link>
+          { isUserLoggedIn && (<span> Estamos aqui</span>)  }
         </div>
       </div>
     </section>
