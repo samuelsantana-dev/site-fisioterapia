@@ -13,42 +13,18 @@ import { EditarExercicios } from './pages/cadastros/editar-exercicio.tsx';
 import { ExerciciosAerobicos } from './pages/exercicios/exercicios-aerobicos.tsx';
 import { Header } from './components/header.tsx';
 import NotFound from './pages/not-found/not-found.tsx';
-import { useState, useEffect } from 'react';
-import { listarTodosUsuarios, listarUsuariosAdmin } from './api/api-usuarios.ts';
-import { User } from './api/interface.ts';
+import { Footer } from './components/footer.tsx';
 
 function App() {
-    const [users, setUsers] = useState<User[]>([]);
-    const storedToken: any = window.localStorage.getItem("user_token");
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (storedToken) {
-                try {
-                    const usersAdmin = await listarUsuariosAdmin();
-                    const usersComuns = await listarTodosUsuarios() 
-                    setUsers([...usersAdmin, ...usersComuns]);
-                } catch (error) {
-                    console.error('Erro ao obter usuários:', error);
-                    alert('Faça login para acessar essa página');
-                }
-            } else {
-                console.error('Token não encontrado');
-            }
-        };
-
-        fetchData();
-    }, [storedToken]);
-
-    const teste = storedToken ? users.find((user: any) => user.user_id === storedToken) : null;
-    console.log('teste', teste);
+    const isUserLoggedIn = window.localStorage.getItem("user_token");
 
     return (
         <div className="App">
             <BrowserRouter>
                     <Header />
                 <Routes>
-                    {teste?.admin === true && (
+                    {isUserLoggedIn && (
                         <>
                             <Route path="/editar-usuario/:id" element={<EditarUsuario />} />
                             <Route path="/editar-exercicio/:id" element={<EditarExercicios />} />
@@ -67,6 +43,7 @@ function App() {
                     
                     <Route path="*" element={<NotFound />} />
                 </Routes>
+                <Footer />
             </BrowserRouter>
         </div>
     );
