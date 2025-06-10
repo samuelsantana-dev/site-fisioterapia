@@ -3,11 +3,10 @@ import { Home } from './pages/home.tsx';
 import { LoginForm } from './pages/login.tsx';
 import { ExerciciosInferiores } from './pages/exercicios/exercicios-inferiores.tsx';
 import { ExerciciosSuperiores } from './pages/exercicios/exercicios-superiores.tsx';
-import { EscolherExercicios } from './pages/escolher-exercicios.tsx';
 import { CadastroForm } from './pages/cadastros/cadastro-usuario.tsx';
 import { CadastroExercicios } from './pages/cadastros/cadastro-exercicios.tsx';
-import TableDadosUsuarios from './pages/relatorios-usuarios.tsx';
-import {TableDadosExercicios} from './pages/relatorios-exercicios.tsx';
+import TableDadosUsuarios from './pages/cadastros/relatorios-usuarios.tsx';
+import {TableDadosExercicios} from './pages/exercicios/relatorios-exercicios.tsx';
 import { EditarUsuario } from './pages/cadastros/editar-usuario.tsx';
 import { EditarExercicios } from './pages/cadastros/editar-exercicio.tsx';
 import { ExerciciosAerobicos } from './pages/exercicios/exercicios-aerobicos.tsx';
@@ -15,6 +14,7 @@ import { Header } from './components/layout/header.tsx';
 import NotFound from './pages/not-found/not-found.tsx';
 import { Footer } from './components/layout/footer.tsx';
 import { useEffect, useState } from 'react';
+import { EscolherExercicios } from './pages/exercicios/escolher-exercicios.tsx';
 
 function App() {
     const [isAdmin, setIsAdmin] = useState(true);

@@ -8,7 +8,7 @@ import { User } from '../../api/interface';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Papa from 'papaparse';
 import { useNavigate } from 'react-router-dom';
-import SearchInput from '../../components/seachbar';
+import SearchInput from '../../components/ui/seachbar';
 
 export default function TableDadosUsuarios() {
   const [users, setUsers] = useState<User[]>([]);
