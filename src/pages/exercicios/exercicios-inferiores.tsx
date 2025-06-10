@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getExercicios } from '../../api/api-exercicios';
 import { Exercise } from '../../api/interface';
-import { DivExercicios } from '../../components/div-exercicio';
+import { DivExercicios } from '../../components/layout/div-exercicio';
 import { ordenarPorDificuldade } from '../../components/validacoes-gerais';
 
 export const ExerciciosInferiores = (): JSX.Element => {

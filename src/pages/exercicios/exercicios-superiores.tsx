@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DivExercicios } from '../../components/div-exercicio';
+import { DivExercicios } from '../../components/layout/div-exercicio';
 import { Exercise } from '../../api/interface';
 import { getExercicios } from '../../api/api-exercicios';
 import { ordenarPorDificuldade } from '../../components/validacoes-gerais';
