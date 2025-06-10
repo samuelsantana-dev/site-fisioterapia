@@ -1,50 +1,75 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { atualizarExercicio } from "../../api/api-exercicios";
-import axios from "axios";
+import { atualizarExercicio, getExercicios} from "../../api/api-exercicios";
 import { ExerciseForm } from "../formulario-props/exercicio-props";
+import ErrorMessage from "../../components/ErrorMessage";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { Exercise } from "../../api/interface";
 
 export function EditarExercicios() {
-  const { id } = useParams();
-  const [formExercicio, setformExercicio] = useState(null);
-  const [error, setError] = useState("");
+  const { id } = useParams<{ id: string }>();
+  const [exercicio, setExercicio] = useState<Exercise | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  console.log(error);
 
-  const handleSubmit = async (formExercicio: any) => {
+  const handleSubmit = async (formData: Exercise) => {
     try {
-      await atualizarExercicio(formExercicio);
-      navigate("/escolher-exercicios");
+      if (!id) {
+        throw new Error("ID do exercício não encontrado");
+      }
+      
+      await atualizarExercicio(formData);
+      navigate("/escolher-exercicios", { 
+        state: { successMessage: "Exercício atualizado com sucesso!" } 
+      });
     } catch (error) {
       console.error("Erro ao editar:", error);
-      setError("Erro ao editar. Por favor, verifique suas informações.");
+      setError(error instanceof Error ? error.message : "Erro ao editar. Por favor, verifique suas informações.");
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchExercicio = async () => {
       try {
-        const response = await axios.get(
-          `https://app-jadson-back-wvjk3k2iaq-uc.a.run.app/api/v1/exercises/${id}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-user-token': window.localStorage["user_token"]
-            }
-          }
-        );
-        setformExercicio(response.data);
+        setIsLoading(true);
+        if (!id) {
+          throw new Error("ID do exercício não fornecido");
+        }
+        
+        const response = await getExercicios()
+        setExercicio(response.data);
       } catch (error) {
-        console.error("Erro ao buscar os dados:", error);
+        console.error("Erro ao buscar exercício:", error);
+        setError(error instanceof Error ? error.message : "Erro ao carregar exercício");
+      } finally {
+        setIsLoading(false);
       }
     };
-    fetchData();
+
+    fetchExercicio();
   }, [id]);
 
-  if (!formExercicio) {
-    return <span className="loading loading-spinner loading-lg"></span>;
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
-  return  <ExerciseForm initialData={formExercicio} onSubmit={handleSubmit} isEditMode/>
-   
+  if (error) {
+    return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
+  }
+
+  if (!exercicio) {
+    return <ErrorMessage message="Exercício não encontrado" />;
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Editar Exercício</h1>
+      <ExerciseForm 
+        initialData={exercicio} 
+        onSubmit={handleSubmit} 
+        isEditMode 
+      />
+    </div>
+  );
 }

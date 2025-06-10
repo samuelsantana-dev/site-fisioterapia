@@ -11,9 +11,9 @@ import {TableDadosExercicios} from './pages/relatorios-exercicios.tsx';
 import { EditarUsuario } from './pages/cadastros/editar-usuario.tsx';
 import { EditarExercicios } from './pages/cadastros/editar-exercicio.tsx';
 import { ExerciciosAerobicos } from './pages/exercicios/exercicios-aerobicos.tsx';
-import { Header } from './components/header.tsx';
+import { Header } from './components/layout/header.tsx';
 import NotFound from './pages/not-found/not-found.tsx';
-import { Footer } from './components/footer.tsx';
+import { Footer } from './components/layout/footer.tsx';
 import { useEffect, useState } from 'react';
 
 function App() {
