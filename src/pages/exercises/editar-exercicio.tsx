@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { atualizarExercicio, getExercicios} from "../../api/api-exercicios";
 import { ExerciseForm } from "../formulario-props/exercicio-props";
-import ErrorMessage from "../../components/ErrorMessage";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorMessage from "../../components/ui/ErrorMessage";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import { Exercise } from "../../api/interface";
 
 export function EditarExercicios() {

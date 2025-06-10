@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import ImagemExercicio from '../assets/fisioterapia-escolher-exercicios.png';
-import buttonPadrao from '../components/button/button-padrao';
+import ImagemExercicio from '../../assets/fisioterapia-escolher-exercicios.png';
+import buttonPadrao from '../../components/button/button-padrao';
 
 export function EscolherExercicios() {
   return (

@@ -4,7 +4,7 @@ import { deletarExercicio, getExercicios } from "../../api/api-exercicios";
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
-import SearchInput from "../../components/seachbar";
+import SearchInput from "../../components/ui/seachbar";
 import { difficulty } from "../../components/validacoes-gerais";
 
 export function TableDadosExercicios() {
